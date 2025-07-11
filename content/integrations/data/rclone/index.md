@@ -22,29 +22,30 @@ date: 2025-07-11
 
 ## Overview
 
-The **Plakar Rclone integration** enables seamless backup and restoration of **a cloud service provided by rclone** to and from a [Kloset repository](/posts/2025-04-29/kloset-the-immutable-data-store/).
+**Rclone** is a command line program to manage files on **cloud storage**. The Plakar Rclone integration enables seamless backup and restoration of a cloud service provided by Rclone to and from a [Kloset repository](/posts/2025-04-29/kloset-the-immutable-data-store/).
 
 > **Why use Rclone with Plakar?**
 >
-> Rclone is here to simplify the connection between Plakar and your cloud storage. It allows you to back up and restore data from various cloud providers like Google Drive, Google Photos, OneDrive, Dropbox, and more, directly to your Kloset repository.
+> Rclone is here to simplify the connection between Plakar and your cloud storage. It allows you to back up and restore data from various cloud providers like Google Drive, Google Photos, OneDrive, Dropbox, Amazon S3, Box, Mega, pCloud, WebDAV, and many more — directly to your Kloset repository. 
+> Please note that Plakar currently supports only a subset of the cloud services supported by Rclone. See the **Q&A** section below for the list of providers currently supported.
 
 ## Configuration
 
 ### Temporary Requirement
 
-*The Rclone connector is on actually on test. So the config setup is temporary*
+*The Rclone connector is actually in test. So the config setup is temporary.*
 
 The Rclone integration requires you to have **Rclone** installed on your system. You can install it by following the instructions on the [Rclone installation page](https://rclone.org/install/).
 
 ### Temporary Configuration
 
-To Create a new Rclone remote configuration, you need to create a rclone conf, to do so run the following command:
+To create a new Rclone remote configuration, you need to create an Rclone conf. To do so, run the following command:
 
 ```bash
 $ rclone config
 ```
 
-And follow the prompts to create a new remote configuration. For the moment plakar only supports `google drive`, `opendrive`, `iclouddrive` and `onedrive` as remote configurations.
+And follow the prompts to create a new remote configuration. For the moment Plakar only supports `google drive`, `opendrive`, `iclouddrive`, and `onedrive` as remote configurations.
 
 Once you have created the remote configuration, you will find it in the `~/.config/rclone/rclone.conf` file.
 
@@ -58,28 +59,31 @@ token = {"..."}
 drive_id = ...
 drive_type = ...
 ```
+
 (the fields will be different for each provider)
 
 You need to copy the remote configuration name (in this case `myremote`) and use it in the Plakar configuration.
-You need to translate it in yaml format, so it will look like this in the Plakar configuration:
+You need to translate it into YAML format, so it will look like this in the Plakar configuration:
 
 ```yaml
 myremote:
   type: ...
-  token: '{"..."}' # Here you need just to add the quotes around the brackets
+  token: '{"..."}' # Here you just need to add the quotes around the brackets
   drive_id: ...
   drive_type: ...
 ```
 
-Before be able to use the Rclone integration, you need to add a last field to the configuration, which is the `location` field.
-You need to add the one of the following values, depending on the provider you are using:
+Before being able to use the Rclone integration, you need to add one last field to the configuration, which is the `location` field.
+You need to add one of the following values, depending on the provider you are using:
+
 ```yaml
 location: 'onedrive://'
 location: 'opendrive://'
 location: 'drive://'
 location: 'iclouddrive://'
 ```
-**Icloudrive does not include icloud photos**
+
+**Iclouddrive does not include iCloud Photos**
 
 ### Example Configuration
 
@@ -98,7 +102,7 @@ myremote:
 
 Once configured, you can back up or restore data using the Rclone integration with Plakar.
 
-To create the Kloset repository at `/var/backups` and back up the onedrive cloud configured as `myremote`, run the following command:
+To create the Kloset repository at `/var/backups` and back up the OneDrive cloud configured as `myremote`, run the following command:
 
 ```bash
 $ plakar at /var/backups create
@@ -125,3 +129,17 @@ See the [QuickStart guide](https://docs.plakar.io/en/quickstart/index.html) for 
 Found a bug? [Open an issue on GitHub](https://github.com/PlakarKorp/plakar/issues/new?title=Bug%20report%20on%20Rclone%20integration&body=Please%20provide%20a%20detailed%20description%20of%20the%20issue.%0A%0A**Plakar%20version**)
 
 Join our [Discord community](https://discord.gg/uuegtnF2Q5) for real-time help and discussions.
+
+## Q&A
+
+**Q: Which cloud providers are supported by Plakar’s Rclone integration?**
+
+A: Currently, Plakar supports Google Drive, Google Photos, OneDrive, OpenDrive, and iCloud Drive (excluding iCloud Photos). Other providers supported by Rclone will be added in the future.
+
+**Q: Do I need to install Rclone separately?**
+
+A: At the moment yes, you must install Rclone on your system and configure your remotes before using them with Plakar.
+
+**Q: Which Providers are supported by Rclone?**
+
+A: Rclone supports a wide range of providers, please refer to the [Rclone documentation](https://rclone.org/overview/) for the complete list. However, Plakar currently does not support all of them.
