@@ -122,6 +122,6 @@ See the [QuickStart guide](https://docs.plakar.io/en/quickstart/index.html) for 
 
 ## Questions, Feedback, and Support
 
-Found a bug? [Open an issue on GitHub](https://github.com/PlakarKorp/plakar/issues/new?title=Bug%20report%20on%20S3%20integration&body=Please%20provide%20a%20detailed%20description%20of%20the%20issue.%0A%0A**Plakar%20version**)
+Found a bug? [Open an issue on GitHub](https://github.com/PlakarKorp/plakar/issues/new?title=Bug%20report%20on%20Rclone%20integration&body=Please%20provide%20a%20detailed%20description%20of%20the%20issue.%0A%0A**Plakar%20version**)
 
 Join our [Discord community](https://discord.gg/uuegtnF2Q5) for real-time help and discussions.
