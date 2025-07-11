@@ -306,9 +306,60 @@ we are producing the same stream of cutpoints as before.
 XXX
 
 
-## Keyed FastCDC
-XXX
+## Keyed CDC
+
+Following a recent paper on attacks that target CDC algorithms,
+not only did we introduce mitigations in plakar itself,
+but we also introduced a Keyed CDC mode in our go-cdc-chunkers package and added support for a Keyed FastCDC implementation.
+
+Long story short,
+for its operations FastCDC relies on a so-called Gear table which contains a set of values that are injected in its decision making for cutpoints.
+The values need to be generated randomly to avoid biases,
+but once generated they need to remain the same between runs so that identical data produce the same cutpoints:
+
+```go 
+// chunkers/kfastcdc/fastcdc_precomputed.go
+var G [256]uint64 = [256]uint64{
+  0x4d65822107fcfd52,
+  0x78629a0f5f3f164f,
+  0xd5104dc76695721d,
+  [...]
+  0x7e23bc6fc8214b8a,
+  0xeadaea4753b428d7,
+  0xaa80d0564cf20a65,
+}
+```
+
+These values are supposedly not sensitive,
+but they have the disadvantage that cutpoints are predictable by everyone:
+if I share a file with you,
+you can determine what the cutpoints for that file will be on my machine,
+and depending on your use of CDC this can lead to some privacy concerns.
+
+With Keyed FastCDC,
+a key is provided upon chunker initialization.
+It is used to setup a Keyed BLAKE3 hasher from which an alternate Gear table is derived,
+a Keyed Gear table if you will.
+Using the same key produces the same Keyed Gear table with similar cutpoints between two runs,
+whereas using a different key produces a different table and therefore different cutpoints:
+you can no longer predict what the cutpoints for a given file will be for someones' chunker using a key you don't know.
+
+The good part is that this Keyed mode bears _no performance cost_,
+it is a fast computation that's only done at chunker initialization,
+essentially free.
+
+We are unaware of another implementation providing a similar mechanism,
+so...straight from Plakar Korp's lab, here's some R&D for you :-)
 
 
 ## Conclusion
-XXX
+
+Our package is opensource and distributed under the permissive ISC-license,
+so it is free for you to use in any application,
+including commercial ones.
+
+Feel free to hop in our Discord channel and ask for help if you want to integrate it somewhere,
+make improvements to it,
+or add support for new algorithms.
+
+We are curious to see what you can build with it !
