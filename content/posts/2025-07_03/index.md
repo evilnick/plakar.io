@@ -362,4 +362,5 @@ Feel free to hop in our Discord channel and ask for help if you want to integrat
 make improvements to it,
 or add support for new algorithms.
 
-We are curious to see what you can build with it !
+It can be used for a wide range of use-cases,
+so we are curious to see what you can build with it !
