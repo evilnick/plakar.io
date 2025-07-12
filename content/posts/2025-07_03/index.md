@@ -199,13 +199,63 @@ we just need a "resource" holding data and files is the simplest to think of.
 
 ### Metadata matching
 
-The first approach to deduplication is to look at metadata and decide if it's worth looking into.
+The first approach to data deduplication is to look at the metadata and decide from there if it's even worth looking into the data itself.
 
-For example,
-assuming that I'm looking at a data set containing a file of 1TB that I have already processed in the past,
-the metadata can inform me that the modification data has not changed,
-that the size has not changed,
-and depending on my level of confidence in these I can reuse my previous save and avoid having to go through this 1TB of data again.
+An example of this,
+is for example looking at file name, size and last modification date if available.
+If I have a 1TB file that I have processed in the past and recorded the metadata for,
+then I could for example take the decision to not process it again if the metadata have not changed since then.
+
+```go
+package main
+
+import (
+	"fmt"
+	"os"
+)
+
+type FileMeta struct {
+	Name    string
+	Size    int64
+	ModTime int64
+}
+
+// seenFiles mimics previously seen file metadata
+var seenFiles = map[string]FileMeta{
+	"file1.dat":
+    {
+      Name: "file1.dat",
+      Size: 1 << 30,
+      ModTime: 1620000000
+    }, // 1GB file
+}
+
+func isDuplicate(meta FileMeta) bool {
+	for _, seen := range seenFiles {
+		if meta.Size == seen.Size &&
+           meta.ModTime == seen.ModTime {
+			return true
+		}
+	}
+	return false
+}
+
+func main() {
+	// simulate a renamed copy with same content
+	file, _ := os.Stat("file_copy.dat") // must exist on disk
+	meta := FileMeta{
+		Name:    file.Name(),
+		Size:    file.Size(),
+		ModTime: file.ModTime().Unix(),
+	}
+
+	if isDuplicate(meta) {
+		fmt.Println("File skipped (duplicate by metadata).")
+	} else {
+		fmt.Println("File processed (new or changed).")
+	}
+}
+```
 
 This is very efficient and nice,
 but since it doesn't look at the data at all...
@@ -226,9 +276,62 @@ When processing new data,
 if the content identifier is already in the index,
 then the data was already recorded and we can skip some heavier operations.
 
+```go
+package main
+
+import (
+	"crypto/sha256"
+	"fmt"
+	"io"
+	"os"
+)
+
+var seenHashes = map[string]bool{}
+
+func computeHash(path string) (string, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return "", err
+	}
+	defer file.Close()
+
+	hash := sha256.New()
+	if _, err := io.Copy(hash, file); err != nil {
+		return "", err
+	}
+
+	return fmt.Sprintf("%x", hash.Sum(nil)), nil
+}
+
+func isDuplicate(path string) bool {
+	sum, err := computeHash(path)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return false
+	}
+
+	if seenHashes[sum] {
+		return true
+	}
+
+	seenHashes[sum] = true
+	return false
+}
+
+func main() {
+	file := "data.bin" // path to the file
+	if isDuplicate(file) {
+		fmt.Println("Duplicate file detected, skipping...")
+	} else {
+		fmt.Println("New content, processing...")
+	}
+}
+```
+
 This has two short-comings:
 - the entire file has to be read before knowing if it's a duplicate
 - if a single bit is changed, the entire file is considered as not duplicate
+
 
 So in our previous 1TB example,
 we must first read 1TB of data and compute a digest out of it,
@@ -252,6 +355,54 @@ if a digest is found,
 the chunk is skipped as we already know it,
 otherwise it means we either never saw it or at least a bit was altered so the chunk is processed and recorded for future runs to skip it.
 
+```go
+package main
+
+import (
+	"crypto/sha256"
+	"fmt"
+	"io"
+	"os"
+)
+
+const chunkSize = 1024 * 1024 // 1MB
+
+var seenChunks = map[string]bool{}
+
+func processFile(path string) {
+	file, err := os.Open(path)
+	if err != nil {
+		fmt.Println("Open error:", err)
+		return
+	}
+	defer file.Close()
+
+	buf := make([]byte, chunkSize)
+	chunkIdx := 0
+	for {
+		n, err := file.Read(buf)
+		if n == 0 || err == io.EOF {
+			break
+		}
+
+		sum := sha256.Sum256(buf[:n])
+		key := fmt.Sprintf("%x", sum)
+
+		if seenChunks[key] {
+			fmt.Printf("Chunk %d skipped (dup)\n", chunkIdx)
+		} else {
+			fmt.Printf("Chunk %d processed (new)\n", chunkIdx)
+			seenChunks[key] = true
+		}
+		chunkIdx++
+	}
+}
+
+func main() {
+	processFile("data.bin")
+}
+```
+
 The size of chunks vary and is very dependant on the use-cases,
 and can even be assigned based on meta-data informations (ie: small chunks for .txt, big chunks for .mpeg).
 
@@ -270,7 +421,10 @@ the offset have not moved but all of the chunks are no longer aligned with their
 
 That's the most beautiful thing in the world.
 
+![](family.png)
+
 Except for my kids...and my wife...and my cat.
+
 
 Content-defined chunking builds upon the idea of fixed-size chunking:
 split an input into smaller chunks so that the whole data doesn't have to be pushed in case of a single bit change...
@@ -284,6 +438,56 @@ but altering a single bit causes a cutpoint to shift and produce a chunk that's 
 Since we compute the digests on chunks to record them in an index,
 then the old chunks are found in the index and the new chunks aren't,
 leading to new records.
+
+```go
+package main
+
+import (
+	"crypto/sha256"
+	"fmt"
+	"os"
+
+	"plkr.io/go-cdc-chunkers"
+)
+
+var seen = map[string]bool{}
+
+func processCDC(path string) {
+	file, err := os.Open(path)
+	if err != nil {
+		fmt.Println("Failed to open:", err)
+		return
+	}
+	defer file.Close()
+
+	// Use default settings: 64KB avg chunk, 32KB min, 256KB max
+	chunker := chunkers.NewChunker(file, nil)
+
+	i := 0
+	for {
+		chunk, err := chunker.Next()
+		if err != nil {
+			break
+		}
+
+		sum := sha256.Sum256(chunk.Data)
+		key := fmt.Sprintf("%x", sum)
+
+		if seen[key] {
+			fmt.Printf("Chunk %d skipped (dup, %d bytes)\n", i, len(chunk.Data))
+		} else {
+			fmt.Printf("Chunk %d processed (new, %d bytes)\n", i, len(chunk.Data))
+			seen[key] = true
+		}
+		i++
+	}
+}
+
+func main() {
+	processCDC("data.bin")
+}
+```
+
 
 If you're unfamiliar with this kind of magic,
 you're going to wonder:
