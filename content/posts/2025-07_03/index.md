@@ -66,6 +66,9 @@ but also makes it possible to fit more operations in a bounded timeframe.
 
 
 ## The limits of compression in deduplication
+
+### Frequency-based token compression
+
 It's not really deduplication per-se,
 but it's worthy of an addition to this article if only to better understand how we came to more modern strategies.
 
@@ -185,6 +188,10 @@ to these 18 bits:
 a    (space) beautiful (space) cat  \n
 1100 0       10110     0       1101 111
 ```
+
+
+### Large data input and compression variability
+XXX
 
 
 
