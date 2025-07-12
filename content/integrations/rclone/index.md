@@ -4,7 +4,8 @@ subtitle: Save and restore your cloud data with rclone for Plakar
 description: Back up and restore your data from and to a cloud provider (e.g., Google Drive, Google Photos, Onedrive) using the Plakar Rclone integration.
 technology_description: Rclone is a command-line program to manage files on cloud storage. It supports various providers like Google Drive, Google Photos, OneDrive, Dropbox, and more.
 categories: 
-  - integrations
+  - source connector
+  - destination connector
 tags:
   - Rclone
   - Backup
