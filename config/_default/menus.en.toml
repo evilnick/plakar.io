@@ -164,7 +164,7 @@ parent = "engineering"
 [[main]]
 identifier = "engineering-community-calendar"
 name = "Upcoming events"
-url = "contact/#upcuming-events"
+url = "contact/#upcoming-events"
 weight = 40
 parent = "engineering"
 [[main.params]]
