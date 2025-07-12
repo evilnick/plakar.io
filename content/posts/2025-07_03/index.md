@@ -1,5 +1,5 @@
 ---
-title: "Cult of the Dead Content-Defined Chunking"
+title: "Introducing go-cdc-chunkers: chunk and deduplicate everything"
 date: 2025-07-11T13:00:00+0100
 authors:
 - "gilles"
@@ -11,9 +11,9 @@ featured-scope:
  - hero-page
 tags:
  - plakar
- - ptar
+ - kloset
  - backups
- - archive
+ - chunking
 ---
 
 ## TL;DR:
@@ -761,7 +761,7 @@ Our package is opensource and distributed under the permissive ISC-license.
 It is free for you to use in any application,
 including commercial ones.
 
-Feel free to hop in our Discord channel and ask for help if you want to integrate it somewhere,
+Feel free to [hop in our Discord channel](https://discord.gg/uuegtnF2Q5) and ask for help if you want to integrate it somewhere,
 make improvements to it,
 or add support for new algorithms.
 
