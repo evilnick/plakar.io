@@ -2905,6 +2905,14 @@ video {
   max-width:36rem;
 }
 
+.max-w-\[600px\] {
+  max-width:600px;
+}
+
+.max-w-\[800px\] {
+  max-width:800px;
+}
+
 .flex-1 {
   flex:1 1 0%;
 }
