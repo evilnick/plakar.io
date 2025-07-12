@@ -17,38 +17,49 @@ tags:
 ---
 
 ## TL;DR:
+Modern data systems suffer from redundancy—wasting time, compute, bandwidth and storage on duplicate content.
+Traditional methods of compression don’t help,
+especially for large datasets in cloud,
+encrypted,
+or zero-trust environments.
+
+That’s why we built and released [go-cdc-chunkers](https://github.com/PlakarKorp/go-cdc-chunkers):
+an opensource and ISC-licensed high-performance Go package for Content-Defined Chunking (CDC),
+optimized for deduplication and resilience against data shifts.
+
+Unlike traditional compression, CDC enables fine-grained, shift-resilient deduplication, ideal for a wide range of uses including backup, synchronization, storage, and distributed systems.
 
 
-## Introduction
+## The problem of duplication
 
 Every time your system moves, stores, or processes duplicated data, it’s doing work it doesn’t need to.
-That means longer sync times, higher cloud egress fees, slower database queries, bloated containers, over-provisioned caches, and users waiting for things that should’ve been instant.
+That means longer sync times, higher cloud egress fees, bloated containers, over-provisioned caches, and users waiting for things that should’ve been instant.
 Multiply that by thousands of files, logs, messages, or binary blobs—and the inefficiency compounds rapidly.
 The more data you touch, the more painful and expensive that duplication becomes.
 
-We should know,
-duplication is a nightmare when it comes to backing up data,
-to transfer that data to a storage, remote or not, and keep it there for extended periods of time.
+In our business,
+where we need to process large amount of data,
+transfer it and store it for extended periods of time,
+duplication is a nightmare:
+it incrases processing time,
+compute resources usage,
+transfer time and cost,
+pressure on storage and space needed.
+Duplication wastes time and money at every - single - step.
 
 The solution ? Deduplication.
 
-Deduplication isn’t just for backups. It’s for anything that handles recurring or repetitive data. Think: real-time collaboration tools, object storage systems, build artifact pipelines, CI/CD caches, logging infrastructures, messaging queues, document editors, and package registries. If your users upload revisions, move large files across services, or repeatedly generate similar outputs, you’re likely storing and reprocessing the same data again and again—sometimes byte-for-byte.
+Deduplication isn’t just for backups. It’s for anything that handles recurring or repetitive data: real-time collaboration tools, object storage systems, build artifact pipelines, CI/CD caches, logging infrastructures, messaging queues, document editors, and package registries. If your users upload revisions, move large files across services, or repeatedly generate similar outputs, you’re likely storing and reprocessing the same data again and again—sometimes byte-for-byte.
 
 By deduplicating at the right layer—whether file-level, block-level, or chunk-level—you avoid wasting resources on what's already known. You free up CPU cycles for meaningful computation, reduce latency across your stack, shrink your operational footprint, and make your systems leaner and faster. And if you're paying per gigabyte, per operation, or per millisecond? You're literally buying back time and money.
 
-So whether you're syncing user files, compressing API payloads, or optimizing data pipelines, deduplication is not an optional optimization—it's a design principle that pays off in every layer of the stack.
-
-
 ## Here comes the `go-cdc-chunkers` package
 
-To help developers build smarter, leaner systems that avoid redundant work, we’re releasing [go-cdc-chunkers]()—an open-source, ISC-licensed library for high-performance Content-Defined Chunking in Go.
+To help developers build smarter, leaner systems that avoid redundant work, we’re releasing [go-cdc-chunkers](https://github.com/PlakarKorp/go-cdc-chunkers)—an open-source, ISC-licensed library for high-performance Content-Defined Chunking (CDC) in Go.
 
 This package is designed to make it easy to slice data into variable-sized, content-aware chunks that are resilient to shifts and edits—perfect for deduplication, delta encoding, change tracking, and more.
 
 Whether you're building synchronization tools, blob stores, data pipelines, or just want to avoid wasting time and compute on repeated data, go-cdc-chunkers gives you the primitives you need to chunk content efficiently and predictably.
-
-It’s **very** fast, **very** memory-conscious, and production-ready, with a clean API that fits into streaming and batch workflows alike. We're publishing it not just as a component of our own infrastructure, but as a useful building block for any developer who wants to treat data as a first-class citizen—one that doesn’t need to be handled twice.
-
 
 ```
 Restic_Rabin			1932542209 ns/op          555.61 MB/s
@@ -56,35 +67,41 @@ Askeladdk_FastCDC		 579593250 ns/op         1852.58 MB/s
 Jotfs_FastCDC			 448508056 ns/op         2394.03 MB/s
 Tigerwill90_FastCDC		 377360430 ns/op         2845.40 MB/s
 Mhofmann_FastCDC		 572578979 ns/op         1875.27 MB/s
+
 PlakarKorp_FastCDC		 117534472 ns/op         9135.55 MB/s
 PlakarKorp_KFastCDC		 115304560 ns/op         9312.22 MB/s
 PlakarKorp_UltraCDC		  79441967 ns/op        13516.05 MB/s
 PlakarKorp_JC			  49784102 ns/op        21567.97 MB/s
 ```
 
-## What is deduplication ?
-
-Deduplication is the process of finding similar subsets of data in a larger set.
-
-Why do that, you ask ?
-
-Well, usually to avoid performing redundant operations like expensive computations,
-network transfers or even storing it multiple times:
-by performing the operation once and reusing its result for all redundant chunks of data,
-you save processing unit cycles,
-and/or network bandwidth and/or storage I/O and space,
-which ultimately translates in less resources consumed and less time spent on unnecessary tasks:
-but also makes it possible to fit more operations in a bounded timeframe.
+It’s **very** fast, **very** memory-conscious, and production-ready, with a clean API that fits into streaming and batch workflows alike.
+We're releasing it not just as part of our internal stack,
+but as a practical tool for any developer who needs data to be handled smartly—only once, not over and over.
 
 
-## The limits of compression in deduplication
+## But what is deduplication ?
+
+Deduplication is the process of identifying and eliminating repeated chunks of data within a larger dataset.
+
+Why bother?
+
+Because avoiding redundant work—like redoing computations, re-transferring data over the network, or storing the same content multiple times—saves compute cycles, bandwidth, I/O, and storage space. It reduces resource consumption, speeds up processing, and frees up capacity to do more useful work within the same time constraints.
+
+In short: do it once, reuse the result, and move faster.
+
+
+## So it's compression basically ?
+
+Every time we mention deduplication,
+people confuse it with compression.
+
+Let's start by refreshing what compression does before going into deduplication,
+this way we can better understand how they differ.
+
 
 ### Frequency-based compression
 
-This isn’t deduplication per se,
-but it's worth exploring as it helps us understand how modern compression strategies evolved.
-
-A compressor processes a stream and tries to identify frequently occurring sequences of bytes,
+A compressor processes data and tries to identify frequently occurring sequences of bytes,
 replacing them with shorter ones.
 To help illustrate,
 let’s use a simplified example.
@@ -179,10 +196,11 @@ look in our table was was the token they were encoding,
 and substitute it back.
 
 Huffman coding is a classic entropy-encoding method optimal for known frequencies.
-It's lossless and widely used in formats like ZIP, JPEG (for DCT coefficient encoding), and others.
-In real compressors, tokens may include multi-byte sequences, patterns, or dictionary entries.
+It's lossless and widely used in formats like ZIP, JPEG, and others.
+In real compressors, tokens may include multi-byte sequences, patterns, or dictionary entries,
+but the general idea remains: swap **repeating** chunks of bits by smaller ones.
 
-### Large data input and compression variability
+### Isn't that deduplication then ?
 So... if compression works so well, why not just use it to handle deduplication?
 
 And if Huffman coding isn’t ideal,
@@ -205,7 +223,8 @@ This works well for small datasets.
 But if the input is massive — say, multiple terabytes — it's impractical to process the entire data stream upfront just to compute token frequencies. Reading all the data before producing any output isn't viable in real-world pipelines.
 
 #### Streaming compression vs. Global context
-To address this, most compressors operate in streaming mode. They split the input into smaller chunks (blocks or windows), compute local frequencies within each, and build temporary codes or dictionaries on the fly.
+To address this, most compressors operate in streaming mode.
+They split the input into smaller chunks (blocks or windows that often range between a few KB to several MB), compute local frequencies within each, and build temporary codes or dictionaries on the fly.
 
 This helps manage memory and compute, but comes at a cost:
 
@@ -230,12 +249,14 @@ Compression is great for making individual files smaller.
 Deduplication is about not storing the same thing twice — ever — even if it shows up a month apart in two backups.
 
 ## A few deduplication strategy
-Deduplication has evolved a lot throughout the years.
+
+Now that we realize that compression doesn't cut it for data deduplication,
+let's see how deduplication has evolved a lot throughout the years.
 
 For this article, let's assume that we are backing up files with data in them.
 The same holds true for objects in an object storage,
 or blobs in a database,
-we just need a "resource" holding data and files is the simplest to think of.
+we just need a "resource" holding data and files is the simplest one to think of.
 
 
 ### Metadata matching
@@ -244,7 +265,7 @@ The first approach to data deduplication is to look at the metadata and decide f
 
 An example of this,
 is for example looking at file name, size and last modification date if available.
-If I have a 1TB file that I have processed in the past and recorded the metadata for,
+If I have a file that I have processed in the past and recorded the metadata for,
 then I could for example take the decision to not process it again if the metadata have not changed since then.
 
 ![](metadata-caching.png)
@@ -270,7 +291,7 @@ var seenFiles = map[string]FileMeta{
       Name: "file1.dat",
       Size: 1 << 30,
       ModTime: 1620000000
-    }, // 1GB file
+    },
 }
 
 func isDuplicate(meta FileMeta) bool {
@@ -303,18 +324,20 @@ func main() {
 This is very efficient and nice,
 but since it doesn't look at the data at all...
 rename the file, update the metadata without changing the content or copy the file so you have another identical copy of it aside with a different name,
-and this breaks deduplication.
+and deduplication collapses.
+
+Some tools still rely on this method for the purpose of deduplication,
+but more often modern tools use metadata matching solely for caching purpose combined with a more modern approach.
 
 
-### Exact-content matching
+### Exact content matching
 
-With this approach,
-a content is looked over to find an exact match.
-
-This used to be done with a CRC checksum until cryptographic digests became the norm.
+With this second approach,
+the content is looked over to find an exact match.
 
 To perform deduplication,
-data is passed through a function that produces a content identifier of some sort that can be recorded in an index.
+data is passed through a function that produces a content identifier of some sort (generally a cryptographic digest) that can be recorded in an index.
+
 When processing new data,
 if the content identifier is already in the index,
 then the data was already recorded and we can skip some heavier operations.
@@ -375,32 +398,36 @@ func main() {
 
 This has two short-comings:
 - the entire file has to be read before knowing if it's a duplicate
-- if a single bit is changed, the entire file is considered as not duplicate
+- if a single bit is changed, the entire file is considered as not being duplicate
 
-
-So in our previous 1TB example,
+If we have a 1TB file,
 we must first read 1TB of data and compute a digest out of it,
-then only when we're done we know if the content was a duplicate or not.
+THEN, only when we're done, we know if we need to do something with that data.
 If we just append a new-line to the file...
 well, it's a new 1TB file.
 
 
-### Fixed-size chunking
+### Fixed-Size Chunking
 
-Now that's a much more interesting approach.
+Now, that's a much more interesting approach.
 
 Instead of considering the data as a whole,
 it is split into fixed-size chunks that are evaluated individually.
 A 1TB file could for example be split into 1024 chunks of 1GB,
-a digest could be computed for each of them and recorded in an index to mark them as seen.
+then a digest could be computed for each of these chunks and recorded in an index to mark them as seen.
+
+This is effectively as if we had split our file into multiple smaller ones of fixed size,
+then performed an exact content match on each of them individually,
+while keeping track that they should be glued one to another to produce the original file.
+
 
 When processing new data,
-we would split it into chunks of 1GB and compute their digests to looked them up in the index:
+we split it into chunks of 1GB and compute their digests to look them up in the index:
 if a digest is found,
-the chunk is skipped as we already know it,
-otherwise it means we either never saw it or at least a bit was altered so the chunk is processed and recorded for future runs to skip it.
+the chunk is skipped as we don't need to process it,
+otherwise it means we never saw it or at least a bit was altered so it needs to be processed and its digest recorded for future runs to skip it.
 
-![](fixed-length-chunking.png)
+![](fixed-size-chunking.png)
 
 
 ```go
@@ -451,44 +478,56 @@ func main() {
 }
 ```
 
-The size of chunks vary and is very dependant on the use-cases,
-and can even be assigned based on meta-data informations (ie: small chunks for .txt, big chunks for .mpeg).
+The size of chunks depends on your use-case (ie: you might want small chunks for text and big chunks for video),
+but it remains fixed within a file.
 
 This method has the advantage that chunks can be efficiently processed as the data does not have to be read byte-by-byte,
-but using fixed-buffer reads that can take advantage of many optimizations.
+but using fixed-buffer reads that can take advantage of many optimizations to make it extremely fast...
 
-The downside,
-well,
-that fixed-size method implies that data is seen as a global structure where data exists at static offsets...
+... but the downside is that fixed-size method implies that data is seen as a global structure where data exists at static offsets...
 add or remove one byte,
 and the whole structure beyond that point is shifted,
 the offset have not moved but all of the chunks are no longer aligned with their previous offsets and are considered new causing the deduplication to fall apart.
 
-![](fixed-length-chunking-misaligned.png)
+![](fixed-size-chunking-misaligned.png)
 
 
 
-### Content-defined chunking
+### Content-Defined Chunking
 
-That's the most beautiful thing in the world.
+Finally, there's CDC, the most beautiful thing in the world.
 
 ![](family.png)
 
-Except for my kids...and my wife...and my cat.
+(except for my kids...and my wife...and my cat, see picture above for reference).
 
 
-Content-defined chunking builds upon the idea of fixed-size chunking:
+CDC builds upon the idea of Fixed-Size Chunking:
 split an input into smaller chunks so that the whole data doesn't have to be pushed in case of a single bit change...
-but it doesn't use a global structure and static offsets.
+but it doesn't use a global structure and static offsets so that it can recover if data is shifted.
 
-Instead,
-it uses a function to process the input and cut it into chunks of varying size...using the content to decide where to insert the cutpoints.
-By doing this,
-running the function on the same data produces the same cutpoints and therefore a serie of chunks identical between two runs,
-but altering a single bit causes a cutpoint to shift and produce a chunk that's different from previous runs.
-Since we compute the digests on chunks to record them in an index,
-then the old chunks are found in the index and the new chunks aren't,
-leading to new records.
+It uses a function to process the data and cut it into chunks of varying size...using the data itself to decide where to produce the cutpoints.
+This means that running the function on the same data twice produces the same cutpoints and the same serie of chunks,
+but altering a single bit causes the cutpoint to be shifted in the stream and produce a different serie of chunks.
+Since we still compute digests on chunks to record them in an index,
+the ones that are found are skipped and the others lead to new records.
+
+If you've followed so far,
+this should raise the following question:
+
+> But... if a cutpoint has been shifted, doesn't it shift all subsequent ones ?
+
+And the answer is: no.
+
+![](content-defined-chunking.png)
+
+
+The function that processes the data only looks at a relatively small window of data and computes a rolling digest to decide if it should insert a cutpoint or not.
+
+Because this is a rolling digest,
+if a change has caused a new cutpoint to be inserted,
+then after we have read a certain amount from this new cutpoint...
+we are producing the rolling digest over unaltered data and producing the original cutpoints.
 
 ```go
 package main
@@ -511,15 +550,17 @@ func processCDC(path string) {
 	}
 	defer file.Close()
 
-	// Use default settings: 64KB avg chunk, 32KB min, 256KB max
-	chunker := chunkers.NewChunker(file, nil)
+    chunker, err := chunkers.NewChunker("fastcdc", file)   // or ultracdc
+    if err != nil {
+        log.Fatal(err)
+    }
 
-	i := 0
-	for {
-		chunk, err := chunker.Next()
-		if err != nil {
-			break
-		}
+    i := 0
+    for {
+        chunk, err := chunker.Next()
+        if err != nil && err != io.EOF {
+            log.Fatal(err)
+        }
 
 		sum := sha256.Sum256(chunk.Data)
 		key := fmt.Sprintf("%x", sum)
@@ -530,7 +571,6 @@ func processCDC(path string) {
 			fmt.Printf("Chunk %d processed (new, %d bytes)\n", i, len(chunk.Data))
 			seen[key] = true
 		}
-		i++
 	}
 }
 
@@ -539,31 +579,18 @@ func main() {
 }
 ```
 
-
-If you're unfamiliar with this kind of magic,
-you're going to wonder:
-
-> well, once a cutpoint has been shifted, doesn't it shift all subsequent ones ?
-
-And the answer is: no.
-
-The function that processes the input only processes the last N bytes of data,
-turns them into a digest of its own,
-and looks at it to decide if it should insert a cutpoint or not.
-
-Because this is a rolling digest over the last N bytes,
-if a change has caused a new cutpoint to be inserted,
-then after we have read N bytes from this new cutpoint...
-we are producing the same stream of cutpoints as before.
+Because this method has to read data to produce the cutpoints,
+it is slower than fixed-sized chunking,
+but it is still very fast with our baseline FastCDC implementation producing chunks at 9GB/s...
+fast enough if you consider the amount of benefits it brings through deduplication in entire workflows.
 
 
-## FastCDC
+## So, what is FastCDC ?
 
-Enter FastCDC,
-a high-performance variant of CDC first introduced by researchers in 2016,
+FastCDC is a high-performance variant of CDC first introduced by researchers in 2016,
 followed by further improvements in subsequent publications.
 
-It was designed to preserve the benefits of content-defined chunking,
+It was designed to preserve the benefits of CDC,
 but with a much faster decision process and more balanced chunk size distributions.
 
 Where traditional CDC uses expensive sliding window techniques to compute rolling fingerprints at each byte,
