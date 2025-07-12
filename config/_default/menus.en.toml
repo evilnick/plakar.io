@@ -150,7 +150,7 @@ parent = "engineering"
 
 [[main]]
 identifier = "engineering-community-join"
-name = "Join us"
+name = "Plakar community"
 url = "contact/#join-our-community"
 weight = 40
 parent = "engineering"
@@ -160,6 +160,19 @@ parent = "engineering"
     section = "Community"
     section_weight = 20
     icon = "team-line"
+
+[[main]]
+identifier = "engineering-community-calendar"
+name = "Upcoming events"
+url = "contact/#upcuming-events"
+weight = 40
+parent = "engineering"
+[[main.params]]
+    description = "Meet Plakar team"
+    enabled = true
+    section = "Community"
+    section_weight = 20
+    icon = "calendar-event-line"
 
 [[main]]
 identifier = "contact-us"
