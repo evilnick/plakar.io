@@ -71,9 +71,9 @@ $ plakar config remote set mys3 use_tls false
 
 Supported options:
 
-- ``: Full S3 URL, e.g. `s3://s3.<region>.amazonaws.com/mybucket`.
-- `` / ``: Your provider’s credentials.
-- ``: Enable or disable TLS (default: true).
+- `location`: Full S3 URL, e.g. `s3://s3.<region>.amazonaws.com/mybucket`.
+- `access_key` / `secret_access_key`: Your provider’s credentials.
+- `use_tls`: Enable or disable TLS (default: true).
 
 ### Provider Examples
 
