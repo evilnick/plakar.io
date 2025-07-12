@@ -3,7 +3,7 @@ title: "Introducing go-cdc-chunkers: chunk and deduplicate everything"
 date: 2025-07-11T13:00:00+0100
 authors:
 - "gilles"
-summary: ".tgz made sense in 1994, but today we need archiving that supports deduplication, encryption, S3, and zero trust. here’s why we built .ptar."
+summary: "We released go-cdc-chunkers, our open source library to provide Content-Defined Chunking. Here's why deduplication is important."
 categories:
  - technology
  - backup
@@ -18,13 +18,11 @@ tags:
 
 ## TL;DR:
 Modern data systems suffer from redundancy—wasting time, compute, bandwidth and storage on duplicate content.
-Traditional methods of compression don’t help,
-especially for large datasets in cloud,
-encrypted,
-or zero-trust environments.
+Traditional methods of compression don’t help  enough,
+especially when you need cross-file, shift-resilient deduplication in large, encrypted datasets.
 
 That’s why we built and released [go-cdc-chunkers](https://github.com/PlakarKorp/go-cdc-chunkers):
-an opensource and ISC-licensed high-performance Go package for Content-Defined Chunking (CDC),
+an open source and ISC-licensed high-performance Go package for Content-Defined Chunking (CDC),
 optimized for deduplication and resilience against data shifts.
 
 Unlike traditional compression, CDC enables fine-grained, shift-resilient deduplication, ideal for a wide range of uses including backup, synchronization, storage, and distributed systems.
@@ -41,7 +39,7 @@ In our business,
 where we need to process large amount of data,
 transfer it and store it for extended periods of time,
 duplication is a nightmare:
-it incrases processing time,
+it increases processing time,
 compute resources usage,
 transfer time and cost,
 pressure on storage and space needed.
@@ -77,6 +75,33 @@ PlakarKorp_JC			  49784102 ns/op        21567.97 MB/s
 It’s **very** fast, **very** memory-conscious, and production-ready, with a clean API that fits into streaming and batch workflows alike.
 We're releasing it not just as part of our internal stack,
 but as a practical tool for any developer who needs data to be handled smartly—only once, not over and over.
+
+oh... and it's trivial to use:
+
+```go
+    chunker, err := chunkers.NewChunker("fastcdc", rd)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    offset := 0
+    for {
+        chunk, err := chunker.Next()
+        if err != nil && err != io.EOF {
+            log.Fatal(err)
+        }
+
+        chunkLen := len(chunk)
+        fmt.Println(offset, chunkLen)
+
+        if err == io.EOF {
+            // no more chunks to read
+            break
+        }
+        offset += chunkLen
+    }
+```
+
 
 
 ## But what is deduplication ?
@@ -239,10 +264,8 @@ data segments that are produced far apart,
 but also in different files,
 today but also a week from now.
 
-Compression removes redundancy within a window.
-Deduplication removes redundancy across arbitrarily large datasets,
-even if separated by long distances in the input stream,
-... and even if present in a different input stream.
+Compression removes redundancy within a local window of data.
+Deduplication removes redundancy across large time- and space-separated segments.
 
 So while compression and deduplication are conceptually aligned, they operate at different levels and under different constraints.
 Compression is great for making individual files smaller.
@@ -396,7 +419,7 @@ func main() {
 }
 ```
 
-This has two short-comings:
+This has two shortcomings:
 - the entire file has to be read before knowing if it's a duplicate
 - if a single bit is changed, the entire file is considered as not being duplicate
 
@@ -404,7 +427,7 @@ If we have a 1TB file,
 we must first read 1TB of data and compute a digest out of it,
 THEN, only when we're done, we know if we need to do something with that data.
 If we just append a new-line to the file...
-well, it's a new 1TB file.
+well, it's a new 1TB file even if the rest is unchanged—making this approach costly for large files with minor edits.
 
 
 ### Fixed-Size Chunking
@@ -503,12 +526,12 @@ Finally, there's CDC, the most beautiful thing in the world.
 
 
 CDC builds upon the idea of Fixed-Size Chunking:
-split an input into smaller chunks so that the whole data doesn't have to be pushed in case of a single bit change...
+split an input into smaller chunks so that the whole data doesn't have to be reprocessed in case of a single bit change...
 but it doesn't use a global structure and static offsets so that it can recover if data is shifted.
 
 It uses a function to process the data and cut it into chunks of varying size...using the data itself to decide where to produce the cutpoints.
-This means that running the function on the same data twice produces the same cutpoints and the same serie of chunks,
-but altering a single bit causes the cutpoint to be shifted in the stream and produce a different serie of chunks.
+This means that running the function on the same data twice produces the same cutpoints and the same series of chunks,
+but altering a single bit causes the cutpoint to be shifted in the stream and produce a different series of chunks.
 Since we still compute digests on chunks to record them in an index,
 the ones that are found are skipped and the others lead to new records.
 
@@ -527,7 +550,7 @@ The function that processes the data only looks at a relatively small window of 
 Because this is a rolling digest,
 if a change has caused a new cutpoint to be inserted,
 then after we have read a certain amount from this new cutpoint...
-we are producing the rolling digest over unaltered data and producing the original cutpoints.
+the chunker resumes producing the same boundaries once the rolling window exits the modified region.
 
 ```go
 package main
@@ -579,10 +602,8 @@ func main() {
 }
 ```
 
-Because this method has to read data to produce the cutpoints,
-it is slower than fixed-sized chunking,
-but it is still very fast with our baseline FastCDC implementation producing chunks at 9GB/s...
-fast enough if you consider the amount of benefits it brings through deduplication in entire workflows.
+While the algorithm is more complex than fixed-size chunking,
+FastCDC remains extremely fast thanks to its streamlined rolling hash and precomputed table—often outperforming naive fixed-size methods in practice.
 
 
 ## So, what is FastCDC ?
@@ -600,6 +621,8 @@ FastCDC introduces several optimizations.
 
 FastCDC uses the Gear fingerprinting function—a technique that computes a rolling hash by `XOR`-ing precomputed values from a random table with incoming byte values.
 This replaces the more CPU-intensive Rabin fingerprinting used in classic CDC.
+
+FastCDC’s Gear table is precomputed at compile time:
 
 ```go 
 // chunkers/fastcdc/fastcdc_precomputed.go
@@ -751,13 +774,14 @@ FastCDC		117534472 ns/op		9135.55 MB/s
 KFastCDC	115304560 ns/op		9312.22 MB/s
 ```
 
-We are unaware of another implementation providing a similar mechanism,
+To our knowledge,
+no other CDC library offers a keyed mode for FastCDC,
 so...here's some R&D for you straight from Plakar Korp's lab :-)
 
 
 ## Conclusion
 
-Our package is opensource and distributed under the permissive ISC-license.
+Our package is open source and distributed under the permissive ISC-license.
 It is free for you to use in any application,
 including commercial ones.
 
