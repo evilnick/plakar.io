@@ -75,18 +75,19 @@ data pipelines,
 or just want to avoid wasting time and compute on repeated data,
 go-cdc-chunkers gives you the primitives you need to chunk content efficiently and predictably.
 
-```
-Restic_Rabin			1932542209 ns/op          555.61 MB/s
-Askeladdk_FastCDC		 579593250 ns/op         1852.58 MB/s
-Jotfs_FastCDC			 448508056 ns/op         2394.03 MB/s
-Tigerwill90_FastCDC		 377360430 ns/op         2845.40 MB/s
-Mhofmann_FastCDC		 572578979 ns/op         1875.27 MB/s
+| Algorithm            | Operations per nanosecond | Throughput      |
+|----------------------|--------------------------:|----------------:|
+| Restic\_Rabin        | `1932542209 ns/op`        |  `555.61 MB/s`  |
+| Askeladdk\_FastCDC   |  `579593250 ns/op`        |  `1852.58 MB/s` |
+| Jotfs\_FastCDC       |  `448508056 ns/op`        |  `2394.03 MB/s` |
+| Tigerwill90\_FastCDC |  `377360430 ns/op`        |  `2845.40 MB/s` |
+| Mhofmann\_FastCDC    |  `572578979 ns/op`        |  `1875.27 MB/s` |
+|                      |                           |                 |
+| PlakarKorp\_FastCDC  |  `117534472 ns/op`        |  `9135.55 MB/s` |
+| PlakarKorp\_KFastCDC |  `115304560 ns/op`        |  `9312.22 MB/s` |
+| PlakarKorp\_UltraCDC |   `79441967 ns/op`        | `13516.05 MB/s` |
+| PlakarKorp\_JC       |   `49784102 ns/op`        | `21567.97 MB/s` |
 
-PlakarKorp_FastCDC		 117534472 ns/op         9135.55 MB/s
-PlakarKorp_KFastCDC		 115304560 ns/op         9312.22 MB/s
-PlakarKorp_UltraCDC		  79441967 ns/op        13516.05 MB/s
-PlakarKorp_JC			  49784102 ns/op        21567.97 MB/s
-```
 
 It’s **very** fast, **very** memory-conscious, and production-ready, with a clean API that fits into streaming and batch workflows alike.
 We're releasing it not just as part of our internal stack,
