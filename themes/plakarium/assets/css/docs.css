@@ -1,0 +1,156 @@
+@layer base {
+    .docs-content {
+        @apply text-neutral-900 leading-relaxed text-base py-8 rounded-lg shadow-md;
+        font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    }
+
+    .docs-content code:not(pre code) {
+        @apply bg-secondary-200 px-2 py-1 rounded-sm;
+    }
+
+    .docs-content blockquote code,
+    .docs-content blockquote p code {
+        @apply bg-neutral-600 px-2 py-1 rounded-sm;
+    }
+
+    .docs-content>h1,
+    .docs-content>h2{
+        clear: both;
+    }
+
+    @media (min-width: 768px) {
+        .docs-content h1,
+        .docs-content h2,
+        .docs-content h3,
+        .docs-content h4,
+        .docs-content h5,
+        .docs-content h6,
+        .docs-content p,
+        .docs-content table,
+        .docs-content ul,
+        .docs-content ol,
+        .docs-content aside,
+        .docs-content dl {
+            margin-right: 50%;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            display: block;
+            padding: 0 28px;
+        }
+
+        .docs-content .box-content > h1,
+        .docs-content .box-content > h2,
+        .docs-content .box-content > h3,
+        .docs-content .box-content > h4,
+        .docs-content .box-content > h5,
+        .docs-content .box-content > h6,
+        .docs-content .box-content > p,
+        .docs-content .box-content > table,
+        .docs-content .box-content > ul,
+        .docs-content .box-content > ol,
+        .docs-content .box-content > aside,
+        .docs-content .box-content > dl {
+            margin-right: 0%;
+        }
+
+        .docs-content details {
+            margin-right: 50%;
+        }
+
+        .docs-content pre,
+        .docs-content blockquote {
+            margin: 0;
+            width: 50%;
+            float: right;
+            clear: right;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .docs-content blockquote p {
+            margin-right: 0 !important;
+        }
+
+        .primary-box {
+            @apply bg-primary-500;
+            width: 50%;
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+    }
+
+    .docs-content h1,
+    .docs-content h2,
+    .docs-content h3,
+    .docs-content h4,
+    .docs-content h5,
+    .docs-content h6,
+    .docs-content p,
+    .docs-content table,
+    .docs-content ul,
+    .docs-content ol,
+    .docs-content aside,
+    .docs-content dl {
+        padding: 0 28px;
+    }
+
+    .docs-content h2 {
+        @apply bg-neutral-100 border-neutral-700 border-b border-t;
+        font-size: 25px;
+        padding-top: .5em;
+        padding-bottom: .5em;
+        margin-bottom: 21px;
+        margin-top: 2em;
+    }
+
+    .docs-content pre {
+        padding-top: 2em;
+        padding-bottom: 2em;
+        padding: 2em 28px;
+        border-radius: 0rem;
+        margin-top: 0!important;
+        margin-bottom: 0!important;
+    }
+
+    .docs-content pre>p {
+        margin: 0;
+    }
+
+    .docs-content blockquote {
+        @apply bg-neutral-700 text-neutral-50 not-italic;
+        border-inline-start-width: 0;
+        padding-inline-start: 0;
+        margin-top: 0!important;
+        margin-bottom: 0!important;
+    }
+
+    .docs-content blockquote > p {
+        padding: 13px 2em;
+        margin-top: 0!important;
+        margin-bottom: 0!important;
+    }
+
+    .docs-content aside.notice:before {
+        content: "\e602";
+    }
+
+    /* Indent lists inside box content for better readability */
+    .docs-content  ul,
+    .docs-content ol {
+        padding-left: 4rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .docs-content li + li {
+        margin-top: 0.25rem;
+    }
+
+
+
+}

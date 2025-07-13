@@ -1,5 +1,5 @@
 ---
-date: "2025-06-30T18:16:35Z"
+date: "2025-07-11T14:20:40Z"
 title: source
 summary: "Manage Plakar backup source configuration"
 ---
@@ -10,7 +10,7 @@ summary: "Manage Plakar backup source configuration"
 <main class="manual-text">
 <section class="Sh">
 <h2 class="Sh" id="NAME"><a class="permalink" href="#NAME">NAME</a></h2>
-<p class="Pp"><code class="Nm">plakar source</code> &#x2014;
+<p class="Pp"><code class="Nm">plakar-source</code> &#x2014;
     <span class="Nd" role="doc-subtitle">Manage Plakar backup source
     configuration</span></p>
 </section>
@@ -68,7 +68,7 @@ summary: "Manage Plakar backup source configuration"
 </section>
 <section class="Sh">
 <h2 class="Sh" id="DIAGNOSTICS"><a class="permalink" href="#DIAGNOSTICS">DIAGNOSTICS</a></h2>
-<p class="Pp">The <code class="Nm">plakar source</code> utility exits&#x00A0;0
+<p class="Pp">The <code class="Nm">plakar-source</code> utility exits&#x00A0;0
     on success, and&#x00A0;&gt;0 if an error occurs.</p>
 </section>
 <section class="Sh">
@@ -79,5 +79,5 @@ summary: "Manage Plakar backup source configuration"
 </section>
 </main>
 <div class="foot" role="doc-pagefooter" aria-label="Manual footer
-  line"><span class="foot-left"></span><span class="foot-date">February 27,
+  line"><span class="foot-left"></span><span class="foot-date">July 3,
   2025</span> <span class="foot-os">Plakar</span></div>

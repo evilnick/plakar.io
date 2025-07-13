@@ -8,31 +8,53 @@
 {{ $placeholder := resources.Get "img/placeholder.svg" }}
 
 
-<div x-data="{ sidebarOpened: true }" class="relative w-full">
+<div
+        x-data="{
+            isSmallScreen: window.innerWidth < 1280,
+            sidebarOpened: localStorage.getItem('sidebarState') === 'open' && document.referrer.includes(window.location.hostname),
+            toggleSidebar(state) {
+                this.sidebarOpened = state;
+                localStorage.setItem('sidebarState', state ? 'open' : 'closed');
+            },
+            checkScreenSize() {
+                this.isSmallScreen = window.innerWidth < 1280;
+            }
+        }"
+        x-init="
+            checkScreenSize();
+            window.addEventListener('resize', () => checkScreenSize());
+        "
+        @mousemove.window="isSmallScreen && sidebarOpened === false && $event.clientX < 24 ? toggleSidebar(true) : null"
+        @mouseleave.window="isSmallScreen ? toggleSidebar(false) : null"
+        class="relative w-full"
+>
     {{- if eq .Section "docs" -}}
         {{ partial "header/docs/header.html" . }}
-        <div class="relative z-10 bg-neutral-50 flex flex-row">
-            <aside :class="sidebarOpened ? 'w-64' : 'w-0'"
-                   class="fixed left-0 h-[calc(100vh-50px)] md:h-[calc(100vh-88px)] transition-all duration-300 bg-white border-r border-neutral-300 flex flex-col">
-{{/*                <button @click="sidebarOpened = !sidebarOpened"
-                        class="p-2 focus:outline-none hover:bg-neutral-200 transition">
-                    <svg x-show="!sidebarOpened" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M3 5h14M3 10h14M3 15h14"></path>
-                    </svg>
-                    <svg x-show="sidebarOpened" x-cloak class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M6 6L14 10L6 14V6Z"></path>
-                    </svg>
-                </button>
-*/}}            <div class="overflow-y-auto flex-grow">
+        <div class="relative z-10 bg-neutral-50 flex flex-row font-grotesk">
+            <button
+                    @click="toggleSidebar(true)"
+                    x-show="isSmallScreen && !sidebarOpened"
+                    x-transition
+                    style="transform: rotate(-90deg); transform-origin: left center;"
+                    class="fixed top-28 md:top-40 left-3 z-50 flex items-center gap-2 bg-neutral-50/50 backdrop-blur rounded-m"
+            >
+                <span class="tracking-widest text-sm">NAV</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <aside
+                    :class="isSmallScreen ? (sidebarOpened ? 'w-64' : 'w-0') : 'w-64'"
+                    class="fixed left-0 h-[calc(100vh-50px)] md:h-[calc(100vh-88px)] transition-all duration-300 bg-white border-r border-neutral-300 flex flex-col"
+                    @mouseleave="isSmallScreen ? toggleSidebar(false) : null"
+            >
+            <div class="flex-grow">
                     {{ partial "sidebar/docs-menu.html" . }}
                 </div>
             </aside>
             <div class="flex flex-row w-full">
-                <!-- aside placeholder -->
-                <div :class="sidebarOpened ? 'w-64' : 'w-0'" class="h-[calc(100vh-50px)] md:h-[calc(100vh-88px)]">
-                </div>
-                <div class="relative max-w-[1280px] mx-auto w-full">
-                        {{ block "main" . }}{{ end }}
+                <div :class="isSmallScreen ? (sidebarOpened ? 'ml-64' : 'ml-0') : 'ml-64'" class="relative max-w-[1280px] mx-auto w-full">
+                    {{ block "main" . }}{{ end }}
                 </div>
 
             </div>

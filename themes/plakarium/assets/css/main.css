@@ -1,4 +1,5 @@
-@import "chroma.css";
+@import "native.css";
+@import "docs.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -18,6 +19,91 @@
         --color-neutral-900: theme('colors.neutral.900');
         --pattern-fg: var(--color-neutral-300);
         --border-color: var(--color-neutral-300);
+        /* Main colors for box types */
+        --BOX-DEFAULT-color: #a0a0a0;
+        --BOX-BLUE-color: #3075e5;
+        --BOX-CYAN-color: #2dbec8;
+        --BOX-GREEN-color: #2ab218;
+        --BOX-GREY-color: #a0a0a0;
+        --BOX-MAGENTA-color: #e532d2;
+        --BOX-ORANGE-color: #ed9909;
+        --BOX-RED-color: #e03e3e;
+
+        /* Caption background colors - using the main colors */
+        --BOX-DEFAULT-CAPTION-BG-color: var(--BOX-DEFAULT-color);
+        --BOX-BLUE-CAPTION-BG-color: var(--BOX-BLUE-color);
+        --BOX-CYAN-CAPTION-BG-color: var(--BOX-CYAN-color);
+        --BOX-GREEN-CAPTION-BG-color: var(--BOX-GREEN-color);
+        --BOX-GREY-CAPTION-BG-color: var(--BOX-GREY-color);
+        --BOX-MAGENTA-CAPTION-BG-color: var(--BOX-MAGENTA-color);
+        --BOX-ORANGE-CAPTION-BG-color: var(--BOX-ORANGE-color);
+        --BOX-RED-CAPTION-BG-color: var(--BOX-RED-color);
+
+        /* Caption text colors - typically white for contrast */
+        --BOX-DEFAULT-CAPTION-TEXT-color: white;
+        --BOX-BLUE-CAPTION-TEXT-color: white;
+        --BOX-CYAN-CAPTION-TEXT-color: white;
+        --BOX-GREEN-CAPTION-TEXT-color: white;
+        --BOX-GREY-CAPTION-TEXT-color: white;
+        --BOX-MAGENTA-CAPTION-TEXT-color: white;
+        --BOX-ORANGE-CAPTION-TEXT-color: white;
+        --BOX-RED-CAPTION-TEXT-color: white;
+
+        /* Box content background colors - pastel/lighter versions of main colors */
+        --BOX-DEFAULT-BG-color: #f7f7f7;
+        --BOX-BLUE-BG-color: #eef5ff;
+        --BOX-CYAN-BG-color: #ecfcfd;
+        --BOX-GREEN-BG-color: #edfde9;
+        --BOX-GREY-BG-color: #f7f7f7;
+        --BOX-MAGENTA-BG-color: #fdeffc;
+        --BOX-ORANGE-BG-color: #fff8e6;
+        --BOX-RED-BG-color: #fdf0f0;
+
+        /* Box content text colors - darker versions for readable text */
+        --BOX-DEFAULT-TEXT-color: #505050;
+        --BOX-BLUE-TEXT-color: #1a4388;
+        --BOX-CYAN-TEXT-color: #176269;
+        --BOX-GREEN-TEXT-color: #155c0c;
+        --BOX-GREY-TEXT-color: #505050;
+        --BOX-MAGENTA-TEXT-color: #7d1a71;
+        --BOX-ORANGE-TEXT-color: #905c04;
+        --BOX-RED-TEXT-color: #7a1f1f;
+
+        /* Semantic mappings for caption backgrounds */
+        --BOX-CAUTION-CAPTION-BG-color: var(--BOX-MAGENTA-CAPTION-BG-color);
+        --BOX-INFO-CAPTION-BG-color: var(--BOX-BLUE-CAPTION-BG-color);
+        --BOX-IMPORTANT-CAPTION-BG-color: var(--BOX-CYAN-CAPTION-BG-color);
+        --BOX-NEUTRAL-CAPTION-BG-color: var(--BOX-GREY-CAPTION-BG-color);
+        --BOX-NOTE-CAPTION-BG-color: var(--BOX-ORANGE-CAPTION-BG-color);
+        --BOX-TIP-CAPTION-BG-color: var(--BOX-GREEN-CAPTION-BG-color);
+        --BOX-WARNING-CAPTION-BG-color: var(--BOX-RED-CAPTION-BG-color);
+
+        /* Semantic mappings for caption text */
+        --BOX-CAUTION-CAPTION-TEXT-color: var(--BOX-MAGENTA-CAPTION-TEXT-color);
+        --BOX-INFO-CAPTION-TEXT-color: var(--BOX-BLUE-CAPTION-TEXT-color);
+        --BOX-IMPORTANT-CAPTION-TEXT-color: var(--BOX-CYAN-CAPTION-TEXT-color);
+        --BOX-NEUTRAL-CAPTION-TEXT-color: var(--BOX-GREY-CAPTION-TEXT-color);
+        --BOX-NOTE-CAPTION-TEXT-color: var(--BOX-ORANGE-CAPTION-TEXT-color);
+        --BOX-TIP-CAPTION-TEXT-color: var(--BOX-GREEN-CAPTION-TEXT-color);
+        --BOX-WARNING-CAPTION-TEXT-color: var(--BOX-RED-CAPTION-TEXT-color);
+
+        /* Semantic mappings for content background colors */
+        --BOX-CAUTION-BG-color: var(--BOX-MAGENTA-BG-color);
+        --BOX-INFO-BG-color: var(--BOX-BLUE-BG-color);
+        --BOX-IMPORTANT-BG-color: var(--BOX-CYAN-BG-color);
+        --BOX-NEUTRAL-BG-color: var(--BOX-GREY-BG-color);
+        --BOX-NOTE-BG-color: var(--BOX-ORANGE-BG-color);
+        --BOX-TIP-BG-color: var(--BOX-GREEN-BG-color);
+        --BOX-WARNING-BG-color: var(--BOX-RED-BG-color);
+
+        /* Semantic mappings for content text colors */
+        --BOX-CAUTION-TEXT-color: var(--BOX-MAGENTA-TEXT-color);
+        --BOX-INFO-TEXT-color: var(--BOX-BLUE-TEXT-color);
+        --BOX-IMPORTANT-TEXT-color: var(--BOX-CYAN-TEXT-color);
+        --BOX-NEUTRAL-TEXT-color: var(--BOX-GREY-TEXT-color);
+        --BOX-NOTE-TEXT-color: var(--BOX-ORANGE-TEXT-color);
+        --BOX-TIP-TEXT-color: var(--BOX-GREEN-TEXT-color);
+        --BOX-WARNING-TEXT-color: var(--BOX-RED-TEXT-color);
     }
 
     .dark {
@@ -34,6 +120,7 @@
         --pattern-fg:var(--color-neutral-50);
         --border-color: var(--color-neutral-50);
     }
+
 }
 
 
@@ -353,4 +440,270 @@ code.Nm {
 }
 code.Fl {
     white-space: pre;
+}
+
+/* Apply the box theme color to the icon */
+.box > summary.box-label img.notice-icon {
+    /* Direct color inheritance from box variable */
+    filter: brightness(0) saturate(100%) !important;
+    filter: invert(1) !important;
+    opacity: 0.9 !important;
+}
+
+/* Info box specific styling for the icon */
+.box.info > summary.box-label img.notice-icon {
+    /* Use the same color as defined in the box variable */
+    filter: invert(1) !important;
+}
+
+/* Ensure proper layout */
+.box > summary.box-label {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    cursor: pointer !important;
+}
+
+/* Hide all expansion markers */
+.box > summary::-webkit-details-marker,
+.box > summary::marker,
+details > summary::-webkit-details-marker,
+details > summary::marker {
+    display: none !important;
+}
+
+.box > summary.box-label img.notice-icon {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    vertical-align: middle !important;
+}
+
+details.box,
+details.box > summary,
+details.box .box-content {
+    pointer-events: auto !important;
+    position: relative !important;
+    z-index: 0 !important;
+
+}
+
+details.box .box-content {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+details.box::before,
+details.box::after {
+    pointer-events: none !important;
+    display: none !important;
+}
+
+details > summary {
+    list-style: none !important;
+}
+
+/* Base box styling */
+.box {
+    outline: none;
+    pointer-events: none;
+    padding-top: 16px;
+}
+
+@media (min-width: 768px) {
+    .box {
+        padding-top: 0px;
+    }
+}
+
+.box > .box-label {
+    font-weight: 500;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+.box > .box-label::-webkit-details-marker,
+.box > .box-label::marker {
+    display: none;
+}
+
+
+
+/* Color variants - Default */
+.box.default > .box-label {
+    background-color: var(--BOX-DEFAULT-CAPTION-BG-color);
+    color: var(--BOX-DEFAULT-CAPTION-TEXT-color);
+}
+.box.default > .box-content {
+    background-color: var(--BOX-DEFAULT-BG-color);
+    color: var(--BOX-DEFAULT-TEXT-color);
+}
+
+/* Color variants - Blue */
+.box.blue > .box-label {
+    background-color: var(--BOX-BLUE-CAPTION-BG-color);
+    color: var(--BOX-BLUE-CAPTION-TEXT-color);
+}
+.box.blue > .box-content {
+    background-color: var(--BOX-BLUE-BG-color);
+    color: var(--BOX-BLUE-TEXT-color);
+}
+
+/* Color variants - Cyan */
+.box.cyan > .box-label {
+    background-color: var(--BOX-CYAN-CAPTION-BG-color);
+    color: var(--BOX-CYAN-CAPTION-TEXT-color);
+}
+.box.cyan > .box-content {
+    background-color: var(--BOX-CYAN-BG-color);
+    color: var(--BOX-CYAN-TEXT-color);
+}
+
+/* Color variants - Green */
+.box.green > .box-label {
+    background-color: var(--BOX-GREEN-CAPTION-BG-color);
+    color: var(--BOX-GREEN-CAPTION-TEXT-color);
+}
+.box.green > .box-content {
+    background-color: var(--BOX-GREEN-BG-color);
+    color: var(--BOX-GREEN-TEXT-color);
+}
+
+/* Color variants - Grey */
+.box.grey > .box-label {
+    background-color: var(--BOX-GREY-CAPTION-BG-color);
+    color: var(--BOX-GREY-CAPTION-TEXT-color);
+}
+.box.grey > .box-content {
+    background-color: var(--BOX-GREY-BG-color);
+    color: var(--BOX-GREY-TEXT-color);
+}
+
+/* Color variants - Magenta */
+.box.magenta > .box-label {
+    background-color: var(--BOX-MAGENTA-CAPTION-BG-color);
+    color: var(--BOX-MAGENTA-CAPTION-TEXT-color);
+}
+.box.magenta > .box-content {
+    background-color: var(--BOX-MAGENTA-BG-color);
+    color: var(--BOX-MAGENTA-TEXT-color);
+}
+
+/* Color variants - Orange */
+.box.orange > .box-label {
+    background-color: var(--BOX-ORANGE-CAPTION-BG-color);
+    color: var(--BOX-ORANGE-CAPTION-TEXT-color);
+}
+.box.orange > .box-content {
+    background-color: var(--BOX-ORANGE-BG-color);
+    color: var(--BOX-ORANGE-TEXT-color);
+}
+
+/* Color variants - Red */
+.box.red > .box-label {
+    background-color: var(--BOX-RED-CAPTION-BG-color);
+    color: var(--BOX-RED-CAPTION-TEXT-color);
+}
+.box.red > .box-content {
+    background-color: var(--BOX-RED-BG-color);
+    color: var(--BOX-RED-TEXT-color);
+}
+
+/* Semantic variants - Caution */
+.box.caution > .box-label {
+    background-color: var(--BOX-CAUTION-CAPTION-BG-color);
+    color: var(--BOX-CAUTION-CAPTION-TEXT-color);
+}
+.box.caution > .box-content {
+    background-color: var(--BOX-CAUTION-BG-color);
+    color: var(--BOX-CAUTION-TEXT-color);
+}
+
+/* Semantic variants - Info */
+.box.info > .box-label {
+    background-color: var(--BOX-INFO-CAPTION-BG-color);
+    color: var(--BOX-INFO-CAPTION-TEXT-color);
+}
+.box.info > .box-content {
+    background-color: var(--BOX-INFO-BG-color);
+    color: var(--BOX-INFO-TEXT-color);
+}
+
+/* Semantic variants - Important */
+.box.important > .box-label {
+    background-color: var(--BOX-IMPORTANT-CAPTION-BG-color);
+    color: var(--BOX-IMPORTANT-CAPTION-TEXT-color);
+}
+.box.important > .box-content {
+    background-color: var(--BOX-IMPORTANT-BG-color);
+    color: var(--BOX-IMPORTANT-TEXT-color);
+}
+
+/* Semantic variants - Neutral */
+.box.neutral > .box-label {
+    background-color: var(--BOX-NEUTRAL-CAPTION-BG-color);
+    color: var(--BOX-NEUTRAL-CAPTION-TEXT-color);
+}
+.box.neutral > .box-content {
+    background-color: var(--BOX-NEUTRAL-BG-color);
+    color: var(--BOX-NEUTRAL-TEXT-color);
+}
+
+/* Semantic variants - Note */
+.box.note > .box-label {
+    background-color: var(--BOX-NOTE-CAPTION-BG-color);
+    color: var(--BOX-NOTE-CAPTION-TEXT-color);
+}
+.box.note > .box-content {
+    background-color: var(--BOX-NOTE-BG-color);
+    color: var(--BOX-NOTE-TEXT-color);
+}
+
+/* Semantic variants - Tip */
+.box.tip > .box-label {
+    background-color: var(--BOX-TIP-CAPTION-BG-color);
+    color: var(--BOX-TIP-CAPTION-TEXT-color);
+}
+.box.tip > .box-content {
+    background-color: var(--BOX-TIP-BG-color);
+    color: var(--BOX-TIP-TEXT-color);
+}
+
+/* Semantic variants - Warning */
+.box.warning > .box-label {
+    background-color: var(--BOX-WARNING-CAPTION-BG-color);
+    color: var(--BOX-WARNING-CAPTION-TEXT-color);
+}
+.box.warning > .box-content {
+    background-color: var(--BOX-WARNING-BG-color);
+    color: var(--BOX-WARNING-TEXT-color);
+}
+
+/* Style for notice icons in box labels */
+.box > summary.box-label img.notice-icon {
+    filter: brightness(0) saturate(100%);
+    filter: invert(1);
+    opacity: 0.9;
+}
+
+/* Remove default markers from summary elements */
+.box > summary::-webkit-details-marker,
+.box > summary::marker,
+details > summary::-webkit-details-marker,
+details > summary::marker {
+    display: none;
+}
+
+/* Fix interaction with details/summary elements */
+details.box,
+details.box > summary,
+details.box .box-content {
+    pointer-events: auto;
+    position: relative;
+    z-index: 0;
+}
+
+/* Remove list styling from summary */
+details > summary {
+    list-style: none;
 }

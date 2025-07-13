@@ -17,77 +17,81 @@
 {{ end }}
 
 
-<section class="section-light-1 px-4 py-14">
-    <div class="content flex flex-col-reverse xl:flex-row items-start">
+<section class="section-light-1">
+    <div class="content flex flex-col-reverse items-start">
         <!-- Article content (right)  -->
         <article class="max-w-full flex-1 flex flex-col gap-4 bg-neutral-50 overflow-hidden">
-            <!-- Breadcrumbs -->
-            <div class="flex items-center gap-2 text-sm font-space-grotesk">
-                <a href="/docs/" class="flex items-center text-primary-500 hover:text-primary-600 transition-colors">
-                    <div class="w-4 h-4">
-                        {{ $riHome5Fill.Content | safeHTML }}
-                    </div>
-                </a>
-                {{ $url := replace .Permalink ( printf "%s" .Site.BaseURL) "" }}
-                {{ $elements := split $url "/" }}
-                {{ $scratch := newScratch }}
-                {{ $scratch.Set "path" "/" }}
-                {{ $firstElement := true }}
+            <div class="primary-box pointer-events-none"></div>
+            <div class="article-header px-8 flex flex-col gap-4 pt-8 max-w-[50%]">
+                <!-- Breadcrumbs -->
+                <div class="flex items-center gap-2 text-sm font-space-grotesk">
+                    <a href="/docs/" class="flex items-center text-primary-500 hover:text-primary-600 transition-colors">
+                        <div class="w-4 h-4">
+                            {{ $riHome5Fill.Content | safeHTML }}
+                        </div>
+                    </a>
+                    {{ $url := replace .Permalink ( printf "%s" .Site.BaseURL) "" }}
+                    {{ $elements := split $url "/" }}
+                    {{ $scratch := newScratch }}
+                    {{ $scratch.Set "path" "/" }}
+                    {{ $firstElement := true }}
 
-                {{ range $index, $element := $elements }}
-                    {{ if ne $element "" }}
-                        {{ $scratch.Add "path" (print $element "/") }}
-                        {{ $currentPath := $scratch.Get "path" }}
+                    {{ range $index, $element := $elements }}
+                        {{ if ne $element "" }}
+                            {{ $scratch.Add "path" (print $element "/") }}
+                            {{ $currentPath := $scratch.Get "path" }}
 
-                        {{ if and (ne $element "docs") (ne $firstElement false) }}
-                            <img src="{{ $riCornerDownRightLine.RelPermalink }}" alt=">" class="w-4 h-4 text-neutral-400">
-                            {{ $firstElement = false }}
-                        {{ else if ne $firstElement true }}
-                            <img src="{{ $riCornerDownRightLine.RelPermalink }}" alt=">" class="w-4 h-4 text-neutral-400">
-                        {{ end }}
-
-                        {{ if ne $index (sub (len $elements) 2) }}
-                            {{ if ne $element "docs" }}
-                                <a href="{{ $currentPath }}" class="text-primary-500 hover:text-primary-600 transition-colors">
-                                    {{ humanize (replace $element "-" " ") }}
-                                </a>
+                            {{ if and (ne $element "docs") (ne $firstElement false) }}
+                                <img src="{{ $riCornerDownRightLine.RelPermalink }}" alt=">" class="w-4 h-4 text-neutral-400">
+                                {{ $firstElement = false }}
+                            {{ else if ne $firstElement true }}
+                                <img src="{{ $riCornerDownRightLine.RelPermalink }}" alt=">" class="w-4 h-4 text-neutral-400">
                             {{ end }}
-                        {{ else }}
-                            <span class="text-neutral-900 font-medium">{{ humanize (replace $element "-" " ") }}</span>
+
+                            {{ if ne $index (sub (len $elements) 2) }}
+                                {{ if ne $element "docs" }}
+                                    <a href="{{ $currentPath }}" class="text-primary-500 hover:text-primary-600 transition-colors">
+                                        {{ humanize (replace $element "-" " ") }}
+                                    </a>
+                                {{ end }}
+                            {{ else }}
+                                <span class="text-neutral-900 font-medium">{{ humanize (replace $element "-" " ") }}</span>
+                            {{ end }}
                         {{ end }}
                     {{ end }}
-                {{ end }}
-            </div>
+                </div>
 
-            <div class="inline-flex w-max px-2 py-1 rounded-md text-xs font-space-grotesk  text-neutral-900 border border-neutral-900">
-                <span>Version {{ $versionName | default "latest" }}</span>
-            </div>
+                <div class="inline-flex w-max px-2 py-1 rounded-md text-xs font-space-grotesk  text-neutral-900 border border-neutral-900">
+                    <span>Version {{ $versionName | default "latest" }}</span>
+                </div>
 
-            <h1 class="font-prose font-bold leading-tight ~text-3xl/4xl">
-                {{ .Title | emojify }}
-            </h1>
-
-            <!-- Content blocks -->
-            <div class="article-content font-prose prose 2xl    :!max-w-none text-base">
-                {{ .Content | safeHTML }}
+                <h1 class="font-prose font-bold leading-tight ~text-3xl/4xl">
+                    {{ .Title | emojify }}
+                </h1>
             </div>
-            <div class="bg-neutral-200 border-neutral-300 flex justify-center items-center gap-3 py-4 px-4 flex-wrap rounded-lg">
-                <div class="flex gap-4 items-center">
-                    {{ partial "social/bluesky-badge.html" . }}
-                    {{ partial "social/discord-badge.html" . }}
-                    {{ partial "social/linkedin-badge.html" . }}
-                    {{ partial "social/github-badge.html" (dict "format" "icon" "context" .) }}
+            <div class="article-wrapper relative">
+
+
+                <!-- Content blocks -->
+                <div class="relative docs-content font-prose prose text-base w-full max-w-full">
+                    {{ .Content | safeHTML }}
+                </div>
+                <div class="bg-neutral-200 border-neutral-300 flex justify-center items-center gap-3 py-4 px-4 flex-wrap w-full max-w-full">
+                    <div class="flex gap-4 items-center">
+                        {{ partial "social/bluesky-badge.html" . }}
+                        {{ partial "social/discord-badge.html" . }}
+                        {{ partial "social/linkedin-badge.html" . }}
+                        {{ partial "social/github-badge.html" (dict "format" "icon" "context" .) }}
+                    </div>
                 </div>
             </div>
         </article>
 
-        <!-- Sidebar (right) -->
+        <!-- Sidebar (right)
+        {{ partial "toc-docs.html" . }}
 
-        <aside class="xl:right-0 xl:sticky w-full xl:w-1/4 pb-4 lg:ps-4 flex flex-col mx-auto xl:mx-0 lg:top-28">
-            <div class="text-xs font-prose flex flex-col gap-6 ">
-                {{ partial "toc-docs.html" . }}
-            </div>
-        </aside>
+         -->
+
     </div>
 </section>
 
