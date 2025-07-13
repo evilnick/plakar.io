@@ -58,6 +58,8 @@ leaner systems that avoid redundant work,
 we’re releasing [go-cdc-chunkers](https://github.com/PlakarKorp/go-cdc-chunkers)—an open-source,
 ISC-licensed library for high-performance Content-Defined Chunking (CDC) in Go.
 
+{{<github repo="plakarKorp/go-cdc-chunkers">}}
+
 It provides a framework to easily support new algorithms as research advances in the field,
 and provides implementations for several algorithms including our optimized version of FastCDC,
 our Keyed variant of FastCDC (discussed in this post),
