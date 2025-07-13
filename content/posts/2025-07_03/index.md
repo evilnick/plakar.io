@@ -77,18 +77,19 @@ data pipelines,
 or just want to avoid wasting time and compute on repeated data,
 go-cdc-chunkers gives you the primitives you need to chunk content efficiently and predictably.
 
-```
-Restic_Rabin			1932542209 ns/op          555.61 MB/s
-Askeladdk_FastCDC		 579593250 ns/op         1852.58 MB/s
-Jotfs_FastCDC			 448508056 ns/op         2394.03 MB/s
-Tigerwill90_FastCDC		 377360430 ns/op         2845.40 MB/s
-Mhofmann_FastCDC		 572578979 ns/op         1875.27 MB/s
+| Algorithm            | Operations per nanosecond | Throughput      |
+|----------------------|--------------------------:|----------------:|
+| Restic\_Rabin        | `1932542209 ns/op`        |  `555.61 MB/s`  |
+| Askeladdk\_FastCDC   |  `579593250 ns/op`        |  `1852.58 MB/s` |
+| Jotfs\_FastCDC       |  `448508056 ns/op`        |  `2394.03 MB/s` |
+| Tigerwill90\_FastCDC |  `377360430 ns/op`        |  `2845.40 MB/s` |
+| Mhofmann\_FastCDC    |  `572578979 ns/op`        |  `1875.27 MB/s` |
+|                      |                           |                 |
+| PlakarKorp\_FastCDC  |  `117534472 ns/op`        |  `9135.55 MB/s` |
+| PlakarKorp\_KFastCDC |  `115304560 ns/op`        |  `9312.22 MB/s` |
+| PlakarKorp\_UltraCDC |   `79441967 ns/op`        | `13516.05 MB/s` |
+| PlakarKorp\_JC       |   `49784102 ns/op`        | `21567.97 MB/s` |
 
-PlakarKorp_FastCDC		 117534472 ns/op         9135.55 MB/s
-PlakarKorp_KFastCDC		 115304560 ns/op         9312.22 MB/s
-PlakarKorp_UltraCDC		  79441967 ns/op        13516.05 MB/s
-PlakarKorp_JC			  49784102 ns/op        21567.97 MB/s
-```
 
 It’s **very** fast, **very** memory-conscious, and production-ready, with a clean API that fits into streaming and batch workflows alike.
 We're releasing it not just as part of our internal stack,
@@ -97,27 +98,27 @@ but as a practical tool for any developer who needs data to be handled smartly�
 oh... and it's trivial to use:
 
 ```go
-    chunker, err := chunkers.NewChunker("fastcdc", rd)
-    if err != nil {
-        log.Fatal(err)
-    }
+chunker, err := chunkers.NewChunker("fastcdc", rd)
+if err != nil {
+	log.Fatal(err)
+}
 
-    offset := 0
-    for {
-        chunk, err := chunker.Next()
-        if err != nil && err != io.EOF {
-            log.Fatal(err)
-        }
+offset := 0
+for {
+	chunk, err := chunker.Next()
+	if err != nil && err != io.EOF {
+		log.Fatal(err)
+	}
 
-        chunkLen := len(chunk)
-        fmt.Println(offset, chunkLen)
+	chunkLen := len(chunk)
+	fmt.Println(offset, chunkLen)
 
-        if err == io.EOF {
-            // no more chunks to read
-            break
-        }
-        offset += chunkLen
-    }
+	if err == io.EOF {
+		// no more chunks to read
+		break
+	}
+	offset += chunkLen
+}
 ```
 
 
@@ -327,18 +328,16 @@ type FileMeta struct {
 
 // seenFiles mimics previously seen file metadata
 var seenFiles = map[string]FileMeta{
-	"file1.dat":
-    {
-      Name: "file1.dat",
-      Size: 1 << 30,
-      ModTime: 1620000000
-    },
+	"file1.dat": {
+		Name: "file1.dat",
+		Size: 1 << 30,
+		ModTime: 1620000000
+	},
 }
 
 func isDuplicate(meta FileMeta) bool {
 	for _, seen := range seenFiles {
-		if meta.Size == seen.Size &&
-           meta.ModTime == seen.ModTime {
+		if meta.Size == seen.Size && meta.ModTime == seen.ModTime {
 			return true
 		}
 	}
@@ -573,7 +572,7 @@ import (
 	"fmt"
 	"os"
 
-	"plkr.io/go-cdc-chunkers"
+	"github.com/PlakarKorp/go-cdc-chunkers"
 )
 
 var seen = map[string]bool{}
@@ -586,17 +585,17 @@ func processCDC(path string) {
 	}
 	defer file.Close()
 
-    chunker, err := chunkers.NewChunker("fastcdc", file)   // or ultracdc
-    if err != nil {
-        log.Fatal(err)
-    }
+	chunker, err := chunkers.NewChunker("fastcdc", file)   // or ultracdc
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    i := 0
-    for {
-        chunk, err := chunker.Next()
-        if err != nil && err != io.EOF {
-            log.Fatal(err)
-        }
+	i := 0
+	for {
+		chunk, err := chunker.Next()
+		if err != nil && err != io.EOF {
+			log.Fatal(err)
+		}
 
 		sum := sha256.Sum256(chunk.Data)
 		key := fmt.Sprintf("%x", sum)
@@ -637,7 +636,7 @@ This replaces the more CPU-intensive Rabin fingerprinting used in classic CDC.
 
 FastCDC’s Gear table is precomputed at compile time:
 
-```go 
+```go
 // chunkers/fastcdc/fastcdc_precomputed.go
 var G [256]uint64 = [256]uint64{
   0x4d65822107fcfd52,
@@ -672,7 +671,7 @@ The mask is derived from the target average chunk size, ensuring chunks are dist
 
 FastCDC avoids very small or very large chunks by using minimum and maximum window sizes before checking for cutpoints, smoothing chunk distribution.
 
---- 
+---
 
 This gives FastCDC several advantages as it can do byte-at-a-time processing with no need for an N-byte rolling buffer,
 it is cache-friendly thanks to the fixed Gear table and simple operations,
