@@ -77,7 +77,7 @@ data pipelines,
 or just want to avoid wasting time and compute on repeated data,
 go-cdc-chunkers gives you the primitives you need to chunk content efficiently and predictably.
 
-| Algorithm            | Operations per nanosecond | Throughput      |
+| Algorithm            | Nanoseconds per operation | Throughput      |
 |----------------------|--------------------------:|----------------:|
 | Restic\_Rabin        | `1932542209 ns/op`        |  `555.61 MB/s`  |
 | Askeladdk\_FastCDC   |  `579593250 ns/op`        |  `1852.58 MB/s` |
@@ -737,7 +737,7 @@ This makes it a near drop-in for backup systems,
 object stores,
 and delta encoders where throughput matters:
 
-| Algorithm            | Operations per nanosecond | Throughput      |
+| Algorithm            | Nanoseconds per operation | Throughput      |
 |----------------------|--------------------------:|----------------:|
 | Rabin                | `1932542209 ns/op`        |  `555.61 MB/s`  |
 | FastCDC              | `117534472 ns/op`         |  `9135.55 MB/s` |
@@ -781,10 +781,10 @@ The good part is that this Keyed mode bears _absolutely no performance cost_,
 it is a fast computation that's only done at chunker initialization,
 it is essentially free and there to be used when privacy is a concern.
 
-| Algorithm            | Operations per nanosecond | Throughput      |
-|----------------------|--------------------------:|----------------:|
-| FastCDC              | `117534472 ns/op`        |  `9135.55 MB/s`  |
-| KFastCDC             | `115304560 ns/op`        |  `9312.22 MB/s`  |
+| Algorithm            | Nanoseconds per operation |  Throughput      |
+|----------------------|--------------------------:|-----------------:|
+| FastCDC              | `117534472 ns/op`         |  `9135.55 MB/s`  |
+| KFastCDC             | `115304560 ns/op`         |  `9312.22 MB/s`  |
 
 
 To our knowledge,
