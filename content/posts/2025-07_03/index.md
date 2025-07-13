@@ -678,9 +678,9 @@ it is cache-friendly thanks to the fixed Gear table and simple operations,
 and it has predictable performance with adjustable minimum, average and maximum chunk size bounds.
 
 ```
-data:        [ A, B, C, D, ... ]
+Data:        [ A, B, C, D, ... ]
 Gear table:  [ G[A], G[B], G[C], ... ]
-Rolling hash: H = ((H << 1) + G[data[i]])
+Rolling hash: H = ((H << 1) + G[Data[i]])
 ```
 
 This loop is tight, fast, and easy to implement in Go. Better yet, it avoids memory pressure by not needing to keep large buffers in memory between chunk decisions.
@@ -737,10 +737,10 @@ This makes it a near drop-in for backup systems,
 object stores,
 and delta encoders where throughput matters:
 
-```
-Rabin		1932542209 ns/op	 555.61 MB/s
-FastCDC		 117534472 ns/op	9135.55 MB/s
-```
+| Algorithm            | Operations per nanosecond | Throughput      |
+|----------------------|--------------------------:|----------------:|
+| Rabin                | `1932542209 ns/op`        |  `555.61 MB/s`  |
+| FastCDC              | `117534472 ns/op`         |  `9135.55 MB/s` |
 
 Its controlled chunk size variance is especially valuable for deduplication systems,
 which benefit from avoiding too-small (overhead) or too-large (inefficient reuse) chunks.
@@ -781,10 +781,11 @@ The good part is that this Keyed mode bears _absolutely no performance cost_,
 it is a fast computation that's only done at chunker initialization,
 it is essentially free and there to be used when privacy is a concern.
 
-```
-FastCDC		117534472 ns/op		9135.55 MB/s
-KFastCDC	115304560 ns/op		9312.22 MB/s
-```
+| Algorithm            | Operations per nanosecond | Throughput      |
+|----------------------|--------------------------:|----------------:|
+| FastCDC              | `117534472 ns/op`        |  `9135.55 MB/s`  |
+| KFastCDC             | `115304560 ns/op`        |  `9312.22 MB/s`  |
+
 
 To our knowledge,
 no other CDC library offers a keyed mode for FastCDC,
