@@ -639,7 +639,7 @@ This replaces the more CPU-intensive Rabin fingerprinting used in classic CDC.
 
 FastCDC’s Gear table is precomputed at compile time:
 
-```go 
+```go
 // chunkers/fastcdc/fastcdc_precomputed.go
 var G [256]uint64 = [256]uint64{
   0x4d65822107fcfd52,
@@ -674,7 +674,7 @@ The mask is derived from the target average chunk size, ensuring chunks are dist
 
 FastCDC avoids very small or very large chunks by using minimum and maximum window sizes before checking for cutpoints, smoothing chunk distribution.
 
---- 
+---
 
 This gives FastCDC several advantages as it can do byte-at-a-time processing with no need for an N-byte rolling buffer,
 it is cache-friendly thanks to the fixed Gear table and simple operations,
