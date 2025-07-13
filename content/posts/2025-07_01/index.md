@@ -51,12 +51,12 @@ it works right away.
 $ go install github.com/PlakarKorp/kapsul@v0.0.0-beta.10
 go: downloading github.com/PlakarKorp/kapsul v0.0.0-beta.10
 
-$ kapsul -f /tmp/bleh.ptar create /private/etc 
-repository passphrase: 
-repository passphrase (confirm): 
+$ kapsul -f /tmp/bleh.ptar create /private/etc
+repository passphrase:
+repository passphrase (confirm):
 
-$ kapsul -f /tmp/bleh.ptar ls                 
-repository passphrase: 
+$ kapsul -f /tmp/bleh.ptar ls
+repository passphrase:
 2025-07-07T21:51:57Z   bff68fc7    3.1 MB        0s /private/etc
 ```
 
@@ -105,16 +105,16 @@ preview files (including media), ...
 
 ```
 $ kapsul -f /tmp/bleh.ptar create ~/Downloads
-repository passphrase: 
-repository passphrase (confirm): 
+repository passphrase:
+repository passphrase (confirm):
 
-$ kapsul -f /tmp/bleh.ptar ls                
-repository passphrase: 
+$ kapsul -f /tmp/bleh.ptar ls
+repository passphrase:
 2025-07-07T23:18:33Z   2a92ad6f     23 GB       55s /Users/gilles/Downloads
 
 
 $ kapsul -f /tmp/bleh.ptar ls 2a92ad6f | tail -5
-repository passphrase: 
+repository passphrase:
 2025-01-07T08:54:15Z -rw-r--r--   gilles    staff    75 kB d0f1_01.pdf
 2025-01-07T08:54:40Z -rw-r--r--   gilles    staff    75 kB d0f1_02.pdf
 2025-01-07T08:54:56Z -rw-r--r--   gilles    staff    75 kB d0f1_03.pdf
@@ -122,7 +122,7 @@ repository passphrase:
 2025-04-01T21:41:59Z -rw-r--r--   gilles    staff   1.9 MB we-simpsons.png
 
 $ kapsul -f /tmp/bleh.ptar cat 2a92ad6f:plakar_1.0.0-throwaway.0_checksums.txt
-repository passphrase: 
+repository passphrase:
 ffdbd5e4f9748038917b7f7d3307292bd8492ba1849f8ef12a6f1937900e6a6f  plakar_1.0.0-throwaway.0_darwin_amd64.tar.gz
 0402b978646105478e530010ff3d2c182885f083775842d881df7101b2abe142  plakar_1.0.0-throwaway.0_darwin_arm64.tar.gz
 fc32c6a3f1c5fe4867c0ee71f285b0b2fd4e6d6bc480a9cf9714946e23629a43  plakar_1.0.0-throwaway.0_freebsd_386.tar.gz
@@ -134,8 +134,8 @@ cefdee40f6caa7b261129fc423a96783f0923c764f8340ee2675889f1141ba75  plakar_1.0.0-t
 d32091ad7552bb2c36f75caa4ae74dcf14fe2a53f70d593232a33f69abbb0359  plakar_1.0.0-throwaway.0_openbsd_amd64.tar.gz
 d4d6e8661b34dffed96dc12b71b1070de3a8ce679177dea62661800e49d75184  plakar_1.0.0-throwaway.0_openbsd_arm64.tar.gz
 
-$ kapsul -f /tmp/bleh.ptar ui                 
-repository passphrase: 
+$ kapsul -f /tmp/bleh.ptar ui
+repository passphrase:
 ```
 
 ![](preview.png)
