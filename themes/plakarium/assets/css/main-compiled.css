@@ -2905,6 +2905,14 @@ video {
   max-width:36rem;
 }
 
+.max-w-\[600px\] {
+  max-width:600px;
+}
+
+.max-w-\[800px\] {
+  max-width:800px;
+}
+
 .flex-1 {
   flex:1 1 0%;
 }
@@ -3810,6 +3818,10 @@ video {
 
 .pt-\[60px\] {
   padding-top:60px;
+}
+
+.pt-16 {
+  padding-top:4rem;
 }
 
 .text-left {
@@ -5266,6 +5278,10 @@ details > summary {
 
   .sm\:grid-cols-4 {
     grid-template-columns:repeat(4, minmax(0, 1fr));
+  }
+
+  .sm\:flex-row {
+    flex-direction:row;
   }
 
   .sm\:items-start {
