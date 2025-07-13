@@ -575,7 +575,7 @@ import (
 	"fmt"
 	"os"
 
-	"plkr.io/go-cdc-chunkers"
+	"github.com/PlakarKorp/go-cdc-chunkers"
 )
 
 var seen = map[string]bool{}
