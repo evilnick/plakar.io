@@ -96,27 +96,27 @@ but as a practical tool for any developer who needs data to be handled smartlyâ€
 oh... and it's trivial to use:
 
 ```go
-    chunker, err := chunkers.NewChunker("fastcdc", rd)
-    if err != nil {
-        log.Fatal(err)
-    }
+chunker, err := chunkers.NewChunker("fastcdc", rd)
+if err != nil {
+	log.Fatal(err)
+}
 
-    offset := 0
-    for {
-        chunk, err := chunker.Next()
-        if err != nil && err != io.EOF {
-            log.Fatal(err)
-        }
+offset := 0
+for {
+	chunk, err := chunker.Next()
+	if err != nil && err != io.EOF {
+		log.Fatal(err)
+	}
 
-        chunkLen := len(chunk)
-        fmt.Println(offset, chunkLen)
+	chunkLen := len(chunk)
+	fmt.Println(offset, chunkLen)
 
-        if err == io.EOF {
-            // no more chunks to read
-            break
-        }
-        offset += chunkLen
-    }
+	if err == io.EOF {
+		// no more chunks to read
+		break
+	}
+	offset += chunkLen
+}
 ```
 
 
