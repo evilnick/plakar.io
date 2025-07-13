@@ -326,18 +326,16 @@ type FileMeta struct {
 
 // seenFiles mimics previously seen file metadata
 var seenFiles = map[string]FileMeta{
-	"file1.dat":
-    {
-      Name: "file1.dat",
-      Size: 1 << 30,
-      ModTime: 1620000000
-    },
+	"file1.dat": {
+		Name: "file1.dat",
+		Size: 1 << 30,
+		ModTime: 1620000000
+	},
 }
 
 func isDuplicate(meta FileMeta) bool {
 	for _, seen := range seenFiles {
-		if meta.Size == seen.Size &&
-           meta.ModTime == seen.ModTime {
+		if meta.Size == seen.Size && meta.ModTime == seen.ModTime {
 			return true
 		}
 	}
@@ -590,17 +588,17 @@ func processCDC(path string) {
 	}
 	defer file.Close()
 
-    chunker, err := chunkers.NewChunker("fastcdc", file)   // or ultracdc
-    if err != nil {
-        log.Fatal(err)
-    }
+	chunker, err := chunkers.NewChunker("fastcdc", file)   // or ultracdc
+	if err != nil {
+		log.Fatal(err)
+	}
 
-    i := 0
-    for {
-        chunk, err := chunker.Next()
-        if err != nil && err != io.EOF {
-            log.Fatal(err)
-        }
+	i := 0
+	for {
+		chunk, err := chunker.Next()
+		if err != nil && err != io.EOF {
+			log.Fatal(err)
+		}
 
 		sum := sha256.Sum256(chunk.Data)
 		key := fmt.Sprintf("%x", sum)
