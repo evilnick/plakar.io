@@ -53,11 +53,27 @@ By deduplicating at the right layer—whether file-level, block-level, or chunk-
 
 ## Here comes the `go-cdc-chunkers` package
 
-To help developers build smarter, leaner systems that avoid redundant work, we’re releasing [go-cdc-chunkers](https://github.com/PlakarKorp/go-cdc-chunkers)—an open-source, ISC-licensed library for high-performance Content-Defined Chunking (CDC) in Go.
+To help developers build smarter,
+leaner systems that avoid redundant work,
+we’re releasing [go-cdc-chunkers](https://github.com/PlakarKorp/go-cdc-chunkers)—an open-source,
+ISC-licensed library for high-performance Content-Defined Chunking (CDC) in Go.
 
-This package is designed to make it easy to slice data into variable-sized, content-aware chunks that are resilient to shifts and edits—perfect for deduplication, delta encoding, change tracking, and more.
+It provides a framework to easily support new algorithms as research advances in the field,
+and provides implementations for several algorithms including our optimized version of FastCDC,
+our Keyed variant of FastCDC (discussed in this post),
+an implementation of the JumpCondition optimization and even the more recent UltraCDC.
 
-Whether you're building synchronization tools, blob stores, data pipelines, or just want to avoid wasting time and compute on repeated data, go-cdc-chunkers gives you the primitives you need to chunk content efficiently and predictably.
+This package is designed to make it easy to slice data into variable-sized,
+content-aware chunks that are resilient to shifts and edits—perfect for deduplication,
+delta encoding,
+change tracking,
+and more.
+
+Whether you're building synchronization tools,
+blob stores,
+data pipelines,
+or just want to avoid wasting time and compute on repeated data,
+go-cdc-chunkers gives you the primitives you need to chunk content efficiently and predictably.
 
 ```
 Restic_Rabin			1932542209 ns/op          555.61 MB/s
