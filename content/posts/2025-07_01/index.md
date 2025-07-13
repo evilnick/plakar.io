@@ -101,7 +101,7 @@ _MOST_ of what `plakar` can do... `kapsul` can do.
 You can craft a ptar,
 list or display its content,
 launch a `ui`,
-preview files (including medias), ...
+preview files (including media), ...
 
 ```
 $ kapsul -f /tmp/bleh.ptar create ~/Downloads

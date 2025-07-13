@@ -273,7 +273,7 @@ the common way to send encrypted tarballs is to use GPG...
 and most of us know how that goes with the general public.
 
 Contrast this again with `.ptar` that provides [audited cryptography](/posts/2025-02-28/audit-of-plakar-cryptography/) _by default_,
-producing an archive that has inherent MAC integrity check and that can't be altered without validation failing visibily,
+producing an archive that has inherent MAC integrity check and that can't be altered without validation failing visibly,
 but which can also generate plaintext archives for public consumption.
 
 
@@ -419,10 +419,10 @@ repository passphrase:
 repository passphrase (confirm): 
 2025-06-24T00:04:01Z   3055ddc3     12 GB       34s /Users/gilles/Downloads
 
-$ plakar at test.ptar ls 3055ddc3:medias/          
+$ plakar at test.ptar ls 3055ddc3:media/          
 2025-05-03T19:36:29Z drwxr-xr-x   gilles    staff    736 B audio    
 
-$ plakar at test.ptar ls 3055ddc3:medias/audio | grep hiphop
+$ plakar at test.ptar ls 3055ddc3:media/audio | grep hiphop
 2025-05-03T19:15:39Z -rw-r--r--   gilles    staff   4.6 MB hiphop1.mp3
 2025-05-03T19:18:35Z -rw-r--r--   gilles    staff   4.3 MB hiphop2.mp3
 $ 
