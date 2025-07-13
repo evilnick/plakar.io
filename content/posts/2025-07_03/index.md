@@ -534,12 +534,7 @@ the offset have not moved but all of the chunks are no longer aligned with their
 
 ### Content-Defined Chunking
 
-Finally, there's CDC, the most beautiful thing in the world.
-
-![](family.png)
-
-(except for my kids...and my wife...and my cat, see picture above for reference).
-
+Finally, there's CDC !
 
 CDC builds upon the idea of Fixed-Size Chunking:
 split an input into smaller chunks so that the whole data doesn't have to be reprocessed in case of a single bit change...
