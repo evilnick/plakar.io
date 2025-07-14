@@ -31,12 +31,19 @@ your e-mail account at work and why not the calendar setup with your partner to 
 
 ## Short summary
 
+> @himynameisnico — 7/10/25, 8:15 AM
+> Hello guys ! how are you ? It's possible use plakar with OneDrive?
+
+> @riki — 7/11/25, 2:12 AM
+> Hi guys, is it possible to use Google drive as a repo for Plakar?
+
 By now,
 if you read our previous articles,
 you should know that Plakar is built upon Kloset - our engine that abstracts data storage into full-featured snapshots.
 
 One of the features of Kloset is to provide programming interfaces to extend its support.
 
+{{<github repo="plakarKorp/go-kloset-sdk">}}
 
 ---
 ## What are integrations ?
