@@ -2751,6 +2751,10 @@ video {
   min-height:max-content;
 }
 
+.min-h-\[38px\] {
+  min-height:38px;
+}
+
 .w-0 {
   width:0px;
 }

@@ -81,9 +81,18 @@
 
     <div class="flex flex-line mt-6 pr-4 justify-end gap-2 text-right text-sm">
 
+        <!-- Discord link -->
+        <div class="flex max-h-[38px] items-stretch gap-2 pr-4 p-[1px] border border-neutral-300 bg-neutral-50 rounded-lg font-space-text">
+            {{ partial "social/discord-badge.html" (dict
+                    "badgeSize" "7"
+                    "format" "star_light"
+                    "context" $ctx
+                    ) }}
+        </div>
+
         <div class="flex max-h-[38px] items-stretch gap-2 pr-4 p-[1px] border border-neutral-300 bg-neutral-50 rounded-lg font-space-text">
             {{ partial "social/github-badge.html" (dict
-                    "badgeSize" "5"
+                    "badgeSize" "7"
                     "format" "star_light"
                     "ctx" $ctx
                     ) }}
