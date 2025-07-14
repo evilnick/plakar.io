@@ -55,7 +55,7 @@ By deduplicating at the right layer—whether file-level, block-level, or chunk-
 
 To help developers build smarter,
 leaner systems that avoid redundant work,
-we’re releasing [go-cdc-chunkers](https://github.com/PlakarKorp/go-cdc-chunkers)—an open-source,
+we’re releasing [v1.0.0](https://github.com/PlakarKorp/go-cdc-chunkers/releases/tag/v1.0.0) of [go-cdc-chunkers](https://github.com/PlakarKorp/go-cdc-chunkers)—an open-source,
 ISC-licensed library for high-performance Content-Defined Chunking (CDC) in Go.
 
 {{<github repo="plakarKorp/go-cdc-chunkers">}}
