@@ -28,6 +28,7 @@ repository = "plakar"
 [Params.discord]
 enabled = true
 inviteCode = "uuegtnF2Q5"
+serverID = "1281181647005421589"
 
 [Params.bluesky]
 enabled = true

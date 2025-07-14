@@ -38,10 +38,18 @@
 
         <!-- Right-side buttons (GitHub + Actions) -->
         <div class="flex flex-row items-center space-x-2 w-full justify-end">
+            <!-- Discord link -->
+            <div class="hidden min-h-[48px] items-stretch lg:flex gap-2 pr-4 p-[1px] border border-neutral-300 bg-neutral-50 rounded-lg font-space-text">
+                {{ partial "social/discord-badge.html" (dict
+                        "badgeSize" "8"
+                        "format" "star_light"
+                        "context" .
+                        ) }}
+            </div>
             <!-- GitHub link -->
             <div class="hidden min-h-[48px] items-stretch lg:flex gap-2 pr-4 p-[1px] border border-neutral-300 bg-neutral-50 rounded-lg font-space-text">
                 {{ partial "social/github-badge.html" (dict
-                        "badgeSize" "5"
+                        "badgeSize" "8"
                         "format" "star_light"
                         "ctx" .
                         ) }}
