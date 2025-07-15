@@ -1,5 +1,5 @@
 ---
-date: "2025-07-11T14:20:40Z"
+date: "2025-07-15T19:15:41Z"
 title: diag
 summary: "Display detailed information about Plakar internal structures"
 ---
@@ -112,5 +112,5 @@ summary: "Display detailed information about Plakar internal structures"
 </section>
 </main>
 <div class="foot" role="doc-pagefooter" aria-label="Manual footer
-  line"><span class="foot-left"></span><span class="foot-date">July 3,
-  2025</span> <span class="foot-os">Plakar</span></div>
+  line"><span class="foot-left">Plakar</span> <span class="foot-date">July 3,
+  2025</span> <span class="foot-right">PLAKAR-DIAG(1)</span></div>
