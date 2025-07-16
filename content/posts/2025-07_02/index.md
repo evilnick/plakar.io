@@ -71,7 +71,7 @@ It’s still evolving (interface changes may happen), but **you can use it right
 
 ## Writing an Integration: Quick Guide
 
-We’ll keep it short — [full docs are available and maintained](https://plakar.io/docs/main/integrations/) — but here’s the big picture.
+We’ll keep it short — [docs are available and maintained](https://plakar.io/docs/main/sdk/) — but here’s the big picture.
 
 
 ### 1. Implement the Connector Interface
