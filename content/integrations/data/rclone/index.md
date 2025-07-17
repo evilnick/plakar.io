@@ -81,6 +81,8 @@ location: 'onedrive://'
 location: 'opendrive://'
 location: 'drive://'
 location: 'iclouddrive://'
+location: 'dropbox://'
+location: 'protondrive://'
 ```
 
 **Iclouddrive does not include iCloud Photos**
@@ -134,7 +136,7 @@ Join our [Discord community](https://discord.gg/uuegtnF2Q5) for real-time help a
 
 **Q: Which cloud providers are supported by Plakar’s Rclone integration?**
 
-A: Currently, Plakar supports Google Drive, Google Photos, OneDrive, OpenDrive, and iCloud Drive (excluding iCloud Photos). Supporting more is easy. To request for it, please ask in our [Discord community](https://discord.gg/uuegtnF2Q5) or [open an issue on GitHub](https://github.com/PlakarKorp/plakar/issues/new?title=Add%20provider_name&body=Please%20provide%20a%20detailed%20description%20of%20the%20issue.%0A%0A**Plakar%20version**)
+A: Currently, Plakar supports Google Drive, Google Photos, OneDrive, OpenDrive, and iCloud Drive (excluding iCloud Photos), dropbox and proton drive. Supporting more is easy. To request for it, please ask in our [Discord community](https://discord.gg/uuegtnF2Q5) or [open an issue on GitHub](https://github.com/PlakarKorp/plakar/issues/new?title=Add%20provider_name&body=Please%20provide%20a%20detailed%20description%20of%20the%20issue.%0A%0A**Plakar%20version**)
 
 **Q: Do I need to install Rclone separately?**
 
