@@ -87,6 +87,35 @@ else
         fetchGitHubStars();
     </script>
 {{ end }}
+
+{{ if .Site.Params.discord.enabled | default false }}
+    <script>
+        async function fetchDiscordMembers() {
+            const inviteCode = "{{ .Site.Params.discord.inviteCode }}"; // exemple: uuegtnF2Q5
+            const url = `https://discord.com/api/invites/${inviteCode}?with_counts=true`;
+
+            try {
+                const res = await fetch(url);
+                if (!res.ok) throw new Error("API error");
+
+                const data = await res.json();
+                const count = data.approximate_member_count;
+
+                document.querySelectorAll('#discord-members-count').forEach(el => {
+                    el.textContent = new Intl.NumberFormat().format(count);
+                });
+            } catch (err) {
+                console.error("Failed to fetch Discord count:", err);
+                document.querySelectorAll('#discord-members-count').forEach(el => {
+                    el.textContent = "...";
+                });
+            }
+        }
+
+        fetchDiscordMembers();
+    </script>
+{{ end }}
+
 {{ if .Site.Params.GoogleAnalytics.enabled | default false }}
     {{ partial "analytics/ga.html" . }}
 {{ end }}

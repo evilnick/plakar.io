@@ -7,7 +7,6 @@
 {{- $class := .class | default "notices" }}
 {{- $containerstyle := .containerstyle | default "div" }}
 {{- $containerclass := .containerclass | default slice | append "box-content" }}
-{{- $color := .color | default "" }}
 {{- $content := trim .content "\n\r\t " }}
 {{- $hasContent := ne (strings.TrimPrefix "<p>" $content) "" }}
 {{- if not (hasPrefix $content "<") }}
@@ -16,26 +15,19 @@
 {{- $groupid := .groupid }}
 {{- $style := .style | default "default" }}
 {{- $boxStyle := partial "_relearn/boxStyle.gotmpl" (dict "style" $style "title" .title "icon" .icon) }}
-{{- if and (not $boxStyle.style) (not $color) }}
-  {{- $color = $style }}
+{{- if and (not $boxStyle.style) (not .color) }}
   {{- $style = "" }}
 {{- end }}
 {{- $title := trim ($boxStyle.title) " " }}
 {{- $icon := trim ($boxStyle.icon) " " }}
-{{- if and $icon (not (findRE ".*?\\bfa-\\w.*?" $icon)) }}
-  {{- $icon = printf "fa-fw fas fa-%s" $icon }}
-{{- end }}
+{{- $iconPath := printf "/img/ri/%s.svg" $icon }}
+{{- $iconExists := fileExists (printf "assets/%s" $iconPath) }}
 {{- $expander := false }}
 {{- $expanded := .expanded | default "" }}
 {{- if $hasContent }}
-  {{- if eq (printf "%T" $expanded) "string" }}
-    {{- if ne (trim $expanded " ") "" }}
-      {{- $expander = true }}
-      {{- $expanded = (eq $expanded "true") }}
-    {{- end }}
-  {{- else }}
-    {{- $expander = true }}
-  {{- end }}
+  {{- $expander = true }}
+{{- else }}
+  {{- $expanded = true }}
 {{- end }}
 {{- $params := .params | default dict }}
 {{- $classes := split (index $params "class" | default "") " " }}
@@ -45,38 +37,51 @@
 {{- $classes = $classes | append $style }}
 {{- if $expander }}
   {{- $classes = $classes | append "expand" }}
-{{- else }}
-  {{- $expanded = true }}
+  {{- if eq (printf "%T" $expanded) "string" }}
+    {{- if ne (trim $expanded " ") "" }}
+      {{- $expanded = (eq $expanded "true") }}
+    {{- end }}
+  {{- end }}
 {{- end }}
 {{- $params = dict "class" (delimit $classes " ") | merge $params }}
-{{- if $color }}
+
+{{- $finalColor := .color | default $boxStyle.color }}
+
+{{- if $finalColor }}
   {{- $styles := split (index $params "style" | default "") ";" }}
-  {{- $styles = $styles | append (printf "--VARIABLE-BOX-color: %s" $color) }}
+  {{- $styles = $styles | append (printf "--VARIABLE-BOX-color: %s" $finalColor) }}
   {{- $params = dict "style" (delimit $styles ";") | merge $params }}
 {{- end }}
+
 {{ if $groupid }}
   {{- $params = dict "name" $groupid | merge $params }}
 {{- end }}
+
 {{- with $page }}
   {{- if or $icon $title $hasContent -}}
-<details
-  {{- if $expanded }} open{{ end }}
-  {{- range $k, $v := $params }}
-      {{- if not (or (in (slice "open" "summary") $k) (strings.HasPrefix $k "on")) }}
-          {{- printf " %s=%q" $k $v | safeHTMLAttr }}
+    <details
+            {{- if $expanded }} open{{ end }}
+            {{- range $k, $v := $params }}
+              {{- if not (or (in (slice "open" "summary") $k) (strings.HasPrefix $k "on")) }}
+                {{- printf " %s=%q" $k $v | safeHTMLAttr }}
+              {{- end }}
+            {{- end }}>
+      <summary class="box-label{{ if and (not $expander) (not $icon) (not $title) }} a11y-only{{ end }}"{{ if not $expander }} tabindex="-1"{{ end }}>{{ if $expander }}
+        <i class="expander-icon fa-fw fas fa-chevron-right"></i> {{ end }}{{ if $icon }}
+        {{- if $iconExists }}
+          {{- $iconResource := resources.Get $iconPath }}
+          <img src="{{ $iconResource.RelPermalink }}" alt="" class="notice-icon" width="20" height="20">
+        {{- else }}
+          <i class="{{ $icon }}"></i>
+        {{- end }} {{ end }}{{ if $title }}
+        {{ $title | .RenderString }}{{ else }}
+        <span class="a11y-only">{{ T "Details" }}</span>{{ end }}
+      </summary>
+      {{- if $hasContent }}
+        {{ printf "  <%s class=\"%s\">" $containerstyle (delimit $containerclass " ") | safeHTML }}
+        {{ $content | safeHTML }}
+        {{ printf "  </%s>" $containerstyle | safeHTML }}
       {{- end }}
-  {{- end }}>
-  <summary class="box-label{{ if and (not $expander) (not $icon) (not $title) }} a11y-only{{ end }}"{{ if not $expander }} tabindex="-1"{{ end }}>{{ if $expander }}
-    <i class="expander-icon fa-fw fas fa-chevron-right"></i> {{ end }}{{ if $icon }}
-    <i class="{{ $icon }}"></i> {{ end }}{{ if $title }}
-    {{ $title | .RenderString }}{{ else }}
-    <span class="a11y-only">{{ T "Details" }}</span>{{ end }}
-  </summary>
-    {{- if $hasContent }}
-{{ printf "  <%s class=\"%s\">" $containerstyle (delimit $containerclass " ") | safeHTML }}
-{{ $content | safeHTML }}
-{{ printf "  </%s>" $containerstyle | safeHTML }}
-    {{- end }}
-</details>
+    </details>
   {{- end }}
 {{- end }}

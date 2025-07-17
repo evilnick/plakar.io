@@ -10,7 +10,21 @@ This article will guide you through the creation of your first backup with plaka
 
 ## Installing plakar
 
-{{% notice style="info" title="Requisites" icon="circle-info" %}}
+> Install **plakar**:
+
+```bash
+$ go install github.com/PlakarKorp/plakar/cmd/plakar@latest
+```
+
+> To verify the installation was successful, run:
+
+```bash
+$ plakar version
+v1.0.1-beta.13
+```
+
+{{% notice style="info" title="Requisites" expanded="true" %}}
+
 At the time of this writing, we do not yet provide packages and **plakar** has to be compiled from source, which requires the Go toolchain to be installed on your system.
 
 To install the Go toolchain, please refer to the [official documentation](https://golang.org/doc/install) or run the following commands:
@@ -25,20 +39,19 @@ By default, *plakar* is installed in *~/go/bin*. Run `export PATH=$PATH:~/go/bin
 
 {{% /notice %}}
 
-Install **plakar**:
-
-```bash
-$ go install github.com/PlakarKorp/plakar/cmd/plakar@latest
-```
-
-To verify the installation was successful, run:
-
-```bash
-$ plakar version
-v1.0.1-beta.13
-```
 
 ## Running the local agent
+
+> Start the agent:
+```bash
+$ plakar agent
+agent started with pid=12539
+```
+
+> The agent can be stopped with the following command:
+```bash
+$ plakar agent -stop
+```
 
 To work efficiently,
 **plakar** requires each user to run a local agent that will provide caching among other things.
@@ -46,16 +59,7 @@ If the agent is not running,
 the **plakar** CLI will operate in degraded mode as a safety net,
 but will disallow concurrent commands and won't benefit from caching.
 
-Start the agent:
-```bash
-$ plakar agent
-agent started with pid=12539
-```
 
-The agent can be stopped with the following command:
-```bash
-$ plakar agent -stop
-```
 
 *If you follow the quickstart but the agent is not running, a warning message will be displayed for each command. You can safely ignore this message: the agent is not mandatory but recommended for optimal performance. This warning can be removed by setting the PLAKAR_AGENTLESS environment variable as such `export PLAKAR_AGENTLESS=`*
 
@@ -72,7 +76,7 @@ a remote directory over SFTP,
 a bucket on an S3 object store,
 or any storage we provide (or you write) a connector for.
 
-Our first repository will be a directory at `/var/backups`:
+> Our first repository will be a directory at `/var/backups`:
 
 ```bash
 $ plakar at /var/backups create
@@ -80,7 +84,8 @@ repository passphrase:
 repository passphrase (confirm):
 ```
 
-{{% notice style="warning" title="Your passphrase is important" icon="triangle-exclamation" %}}
+{{% notice style="warning" title="Your passphrase is important" expanded="true"  %}}
+
 Be extra careful when choosing the passphrase:
 it is the secret protecting your data.
 People with both access to the repository and knowledge of the passphrase can read your backups.
@@ -90,7 +95,9 @@ it is not stored anywhere and can't be recovered in case of loss.
 A lost passphrase means the data within the repository can no longer be recovered.
 {{% /notice %}}
 
-It is also possible to create unencrypted repositories,
+
+
+> It is also possible to create unencrypted repositories,
 should your backups remain local,
 in which case the `-no-encryption` option has to be passed at creation:
 
@@ -105,7 +112,7 @@ such changes require creating a new repository and performing a synchronization 
 
 ## Creating your first local backup
 
-Once the repository is created, we can do the first backup to it:
+> Once the repository is created, we can do the first backup to it:
 
 ```bash
 $ plakar at /var/backups backup /private/etc
@@ -120,14 +127,14 @@ $ plakar at /var/backups backup /private/etc
 backup: created unsigned snapshot 9abc3294 of size 3.1 MB in 72.55875ms
 ```
 
-You can verify that it is properly recorded:
+> You can verify that it is properly recorded:
 
 ```bash
 $ plakar at /var/backups ls
 2025-02-19T21:38:16Z   9abc3294    3.1 MB      0s   /private/etc
 ```
 
-Verify the integrity of its content:
+> Verify the integrity of its content:
 
 ```bash
 $ plakar at /var/backups check 9abc3294
@@ -142,7 +149,7 @@ $ plakar at /var/backups check 9abc3294
 check: verification of 9abc3294:/private/etc completed successfully
 ```
 
-And restore it to a local directory:
+> And restore it to a local directory:
 
 ```bash
 $ plakar at /var/backups restore -to /tmp/restore 9abc3294
@@ -169,7 +176,7 @@ drwxr-xr-x@ 16 gilles  wheel     512 Feb 19 22:47 asl
 
 ## Viewing the backup with the web interface
 
-Plakar provides a web interface to view the backups and their content. To start the web interface, run:
+> Plakar provides a web interface to view the backups and their content. To start the web interface, run:
 
 ```bash
 $ plakar at /var/backups ui
@@ -185,7 +192,11 @@ Your default browser will open a new tab. You can navigate through the snapshots
 
 You've completed a backup, which is great. However, if you'll allow me, I'd like to digress for a moment:
 
-> Literature and empirical studies suggest that the annual probability of data loss at a single site—especially when considering factors like hardware failures, human error, and environmental risks—is typically in the low single-digit percentages. For example, a seminal study by Pinheiro, Weber, and Barroso (2007) titled ["Failure Trends in a Large Disk Drive Population"](https://static.googleusercontent.com/media/research.google.com/en//archive/disk_failures.pdf) found that hard drive failure rates generally fall in the range of 2% to 4% per year. In practice, when additional risks beyond basic hardware failure (such as accidental deletion or other operational issues) are factored in, many practitioners adopt a conservative estimate of around 5% per year for a single site.
+{{% notice style="note" title="Everything fail" expanded="true"  %}}
+
+Literature and empirical studies suggest that the annual probability of data loss at a single site—especially when considering factors like hardware failures, human error, and environmental risks—is typically in the low single-digit percentages. For example, a seminal study by Pinheiro, Weber, and Barroso (2007) titled ["Failure Trends in a Large Disk Drive Population"](https://static.googleusercontent.com/media/research.google.com/en//archive/disk_failures.pdf) found that hard drive failure rates generally fall in the range of 2% to 4% per year. In practice, when additional risks beyond basic hardware failure (such as accidental deletion or other operational issues) are factored in, many practitioners adopt a conservative estimate of around 5% per year for a single site.
+
+{{% /notice %}}
 
 A local backup, as we just did, is helpful in case of accidental removal of the original data...  but not so much if the storage is entirely lost.
 
@@ -203,13 +214,12 @@ We now have a local repository with a copy of our backups, but it is done on the
 
 Plakar has been designed to make it easy to synchronize repositories across multiple locations. Let's create another repository on my remote NAS over SFTP and synchronize it with the local one: it should not take more than a couple of minutes.
 
-{{% notice title="What is SFTP?" style="grey" icon="circle-question" %}}
+{{% notice title="What is SFTP?" style="grey" icon="circle-question" expanded="true"%}}
 SFTP is the Secure File Transfer Protocol that comes with OpenSSH.
 {{% /notice %}}
 
 
-This can be done by creating a new repository there,
-with its own passphrase:
+> This can be done by creating a new repository there, with its own passphrase:
 
 ```bash
 $ plakar at sftp://gilles@nas.plakar.io/var/backups create
@@ -221,7 +231,7 @@ We could simply do a new backup to it, but this might produce different snapshot
 
 Instead, we can perform a repository synchronization.
 
-A repository synchronization ensures that backups are transferred from a repository to another, using the recorded data,and performing necessary decryption and encryption to produce a similar copy:
+> A repository synchronization ensures that backups are transferred from a repository to another, using the recorded data,and performing necessary decryption and encryption to produce a similar copy:
 
 ```bash
 $ plakar at /var/backups sync to sftp://gilles@nas.plakar.io/var/backups
@@ -233,7 +243,7 @@ $ plakar at sftp://gilles@nas.plakar.io/var/backups ls
 2025-02-19T21:38:16Z   9abc3294    3.1 MB      0s   /private/etc
 ```
 
-We can verify integrity of the snapshot on the second repository:
+> We can verify integrity of the snapshot on the second repository:
 
 ```bash
 $ plakar at sftp://gilles@nas.plakar.io/var/backups check 9abc3294
@@ -253,9 +263,7 @@ check: verification of 9abc3294:/ completed successfully
 
 ## Creating a third copy over S3
 
-But what if both my drive died AND the data center hosting my NAS burst in flames?
-
-Let’s create yet another repository on a remote S3 bucket!
+> Let’s create yet another repository on a remote S3 bucket!
 
 ```bash
 $ plakar config repository create s3
@@ -267,7 +275,7 @@ $ plakar config repository set s3 secret_access_key ********
 $ plakar at @s3 create
 ```
 
-Let's do another synchronization!
+> Let's do another synchronization!
 
 ```bash
 $ plakar at /var/backups sync to @s3
@@ -277,7 +285,7 @@ $ plakar at @s3 ls
 ```
 
 
-We can verify integrity of the snapshot on the third repository:
+> We can verify integrity of the snapshot on the third repository:
 
 ```bash
 $ plakar at @s3 check 9abc3294
@@ -292,31 +300,37 @@ $ plakar at @s3 check 9abc3294
 check: verification of 9abc3294:/private/etc completed successfully
 ```
 
+
+But what if both my drive died AND the data center hosting my NAS burst in flames?
+
+
 **The probability of losing data has now fallen from 0.00069% to 0.0000001% (1 in a billion)!**
 
 
 ## A few additional words on synchronization
 
-Repository synchronization is slightly more advanced than what was shown,
-and you are encouraged to experiment with it to find the best workflow for your use-case.
-
-This first command locates snapshots that exist in my local repository but not in the remote one,
+> This first command locates snapshots that exist in my local repository but not in the remote one,
 then sends them over:
 
 ```bash
 $ plakar at /var/backups sync to @s3
 ```
 
-This second command locates snapshots that exist in the remote repository but not in the local one to bring them over:
+> This second command locates snapshots that exist in the remote repository but not in the local one to bring them over:
 
 ```bash
 $ plakar at /var/backups sync from @s3
 ```
 
-And this last command does it both ways, pushing to the remote repositories snapshots that exist locally and are missing, but also fetching locally snapshots that only exist remotely:
+> And this last command does it both ways, pushing to the remote repositories snapshots that exist locally and are missing, but also fetching locally snapshots that only exist remotely:
 
 ```bash
 $ plakar at /var/backups sync with @s3
 ```
+
+
+Repository synchronization is slightly more advanced than what was shown,
+and you are encouraged to experiment with it to find the best workflow for your use-case.
+
 
 In addition, all these commands support passing snapshot identifiers and various options to perform partial synchronizations, only exchanging snapshots that match certain criteria. More information can be found in the [documentation](/docs/commands/sync/).

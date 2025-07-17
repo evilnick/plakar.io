@@ -48,7 +48,7 @@
 
                 {{  if  .HasChildren  }}
                     <div class="dropdown-menu absolute top-full mt-4 pt-2 hidden z-50">
-                        <div class="flex flex-wrap items-end
+                        <div class="flex flex-wrap items-stretch
                          py-8 px-4 bg-white shadow-lg border border-neutral-200 rounded-2xl ~text-sm/base">
                             {{ range sort $sections "weight" }}
                                 <div class="w-1/2 lg:w-[30%] flex flex-col gap-6">
@@ -77,7 +77,9 @@
                                     </div>
                                 </div>
                             {{ end }}
-                            {{ partial "header/menu-featured-article.html" $ctx }}
+                            <div class="flex flex-1 items-end">
+                                {{ partial "header/menu-featured-article.html" $ctx }}
+                            </div>
                         </div>
                     </div>
                 {{ end }}

@@ -25,3 +25,4 @@
 * **Change code highlight style**
 
     - `hugo gen chromastyles --style=monokailight > assets/css/chroma.css`
+    - `hugo gen chromastyles --style=native > assets/css/native.css`

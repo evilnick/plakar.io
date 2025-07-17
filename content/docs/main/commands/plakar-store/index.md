@@ -1,5 +1,5 @@
 ---
-date: "2025-06-30T18:16:35Z"
+date: "2025-07-15T19:15:41Z"
 title: store
 summary: "Manage Plakar store configurations"
 ---
@@ -10,7 +10,7 @@ summary: "Manage Plakar store configurations"
 <main class="manual-text">
 <section class="Sh">
 <h2 class="Sh" id="NAME"><a class="permalink" href="#NAME">NAME</a></h2>
-<p class="Pp"><code class="Nm">plakar store</code> &#x2014;
+<p class="Pp"><code class="Nm">plakar-store</code> &#x2014;
     <span class="Nd" role="doc-subtitle">Manage Plakar store
     configurations</span></p>
 </section>
@@ -68,7 +68,7 @@ summary: "Manage Plakar store configurations"
 </section>
 <section class="Sh">
 <h2 class="Sh" id="DIAGNOSTICS"><a class="permalink" href="#DIAGNOSTICS">DIAGNOSTICS</a></h2>
-<p class="Pp">The <code class="Nm">plakar store</code> utility exits&#x00A0;0 on
+<p class="Pp">The <code class="Nm">plakar-store</code> utility exits&#x00A0;0 on
     success, and&#x00A0;&gt;0 if an error occurs.</p>
 </section>
 <section class="Sh">
@@ -79,5 +79,5 @@ summary: "Manage Plakar store configurations"
 </section>
 </main>
 <div class="foot" role="doc-pagefooter" aria-label="Manual footer
-  line"><span class="foot-left"></span><span class="foot-date">February 27,
-  2025</span> <span class="foot-os">Plakar</span></div>
+  line"><span class="foot-left">Plakar</span> <span class="foot-date">July 3,
+  2025</span> <span class="foot-right">PLAKAR-STORE(1)</span></div>

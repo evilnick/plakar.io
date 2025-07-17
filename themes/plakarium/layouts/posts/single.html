@@ -70,8 +70,8 @@
     <section class="section-light-1 px-4 py-7">
         <div class="content flex flex-col xl:flex-row items-start">
                 <!-- Sidebar (left) -->
-                <aside class="xl:left-0 xl:sticky w-full h-full xl:w-[calc((100%-680px+32px)/2)] max-w-[calc(680px+32px)] xl:max-w-[calc((100%-680px-32px)/2)] pb-4 xl:pe-4 lg:top-28 flex flex-col  mx-auto xl:mx-0">
-                    <div class="text-xs font-prose flex flex-col gap-6 p-4 bg-neutral-50 xl:border-r border-dotted ">
+                <aside class="xl:left-0 xl:sticky w-full h-full xl:w-[340px] max-w-[calc(680px+32px)] xl:max-w-[calc((100%-680px-32px)/2)] pb-4 2xl:pe-4 lg:top-28 flex flex-col  mx-auto xl:mx-0">
+                    <div class="~text-xs/lg font-prose flex flex-col gap-6 p-2 2xl:p-4 bg-neutral-50 xl:border-r border-dotted ">
                         {{ partial "toc.html" . }}
                     </div>
                 </aside>
@@ -106,13 +106,13 @@
                         {{ .Content }}
                         <p></p>
                     </div>
-                    <div class="mt-4 flex flex-wrap gap-2 items-center border-t border-b pt-8 pb-8">
-                        <span class="font-dm-mono text-xs text-neutral-500">Share good vibes:</span>
-                        {{ partial "social/bluesky-badge.html" (dict "shareText" .Title "shareURL" .Permalink "context" .) }}
-                        {{ partial "social/linkedin-badge.html" (dict "shareText" .Title "shareURL" .Permalink "context" .) }}
-                        {{ partial "social/x-badge.html" (dict "shareText" .Title "shareURL" .Permalink "context" .) }}
+                    <div class="mt-4 flex flex-wrap gap-2 items-center border-t border-b pt-8 pb-8 text-primary-500">
+                        <span class="font-space-grotesk text-base text-neutral-900">Share good vibes:</span>
+                        {{ partial "social/bluesky-badge.html" (dict "badgeSize" "7" "shareText" .Title "shareURL" .Permalink "context" .) }}
+                        {{ partial "social/linkedin-badge.html" (dict "badgeSize" "7" "shareText" .Title "shareURL" .Permalink "context" .) }}
+                        {{ partial "social/x-badge.html" (dict "badgeSize" "7" "shareText" .Title "shareURL" .Permalink "context" .) }}
                     </div>
-                    <div class="flex flex-row items-left justify-left pt-4 text-xs">
+                    <div class="flex flex-row items-left justify-left pt-4 text-base">
                         {{ partial "cta/star-us-on-github.html" . }}
                         {{ partial "cta/join-us-on-discord.html" . }}
                     </div>

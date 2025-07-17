@@ -79,18 +79,18 @@ But if you *just* want to produce a `.tar` or `.zip`-like archive that comes pac
 well... it's built for that too 😊
 
 Creating a `.ptar` archive is as simple as the following command:
- 
+
 ```sh
 $ plakar ptar -o test.ptar ~/Downloads
 passphrase:
-passphrase (confirm): 
+passphrase (confirm):
 $
 ```
 
 The resulting file contains all of `~/Downloads`,
 deduplicated,
 compressed,
-encrypted, 
+encrypted,
 cryptographically authenticated,
 easily transportable and immediately usable for restore:
 
@@ -156,25 +156,25 @@ any redundant data is duplicated inside the archive.
 Yeah, no, it won't.
 
 ```sh
-$ du -sh ~/Downloads 
+$ du -sh ~/Downloads
  11G    /Users/gilles/Downloads
 
 $ time tar -czf test.tar.gz ~/Downloads
 [...] 166.48s user 14.07s system 99% cpu 3:01.53 total
-$ du -sh test.tar.gz 
+$ du -sh test.tar.gz
 8.8G    test.tar.gz
 
 $ time tar -czf test.tar.gz ~/Downloads ~/Downloads
 [...] 332.98s user 28.09s system 99% cpu 6:02.89 total
-$ du -sh test.tar.gz                          
+$ du -sh test.tar.gz
  18G    test.tar.gz
-$ 
+$
 
 $ time tar -czf test.tar.gz ~/Downloads ~/Downloads ~/Downloads
 [...] 499.69s user 41.99s system 99% cpu 9:05.15 total
-$ du -sh test.tar.gz                                      
+$ du -sh test.tar.gz
  26G    test.tar.gz
-$ 
+$
 ```
 
 As seen above,
@@ -202,15 +202,15 @@ $ du -sh test.ptar
 
 $ time plakar ptar -plaintext -o test.ptar ~/Downloads ~/Downloads
 [...] 134.91s user 31.09s system 438% cpu 37.892 total
-$ du -sh test.ptar                                                     
+$ du -sh test.ptar
 8.2G    test.ptar
-$ 
+$
 
 $ time plakar ptar -plaintext -o test.ptar ~/Downloads ~/Downloads ~/Downloads
 [...] 134.60s user 30.74s system 438% cpu 37.727 total
-$ du -sh test.ptar                                                                    
+$ du -sh test.ptar
 8.2G    test.ptar
-$ 
+$
 ```
 
 Of course,
@@ -273,7 +273,7 @@ the common way to send encrypted tarballs is to use GPG...
 and most of us know how that goes with the general public.
 
 Contrast this again with `.ptar` that provides [audited cryptography](/posts/2025-02-28/audit-of-plakar-cryptography/) _by default_,
-producing an archive that has inherent MAC integrity check and that can't be altered without validation failing visibily,
+producing an archive that has inherent MAC integrity check and that can't be altered without validation failing visibly,
 but which can also generate plaintext archives for public consumption.
 
 
@@ -392,8 +392,8 @@ The following command creates an encrypted snapshot of my `~/Downloads` director
 
 ```sh
 $ plakar ptar -o downloads.ptar ~/Downloads
-passphrase: 
-passphrase (confirm): 
+passphrase:
+passphrase (confirm):
 $
 ```
 
@@ -415,17 +415,17 @@ A `.ptar` can be browsed without extracting the actual data.
 
 ```sh
 $ plakar at downloads.ptar ls
-repository passphrase: 
-repository passphrase (confirm): 
+repository passphrase:
+repository passphrase (confirm):
 2025-06-24T00:04:01Z   3055ddc3     12 GB       34s /Users/gilles/Downloads
 
-$ plakar at test.ptar ls 3055ddc3:medias/          
-2025-05-03T19:36:29Z drwxr-xr-x   gilles    staff    736 B audio    
+$ plakar at test.ptar ls 3055ddc3:media/
+2025-05-03T19:36:29Z drwxr-xr-x   gilles    staff    736 B audio
 
-$ plakar at test.ptar ls 3055ddc3:medias/audio | grep hiphop
+$ plakar at test.ptar ls 3055ddc3:media/audio | grep hiphop
 2025-05-03T19:15:39Z -rw-r--r--   gilles    staff   4.6 MB hiphop1.mp3
 2025-05-03T19:18:35Z -rw-r--r--   gilles    staff   4.3 MB hiphop2.mp3
-$ 
+$
 ```
 
 This gives you a tree view of all files, snapshot info, timestamps, and version diffs — similar to `ls`, but scoped inside the archive.
@@ -436,7 +436,7 @@ providing you with a **local** web-based filesystem browser, preview, search and
 
 ```sh
 $ plakar at downloads.ptar ui
-repository passphrase: 
+repository passphrase:
 repository passphrase (confirm):
 ```
 
@@ -453,7 +453,7 @@ as shown below:
 
 ```sh
 $ plakar at downloads.ptar cat 3055ddc3:dragon.txt
-repository passphrase: 
+repository passphrase:
 repository passphrase (confirm):
 
                    ___====-_  _-====___
@@ -467,7 +467,7 @@ repository passphrase (confirm):
    -###################\\/  (_) \/###################-
   _#/|##########/\######(   "/" )######/\##########|\#_
   |/ |#/\#/\#/\/  \#/\##\  ! ' !  /##/\#/  \/\#/\#/\| \
-  ||/  V  V '   V  \\#\##\  ~~~  /##/##/  V  '  V  V  \|  
+  ||/  V  V '   V  \\#\##\  ~~~  /##/##/  V  '  V  V  \|
   ||| \ \|  | \|  |  \\#\|     |/##/##/|  |/  | | / / |||
   |||  |_|_|___|_|___|/##\___/##/##/|_|_|__|_|_|  |||
   ||\  .---.  .---.  /###/   \###\  .---.  .---.  /||
@@ -477,14 +477,14 @@ repository passphrase (confirm):
 
 ```
 
-Useful for quickly validating what’s in a backup without extracting or restoring the whole archive.             
+Useful for quickly validating what’s in a backup without extracting or restoring the whole archive.
 
 ---
 
 ### Restore files from archive
 
 ```sh
-$ plakar at test.ptar restore -to ./recovery /etc/nginx/nginx.conf 
+$ plakar at test.ptar restore -to ./recovery /etc/nginx/nginx.conf
 ```
 
 You can restore full trees, subdirectories or single files.

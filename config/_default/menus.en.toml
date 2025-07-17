@@ -48,21 +48,22 @@ parent = "solutions"
     icon = "refresh-line"
 
 [[main]]
-identifier = "solutions-usecases-aws"
-name = "Plakar for AWS"
-url = "#"
+identifier = "solutions-usecases-notion"
+name = "Plakar for Notion"
+url = "/solutions/plakar-for-notion/"
 weight = 20
 parent = "solutions"
 [[main.params]]
-    description = "Coming soon"
+    description = "Backup your workspace"
     enabled = true
     section = "Use cases"
     section_weight = 10
-    icon = "amazon-line"
+    icon = "notion-line"
+
 
 [[main]]
-identifier = "solutions-usecases-notion"
-name = "Plakar for Notion"
+identifier = "solutions-usecases-aws"
+name = "Plakar for AWS"
 url = "#"
 weight = 30
 parent = "solutions"
@@ -71,7 +72,8 @@ parent = "solutions"
     enabled = true
     section = "Use cases"
     section_weight = 10
-    icon = "notion-line"
+    icon = "amazon-line"
+
 
 # ----------- Solutions > Resources -----------
 
@@ -148,7 +150,7 @@ parent = "engineering"
 
 [[main]]
 identifier = "engineering-community-join"
-name = "Join us"
+name = "Plakar community"
 url = "contact/#join-our-community"
 weight = 40
 parent = "engineering"
@@ -158,6 +160,19 @@ parent = "engineering"
     section = "Community"
     section_weight = 20
     icon = "team-line"
+
+[[main]]
+identifier = "engineering-community-calendar"
+name = "Upcoming events"
+url = "contact/#upcoming-events"
+weight = 40
+parent = "engineering"
+[[main.params]]
+    description = "Meet Plakar team"
+    enabled = true
+    section = "Community"
+    section_weight = 20
+    icon = "calendar-event-line"
 
 [[main]]
 identifier = "contact-us"

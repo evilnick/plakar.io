@@ -39,7 +39,10 @@
                 {{ $categories := .GetTerms "categories" }}
                 {{ if gt (len $categories) 0 }}
                     <div class="text-primary-500 text-xs font-space-grotesk font-medium">
-                        {{ (index $categories 0).LinkTitle }}
+                        {{ range $index, $category := $categories }}
+                            {{ if gt $index 0 }} / {{ end }}
+                            {{ replace $category.LinkTitle " Connector" "" }}
+                        {{ end }}
                     </div>
                 {{ end }}
                 {{ with .Params.description }}

@@ -1,5 +1,5 @@
 ---
-date: "2025-06-30T18:16:35Z"
+date: "2025-07-15T19:15:41Z"
 title: clone
 summary: "Clone a Plakar repository to a new location"
 ---
@@ -10,7 +10,7 @@ summary: "Clone a Plakar repository to a new location"
 <main class="manual-text">
 <section class="Sh">
 <h2 class="Sh" id="NAME"><a class="permalink" href="#NAME">NAME</a></h2>
-<p class="Pp"><code class="Nm">plakar clone</code> &#x2014;
+<p class="Pp"><code class="Nm">plakar-clone</code> &#x2014;
     <span class="Nd" role="doc-subtitle">Clone a Plakar repository to a new
     location</span></p>
 </section>
@@ -39,7 +39,7 @@ summary: "Clone a Plakar repository to a new location"
 </section>
 <section class="Sh">
 <h2 class="Sh" id="DIAGNOSTICS"><a class="permalink" href="#DIAGNOSTICS">DIAGNOSTICS</a></h2>
-<p class="Pp">The <code class="Nm">plakar clone</code> utility exits&#x00A0;0 on
+<p class="Pp">The <code class="Nm">plakar-clone</code> utility exits&#x00A0;0 on
     success, and&#x00A0;&gt;0 if an error occurs.</p>
 <dl class="Bl-tag">
   <dt>0</dt>
@@ -59,5 +59,5 @@ summary: "Clone a Plakar repository to a new location"
 </section>
 </main>
 <div class="foot" role="doc-pagefooter" aria-label="Manual footer
-  line"><span class="foot-left"></span><span class="foot-date">February 1,
-  2025</span> <span class="foot-os">Plakar</span></div>
+  line"><span class="foot-left">Plakar</span> <span class="foot-date">July 3,
+  2025</span> <span class="foot-right">PLAKAR-CLONE(1)</span></div>

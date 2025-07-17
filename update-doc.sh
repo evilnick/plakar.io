@@ -11,7 +11,7 @@ TMPDIR=`mktemp -d /tmp/${tempfoo}.XXXXXX` || exit 1
 
 onexit() {
 	rm -rf "$TMPDIR"
-	exit 1
+	exit 0
 }
 
 trap 'onexit' EXIT INT TERM

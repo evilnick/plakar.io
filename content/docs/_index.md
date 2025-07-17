@@ -76,7 +76,7 @@ Until a first version is released and packaged,
 ### Go installer
 
 ```sh
-go install github.com/PlakarKorp/plakar/cmd/plakar@latest
+go install github.com/PlakarKorp/plakar@latest
 ```
 
 
