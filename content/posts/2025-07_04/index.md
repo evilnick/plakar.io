@@ -20,7 +20,7 @@ tags:
 You didn't ask. We still listened. And now — it’s here 🎉
 
 
-## Notion integration is live !
+## Notion backup integration is live !
 
 Notion powers countless personal and team workflows — but backing it up?
 
@@ -40,7 +40,6 @@ brrrrrr, that changes today.
 With our new Notion integration, you can now:
 - Import your Notion pages as versioned snapshots
 - Maintain a local copy of all your Notion content
-- Restore your work back to Notion, when needed
 
 All using the same Plakar tooling you already know and love 💜
 
@@ -65,12 +64,12 @@ Typing the following command will fetch the latest version of the integration an
 
 ```
 $ plakar pkg build notion
-/usr/bin/make -C /tmp/build-notion-v0.1.0-devel.ad53b3c-3921227270
+/usr/bin/make -C /tmp/build-notion-v0.1.0-devel.a1f54e6-644909591
 ea7b3ad6: OK ✓ /manifest.yaml
 ea7b3ad6: OK ✓ /notion-importer
 ea7b3ad6: OK ✓ /notion-exporter
 ea7b3ad6: OK ✓ /
-Created successfully: notion_v0.1.0-devel.ad53b3c_darwin_arm64.ptar
+Plugin created successfully: notion_v0.1.0-devel.a1f54e6_darwin_arm64.ptar
 ```
 
 The resulting file,
@@ -79,7 +78,7 @@ is a plugin that's exactly like the ones that will be pre-built and distributed 
 ready to be installed:
 
 ```
-$ plakar pkg add ./notion-v0.1.0-devel.ad53b3c_darwin_arm64.ptar
+$ plakar pkg add ./notion-v0.1.0-devel.a1f54e6_darwin_arm64.ptar
 ```
 
 You can verify that it's properly installed (see how notion appears now):
@@ -147,13 +146,25 @@ $ plakar backup @mynotion
 [...]
 ```
 
+You're done.
 
+--- 
 To restore,
-you do just the opposite by providing a destination configuration:
+you do the opposite by providing a destination configuration,
+however Notion public API doesn't let you restore directly to a workspace,
+so first:
+
+- create an empty page and **make sure you have write access**
+- get ID from URL: https://www.notion.so/1ea782d6899380dd96c2f88f20f68635
+- attach the notion integration to that page, as explained in the previous section
+
+Then you can do the `plakar` setup as was done for backup,
+but now for the destination side:
 
 ```
 $ plakar destination set mynotion notion:// \
-    token=ntn_1234567890123456789012345678901234567890123456
+    token=ntn_1234567890123456789012345678901234567890123456 \
+    rootID=1ea782d6899380dd96c2f88f20f68635
 ```
 
 Reload the agent config:
@@ -170,7 +181,22 @@ $ plakar restore -to @mynotion 30b99763
 [...]
 ```
 
-There. you. go... let's run the UI:
+There. you. go... 
+
+Note that you can also restore to a local directory or an alternate target,
+the restored data will maintain the original structure.
+
+```
+$ plakar restore -to /tmp/notion-backup 30b99763
+30b99763: OK ✓ /e2fdfe56-536a-4172-8974-78b14b351df7/page.json
+30b99763: OK ✓ /e2fdfe56-536a-4172-8974-78b14b351df7/9ccb9414-066f-4743-a694-6589cce600b6/page.json
+30b99763: OK ✓ /e2fdfe56-536a-4172-8974-78b14b351df7/8ea2b894-7caa-4f57-8695-803e3c09369c/page.json
+[...]
+```
+
+--- 
+
+Now let's run the UI:
 
 ```
 $ plakar ui
