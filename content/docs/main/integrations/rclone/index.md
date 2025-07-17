@@ -79,7 +79,7 @@ You need to add one of the following values, depending on the provider you are u
 ```yaml
 location: 'onedrive://'
 location: 'opendrive://'
-location: 'drive://'
+location: 'googledrive://'
 location: 'iclouddrive://'
 location: 'dropbox://'
 location: 'protondrive://'
