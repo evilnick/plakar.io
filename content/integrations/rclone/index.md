@@ -1,148 +1,72 @@
 ---
-title: RCLONE
-subtitle: Save and restore your cloud data with rclone for Plakar
-description: Back up and restore your data from and to a cloud provider (e.g., Google Drive, Google Photos, Onedrive) using the Plakar Rclone integration.
+title: "Rclone"
+subtitle: "Secure and automated backups for your cloud storage with Rclone in Plakar"
+description: Back up and restore your data from your cloud storage or store your back ups on it thanks to Rclone integration on Plakar.
 technology_description: Rclone is a command-line program to manage files on cloud storage. It supports various providers like Google Drive, Google Photos, OneDrive, Dropbox, and more.
-categories: 
+categories:
   - source connector
   - destination connector
 tags:
   - Rclone
-  - Backup
-  - Restore
-  - Google Drive
-  - Google Photos
-  - Icloud
-  - Onedrive
-  - Opendrive
+  - cloud storage
 stage: testing
-date: 2025-07-11
+date: 2025-07-17
 ---
 
-# Rclone Integration
+# Back up your cloud data with Plakar and Rclone
 
-## Overview
+Plakar’s Rclone integration gives you a robust way to protect your cloud files against accidental deletion, corruption, or unauthorized modifications. Files, folders, and metadata are backed up automatically from your cloud provider and stored in secure, immutable snapshots.
 
-**Rclone** is a command line program to manage files on **cloud storage**. The Plakar Rclone integration enables seamless backup and restoration of a cloud service provided by Rclone to and from a [Kloset repository](/posts/2025-04-29/kloset-the-immutable-data-store/).
+Unlike manual downloads or partial exports, Plakar leverages Rclone’s powerful cloud connectors to capture complete, structured representations of your remote data, with full traceability and integrity checks.
 
-> **Why use Rclone with Plakar?**
->
-> Rclone is here to simplify the connection between Plakar and your cloud storage. It allows you to back up and restore data from various cloud providers like Google Drive, Google Photos, OneDrive, Dropbox, Amazon S3, Box, Mega, pCloud, WebDAV, and many more — directly to your Kloset repository. 
-> Please note that Plakar currently supports only a subset of the cloud services supported by Rclone. See the **Q&A** section below for the list of providers currently supported.
+---
 
-## Configuration
+## Why back up cloud data with Rclone?
 
-### Temporary Requirement
+Your cloud storage provider keeps your files accessible — but they don’t always guarantee versioned recovery if files are changed, overwritten, or deleted by mistake, ransomware, or misconfigured sync. Rclone simplify the connection between Plakar and your cloud storage, allowing you to back up and restore data from various cloud providers directly to your Kloset repository.
 
-*The Rclone connector is actually in test. So the config setup is temporary.*
+With Plakar + Rclone:
 
-The Rclone integration requires you to have **Rclone** installed on your system. You can install it by following the instructions on the [Rclone installation page](https://rclone.org/install/).
+- Data is fetched securely using the official Rclone client
+- Snapshots are cryptographically verified and immutable
+- Each backup is self-contained, versioned, and browsable
+- Your storage backend is fully configurable (local disk or cloud storage)
 
-### Temporary Configuration
+---
 
-To create a new Rclone remote configuration, you need to create an Rclone conf. To do so, run the following command:
+## Supported features
 
-```bash
-$ rclone config
-```
+- Full remote file structure backup (folders, files, symlinks if supported)
+- Metadata preservation where available (timestamps, checksums)
+- Incremental snapshot deduplication to save bandwidth and space
+- Restore data to any supported Rclone remote
+- Store your backups on any Plakar-supported backend (filesystem, S3, SFTP, etc.)
 
-And follow the prompts to create a new remote configuration. For the moment Plakar only supports `google drive`, `opendrive`, `iclouddrive`, and `onedrive` as remote configurations.
+---
 
-Once you have created the remote configuration, you will find it in the `~/.config/rclone/rclone.conf` file.
+## Limitations
 
-This will look like this:
+- Only a subset of Rclone’s remotes are fully supported for now (`google drive`, `google photos`, `onedrive`, `opendrive`, `iclouddrive` — iCloud Photos not yet supported, `dropbox` and `proton drive')
+- You must install and configure Rclone manually (`rclone config`)
+- Initial backups of large remotes may take time; incremental syncs are optimized
+- Some provider-specific features (like shared permissions) may not be captured yet
 
-```ini
-[myremote]
+For detailed setup instructions, see the [configuration guide](../../docs/main/integrations/rclone/index.md).
 
-type = ...
-token = {"..."}
-drive_id = ...
-drive_type = ...
-```
+---
 
-(the fields will be different for each provider)
+## Threats mitigated
 
-You need to copy the remote configuration name (in this case `myremote`) and use it in the Plakar configuration.
-You need to translate it into YAML format, so it will look like this in the Plakar configuration:
+- Accidental or malicious file deletion in your cloud account
+- Local corruption or ransomware on synced folders
+- Permanent deletion after trash expiration
+- Account lockout or permission misconfigurations
 
-```yaml
-myremote:
-  type: ...
-  token: '{"..."}' # Here you just need to add the quotes around the brackets
-  drive_id: ...
-  drive_type: ...
-```
+---
 
-Before being able to use the Rclone integration, you need to add one last field to the configuration, which is the `location` field.
-You need to add one of the following values, depending on the provider you are using:
+## Questions and support
 
-```yaml
-location: 'onedrive://'
-location: 'opendrive://'
-location: 'drive://'
-location: 'iclouddrive://'
-location: 'dropbox://'
-location: 'protondrive://'
-```
+Need help or want to request support for a new cloud provider?
 
-**Iclouddrive does not include iCloud Photos**
-
-### Example Configuration
-
-Here is an example of a complete Plakar configuration for Rclone:
-
-```yaml
-myremote:
-  type: onedrive
-  token: '{"..."}'
-  drive_id: ...
-  drive_type: business
-  location: 'onedrive://'
-```
-
-## Example Usage
-
-Once configured, you can back up or restore data using the Rclone integration with Plakar.
-
-To create the Kloset repository at `/var/backups` and back up the OneDrive cloud configured as `myremote`, run the following command:
-
-```bash
-$ plakar at /var/backups create
-$ plakar at /var/backups backup @myremote
-```
-
-To restore the data from the same Kloset repository to the `myremote` cloud, run:
-
-```bash
-# List available backups
-$ plakar at /var/backups ls
-
-# Restore a specific file
-$ plakar at /var/backups restore -to @myremote fc1b1e94:path/to/file.docx
-
-# Restore the full backup
-$ plakar at /var/backups restore -to @myremote fc1b1e94
-```
-
-See the [QuickStart guide](https://docs.plakar.io/en/quickstart/index.html) for more examples.
-
-## Questions, Feedback, and Support
-
-Found a bug? [Open an issue on GitHub](https://github.com/PlakarKorp/plakar/issues/new?title=Bug%20report%20on%20Rclone%20integration&body=Please%20provide%20a%20detailed%20description%20of%20the%20issue.%0A%0A**Plakar%20version**)
-
-Join our [Discord community](https://discord.gg/uuegtnF2Q5) for real-time help and discussions.
-
-## Q&A
-
-**Q: Which cloud providers are supported by Plakar’s Rclone integration?**
-
-A: Currently, Plakar supports Google Drive, Google Photos, OneDrive, OpenDrive, and iCloud Drive (excluding iCloud Photos), dropbox and proton drive. Supporting more is easy. To request for it, please ask in our [Discord community](https://discord.gg/uuegtnF2Q5) or [open an issue on GitHub](https://github.com/PlakarKorp/plakar/issues/new?title=Add%20provider_name&body=Please%20provide%20a%20detailed%20description%20of%20the%20issue.%0A%0A**Plakar%20version**)
-
-**Q: Do I need to install Rclone separately?**
-
-A: At the moment yes, you must install Rclone on your system and configure your remotes before using them with Plakar.
-
-**Q: Which Providers are supported by Rclone?**
-
-A: Rclone supports a wide range of providers, please refer to the [Rclone documentation](https://rclone.org/overview/) for the complete list. However, Plakar currently does not support all of them.
+→ [Open an issue on GitHub](https://github.com/PlakarKorp/integration-rclone/issues/new)  
+→ [Join our Discord](https://discord.gg/uuegtnF2Q5) for real-time help and community support
