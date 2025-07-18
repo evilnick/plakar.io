@@ -64,21 +64,21 @@ Typing the following command will fetch the latest version of the integration an
 
 ```
 $ plakar pkg build notion
-/usr/bin/make -C /tmp/build-notion-v0.1.0-devel.a1f54e6-644909591
+/usr/bin/make -C /tmp/build-notion-v0.1.0-devel.b66af0a-644909591
 ea7b3ad6: OK ✓ /manifest.yaml
 ea7b3ad6: OK ✓ /notion-importer
 ea7b3ad6: OK ✓ /notion-exporter
 ea7b3ad6: OK ✓ /
-Plugin created successfully: notion_v0.1.0-devel.a1f54e6_darwin_arm64.ptar
+Plugin created successfully: notion_v0.1.0-devel.b66af0a_darwin_arm64.ptar
 ```
 
 The resulting file,
-`/tmp/notion_v0.1.0_darwin_arm64.ptar`,
+`/tmp/notion_v0.1.0-devel.b66af0a_darwin_arm64.ptar`,
 is a plugin that's exactly like the ones that will be pre-built and distributed by us,
 ready to be installed:
 
 ```
-$ plakar pkg add ./notion-v0.1.0-devel.a1f54e6_darwin_arm64.ptar
+$ plakar pkg add ./notion-v0.1.0-devel.b66af0a_darwin_arm64.ptar
 ```
 
 You can verify that it's properly installed (see how notion appears now):
