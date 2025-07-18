@@ -39,12 +39,14 @@ With Plakar:
 - Hierarchical relationships between pages
 - Incremental snapshot deduplication
 - Storage to any backend (filesystem, S3, SFTP)
+- Restore to any Notion page
 
 ## Limitations
 
-- Restore functionality is not available yet (planned in a future release)
 - Integration must be manually shared with each page to access its content
 - Some third-party Notion blocks may not serialize perfectly
+- Restoring to Notion requires a valid Notion Page ID as the root destination
+- Media files are not yet restorable to Notion, due to API limitations.. We are working on a solution to restore media files.
 
 For setup instructions, see the [configuration guide](/docs/main/integrations/notion).
 
