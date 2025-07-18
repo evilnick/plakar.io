@@ -1,5 +1,5 @@
 ---
-date: "2025-07-11T14:20:40Z"
+date: "2025-07-15T19:15:41Z"
 title: plakar
 summary: "effortless backups"
 ---
@@ -139,6 +139,30 @@ summary: "effortless backups"
   <dd>Create a .ptar archive, documented in
       <a class="Xr" href="../plakar-ptar/" aria-label="plakar-ptar, section
       1">plakar-ptar(1)</a>.</dd>
+  <dt id="pkg"><a class="permalink" href="#pkg"><code class="Cm">pkg</code></a></dt>
+  <dd>List installed plugins, documented in
+      <a class="Xr" href="../plakar-pkg/" aria-label="plakar-pkg, section
+      1">plakar-pkg(1)</a>.</dd>
+  <dt id="pkg~2"><a class="permalink" href="#pkg~2"><code class="Cm">pkg
+    add</code></a></dt>
+  <dd>Install a plugin, documented in
+      <a class="Xr" href="../plakar-pkg-add/" aria-label="plakar-pkg-add,
+      section 1">plakar-pkg-add(1)</a>.</dd>
+  <dt id="pkg~3"><a class="permalink" href="#pkg~3"><code class="Cm">pkg
+    build</code></a></dt>
+  <dd>Build a plugin from source, documented in
+      <a class="Xr" href="../plakar-pkg-build/" aria-label="plakar-pkg-build,
+      section 1">plakar-pkg-build(1)</a>.</dd>
+  <dt id="pkg~4"><a class="permalink" href="#pkg~4"><code class="Cm">pkg
+    create</code></a></dt>
+  <dd>Package a plugin, documented in
+      <a class="Xr" href="../plakar-pkg-create/" aria-label="plakar-pkg-create,
+      section 1">plakar-pkg-create(1)</a>.</dd>
+  <dt id="pkg~5"><a class="permalink" href="#pkg~5"><code class="Cm">pkg
+    rm</code></a></dt>
+  <dd>Unistall a plugin, documented in
+      <a class="Xr" href="../plakar-pkg-rm/" aria-label="plakar-pkg-rm, section
+      1">plakar-pkg-rm(1)</a>.</dd>
   <dt id="restore"><a class="permalink" href="#restore"><code class="Cm">restore</code></a></dt>
   <dd>Restore files from a Kloset snapshot, documented in
       <a class="Xr" href="../plakar-restore/" aria-label="plakar-restore,
@@ -233,5 +257,5 @@ $ plakar at @mys3bucket create</pre>
 </section>
 </main>
 <div class="foot" role="doc-pagefooter" aria-label="Manual footer
-  line"><span class="foot-left"></span><span class="foot-date">July 8,
-  2025</span> <span class="foot-os">Plakar</span></div>
+  line"><span class="foot-left">Plakar</span> <span class="foot-date">July 8,
+  2025</span> <span class="foot-right">PLAKAR(1)</span></div>

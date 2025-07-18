@@ -1,5 +1,5 @@
 ---
-date: "2025-07-11T14:20:40Z"
+date: "2025-07-15T19:15:41Z"
 title: source
 summary: "Manage Plakar backup source configuration"
 ---
@@ -79,5 +79,5 @@ summary: "Manage Plakar backup source configuration"
 </section>
 </main>
 <div class="foot" role="doc-pagefooter" aria-label="Manual footer
-  line"><span class="foot-left"></span><span class="foot-date">July 3,
-  2025</span> <span class="foot-os">Plakar</span></div>
+  line"><span class="foot-left">Plakar</span> <span class="foot-date">July 3,
+  2025</span> <span class="foot-right">PLAKAR-SOURCE(1)</span></div>
