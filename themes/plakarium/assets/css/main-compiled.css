@@ -2977,6 +2977,10 @@ video {
   flex-grow:1;
 }
 
+.grow {
+  flex-grow:1;
+}
+
 .origin-top {
   transform-origin:top;
 }
@@ -4609,6 +4613,11 @@ video {
   line-height:clamp(1.75rem,1.57rem + 0.45vw,2rem)/* fluid from 1.75rem at 40rem to 2rem at 96rem */;
 }
 
+.\~text-xxs\/lg {
+  font-size:clamp(0.625rem,0.268rem + 0.893vw,1.125rem)/* fluid type from 0.625rem at 40rem to 1.125rem at 96rem */;
+  line-height:/* error - Missing start value */;
+}
+
 .\~px-3\/6 {
   padding-left:clamp(0.75rem,0.21rem + 1.34vw,1.5rem)/* fluid from 0.75rem at 40rem to 1.5rem at 96rem */;
   padding-right:clamp(0.75rem,0.21rem + 1.34vw,1.5rem)/* fluid from 0.75rem at 40rem to 1.5rem at 96rem */;
@@ -5587,6 +5596,10 @@ details > summary {
 
   .md\:p-8 {
     padding:2rem;
+  }
+
+  .md\:p-2 {
+    padding:0.5rem;
   }
 
   .md\:px-12 {
