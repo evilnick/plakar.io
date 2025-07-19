@@ -59,7 +59,7 @@
             <p>{{ i18n "article.no_table_of_contents" }}</p>
         {{ end }}
     </div>
-    <div class="mt-4 flex flex-col gap-2 items-center border-t border-b pt-8 pb-8 bg-primary-500 text-neutral-200 font-space-grotesk rounded-xl px-2 xl:px-4">
+    <div class="mt-4 flex flex-col gap-2 items-center border-t border-b pt-8 pb-8 bg-primary-500 text-neutral-200 font-space-grotesk rounded-xl px-4">
         <div class="flex flex-col items-center gap-2">
             <span class="~text-lg/xl">You liked this article ?</span>
             {{ $danseSvg := resources.Get "img/Nestor/danse.svg" }}
@@ -71,14 +71,16 @@
             <span class=" ~text-lg/xl text-neutral-200">Share it</span>
             <div class="flex flex-row gap-2 2xl:gap-4">
                 {{ partial "social/bluesky-badge.html" (dict "badgeSize" "7" "shareText" .Title "shareURL" .Permalink "context" .) }}
+                {{ partial "social/reddit-badge.html" (dict "badgeSize" "7" "shareText" .Title "shareURL" .Permalink "context" .) }}
                 {{ partial "social/linkedin-badge.html" (dict "badgeSize" "7" "shareText" .Title "shareURL" .Permalink "context" .) }}
                 {{ partial "social/x-badge.html" (dict "badgeSize" "7" "shareText" .Title "shareURL" .Permalink "context" .) }}
             </div>
         </div>
         <div class="flex flex-row items-center gap-2 border-t border-neutral-500/50 pt-4 w-full justify-between">
-            <span class=" ~text-lg/xl text-neutral-200">Join our Discord</span>
+            <span class=" ~text-lg/xl text-neutral-200">Join us</span>
             <div class="flex flex-row gap-2 2xl:gap-4">
                 {{ partial "social/discord-badge.html" (dict "badgeSize" "7" "context" .) }}
+                {{ partial "social/reddit-badge.html" (dict "badgeSize" "7" "context" .) }}
             </div>
         </div>
         <div class="flex flex-row items-center gap-2 border-t border-neutral-500/50 pt-4 w-full justify-between">

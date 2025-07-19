@@ -3906,6 +3906,14 @@ video {
   padding-right:0.25rem;
 }
 
+.pe-4 {
+  padding-inline-end:1rem;
+}
+
+.pe-2 {
+  padding-inline-end:0.5rem;
+}
+
 .text-left {
   text-align:left;
 }

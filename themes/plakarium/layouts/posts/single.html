@@ -109,12 +109,16 @@
                     <div class="mt-4 flex flex-wrap gap-2 items-center border-t border-b pt-8 pb-8 text-primary-500">
                         <span class="font-space-grotesk text-base text-neutral-900">Share good vibes:</span>
                         {{ partial "social/bluesky-badge.html" (dict "badgeSize" "7" "shareText" .Title "shareURL" .Permalink "context" .) }}
+                        {{ partial "social/reddit-badge.html" (dict "badgeSize" "7" "shareText" .Title "shareURL" .Permalink "context" .) }}
                         {{ partial "social/linkedin-badge.html" (dict "badgeSize" "7" "shareText" .Title "shareURL" .Permalink "context" .) }}
                         {{ partial "social/x-badge.html" (dict "badgeSize" "7" "shareText" .Title "shareURL" .Permalink "context" .) }}
                     </div>
-                    <div class="flex flex-row items-left justify-left pt-4 text-base">
-                        {{ partial "cta/star-us-on-github.html" . }}
+                    <div class="flex flex-row flex-wrap items-start justify-start gap-2 pt-4 text-base">
+                        <div class="flex flex-wrap gap-2">                        {{ partial "cta/star-us-on-github.html" . }}
                         {{ partial "cta/join-us-on-discord.html" . }}
+                        {{ partial "cta/join-us-on-reddit.html" . }}
+                    </div>
+
                     </div>
 
                 </article>
