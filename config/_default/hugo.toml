@@ -30,6 +30,10 @@ enabled = true
 inviteCode = "uuegtnF2Q5"
 serverID = "1281181647005421589"
 
+[Params.reddit]
+enabled = true
+communityName = "plakar"
+
 [Params.bluesky]
 enabled = true
 account = "plakar.bsky.social"

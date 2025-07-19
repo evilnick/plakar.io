@@ -1,0 +1,48 @@
+{{ $ctx := . }}
+{{ if isset . "context" }}
+    {{ with .context }}
+        {{ $ctx = . }}
+    {{ end }}
+{{ end }}
+
+{{ $badgeSize := 5 }}
+{{ if isset . "badgeSize" }}
+    {{ $badgeSize = $.badgeSize }}
+{{ end }}
+
+{{ $format := "" }}
+{{ if isset . "format" }}
+    {{ $format = $.format }}
+{{ end }}
+
+{{ $ctx := . }}
+{{ if isset . "context" }}
+    {{ with .context }}
+        {{ $ctx = . }}
+    {{ end }}
+{{ end }}
+
+{{ $badgeSize := 5 }}
+{{ if isset . "badgeSize" }}
+    {{ $badgeSize = $.badgeSize }}
+{{ end }}
+
+{{ $format := "" }}
+{{ if isset . "format" }}
+    {{ $format = $.format }}
+{{ end }}
+
+{{ if $ctx.Site.Params.reddit.enabled | default false }}
+    {{ $riRedditLine := resources.Get "img/ri/reddit-line.svg" }}
+    {{ $redditCommunityName := $ctx.Site.Params.reddit.communityName | default "" }}
+        <a
+                class="flex items-center space-x-2"
+                href="https://www.reddit.com/r/{{ $redditCommunityName }}"
+                target="_blank"
+                aria-label="Visit us on Reddit"
+        >
+      <span class="w-{{ $badgeSize }} h-{{ $badgeSize }}">
+        {{ $riRedditLine.Content | safeHTML }}
+      </span>
+        </a>
+{{ end }}
