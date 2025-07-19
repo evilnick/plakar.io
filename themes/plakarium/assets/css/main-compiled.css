@@ -3070,6 +3070,10 @@ video {
   cursor:pointer;
 }
 
+.resize-none {
+  resize:none;
+}
+
 .resize {
   resize:both;
 }
