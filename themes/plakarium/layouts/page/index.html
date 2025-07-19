@@ -1,5 +1,8 @@
     {{ define "main" }}
         {{ $riDatabaseLine := resources.Get "img/ri/database-line.svg" }}
+        {{ $riCodeBoxLine := resources.Get "img/ri/code-box-line.svg" }}
+        {{ $riArchiveLine := resources.Get "img/ri/archive-line.svg" }}
+        {{ $riPuzzle2Line := resources.Get "img/ri/puzzle-2-line.svg" }}
         {{ $riFlashlightLine := resources.Get "img/ri/flashlight-line.svg" }}
         {{ $riListView := resources.Get "img/ri/list-view.svg" }}
         {{ $riMenuSearchLine := resources.Get "img/ri/menu-search-line.svg" }}
@@ -194,7 +197,7 @@
                         <div>
                             <h3 class="font-space-grotesk text-lg font-semibold text-neutral-900">Cryptography audit: ✅ passed</h3>
                             <p class="text-neutral-600 ~text-sm/base font-space-text mt-1">Before releasing Plakar, we commissioned a cryptographic review from Jean-Philippe Aumasson, the author of multiple widely-used algorithms and seminal books on cryptography.</p>
-                            <a href="/posts/2025-02-28/audit-of-plakar-cryptography/" class="text-primary-500 text-sm font-medium hover:underline">Read the report</a>
+                            <a href="/posts/2025-02-28/audit-of-plakar-cryptography/" target="_blank" class="text-primary-500 text-sm font-medium hover:underline">Read the report</a>
                         </div>
                     </div>
 
@@ -208,6 +211,62 @@
                             <h3 class="font-space-grotesk text-lg font-semibold text-neutral-900">New plakar UI available</h3>
                             <p class="text-neutral-600 ~text-sm/base font-space-text mt-1">Introducing the new UI: more responsive, faster, and better structured for large-scale browsing.</p>
                             <a href="https://demo.plakar.io" target="_blank" class="text-primary-500 text-sm font-medium hover:underline">Visit demo</a>
+                        </div>
+                    </div>
+                    <!-- Card 3: Plakar SDK -->
+                    <div class="group/link flex items-start gap-4 p-4 border bg-neutral-50 border-neutral-300 rounded-lg hover:bg-neutral-300 transition">
+                        <div class="w-10 h-10 rounded-lg text-primary-500 flex items-stretch justify-center">
+                            <!-- Icon: CodeBox -->
+                            {{ $riCodeBoxLine.Content | safeHTML }}
+                        </div>
+                        <div>
+                            <h3 class="font-space-grotesk text-lg font-semibold text-neutral-900">
+                                Plakar SDK is live !
+                            </h3>
+                            <p class="text-neutral-600 ~text-sm/base font-space-text mt-1">
+                                We’ve abstracted all the hard parts of writing integrations into a simple Go SDK — no boilerplate, no hassle. Build, package and run powerful plugins in minutes.
+                            </p>
+                            <a href="/posts/2025-07-15/go-kloset-sdk-is-live/" target="_blank" class="text-primary-500 text-sm font-medium hover:underline">
+                                Read more
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Kapsul -->
+                    <div class="group/link flex items-start gap-4 p-4 border bg-neutral-50 border-neutral-300 rounded-lg hover:bg-neutral-300 transition">
+                        <div class="w-10 h-10 rounded-lg text-primary-500 flex items-stretch justify-center">
+                            <!-- Icon: Archive -->
+                            {{ $riArchiveLine.Content | safeHTML }}
+                        </div>
+                        <div>
+                            <h3 class="font-space-grotesk text-lg font-semibold text-neutral-900">
+                                Kapsul: a tool to create and manage PTAR archives
+                            </h3>
+                            <p class="text-neutral-600 ~text-sm/base font-space-text mt-1">
+                                Discover our new CLI command for `.ptar` archives: zero-config, agentless, deduplicated, compressed and end-to-end encrypted.
+                            </p>
+                            <a href="/posts/2025-07-07/kapsul-a-tool-to-create-and-manage-deduplicated-compressed-and-encrypted-ptar-vaults/" target="_blank" class="text-primary-500 text-sm font-medium hover:underline">
+                                Read more
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Card 5: go-cdc-chunkers -->
+                    <div class="group/link flex items-start gap-4 p-4 border bg-neutral-50 border-neutral-300 rounded-lg hover:bg-neutral-300 transition">
+                        <div class="w-10 h-10 rounded-lg text-primary-500 flex items-stretch justify-center">
+                            <!-- Icon: Cube -->
+                            {{ $riPuzzle2Line.Content | safeHTML }}
+                        </div>
+                        <div>
+                            <h3 class="font-space-grotesk text-lg font-semibold text-neutral-900">
+                                Introducing go-cdc-chunkers: chunk and deduplicate everything
+                            </h3>
+                            <p class="text-neutral-600 ~text-sm/base font-space-text mt-1">
+                                Our new ISC-licensed Go library for Content-Defined Chunking delivers ultra-fast, shift-resilient deduplication—perfect for backups, sync and more.
+                            </p>
+                            <a href="/posts/2025-07-11/introducing-go-cdc-chunkers-chunk-and-deduplicate-everything/" target="_blank" class="text-primary-500 text-sm font-medium hover:underline">
+                                Read more
+                            </a>
                         </div>
                     </div>
                 </div>
