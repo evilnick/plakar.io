@@ -130,7 +130,6 @@
                 toc.querySelectorAll("a.active").forEach(a => a.classList.remove("active"));
 
                 const targetLink = toc.querySelector(`a[href="#${CSS.escape(currentId)}"]`);
-                console.log(targetLink);
                 if (targetLink) {
                     targetLink.classList.add("active");
                 }
