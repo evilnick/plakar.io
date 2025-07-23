@@ -1,4 +1,5 @@
 @layer base {
+
     .docs-content {
         @apply text-neutral-900 leading-relaxed text-base py-8 rounded-lg shadow-md;
         font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
@@ -18,7 +19,7 @@
         clear: both;
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: 1024px) {
         .docs-content h1,
         .docs-content h2,
         .docs-content h3,
@@ -26,10 +27,12 @@
         .docs-content h5,
         .docs-content h6,
         .docs-content p,
+        .docs-content hr,
         .docs-content table,
         .docs-content ul,
         .docs-content ol,
         .docs-content aside,
+        .docs-content .head,
         .docs-content dl {
             margin-right: 50%;
             -webkit-box-sizing: border-box;
@@ -73,14 +76,7 @@
             margin-right: 0 !important;
         }
 
-        .primary-box {
-            @apply bg-primary-500;
-            width: 50%;
-            position: absolute;
-            right: 0;
-            top: 0;
-            bottom: 0;
-        }
+
 
     }
 
@@ -95,6 +91,7 @@
     .docs-content ul,
     .docs-content ol,
     .docs-content aside,
+    .docs-content .head,
     .docs-content dl {
         padding: 0 28px;
     }
@@ -151,6 +148,17 @@
         margin-top: 0.25rem;
     }
 
+    .docs-content img:hover {
+        cursor: zoom-in;
+    }
+
+    .docs-content table {
+        display: block;
+        width: auto;
+        max-width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
 
 
 }
