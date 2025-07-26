@@ -13,9 +13,15 @@
     .docs-content blockquote p code {
         @apply bg-neutral-600 px-2 py-1 rounded-sm;
     }
+    .docs-content blockquote ul {
+        width: 100%;
+    }
 
     .docs-content>h1,
-    .docs-content>h2{
+    .docs-content>h2,
+    .docs-content>h3,
+    .docs-content>h4,
+    .docs-content>hr{
         clear: both;
     }
 
@@ -40,6 +46,14 @@
             box-sizing: border-box;
             display: block;
             padding: 0 28px;
+        }
+
+        .docs-content ul ul,
+        .docs-content li p,
+        .docs-content ul ol,
+        .docs-content ol ul,
+        .docs-content ol ol {
+            margin-right: 0;
         }
 
         .docs-content .box-content > h1,
