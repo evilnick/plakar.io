@@ -1,6 +1,6 @@
 {{ if .Site.Params.github.enabled | default false }}
     <!-- for tailwind safelist -->
-    <span class="hover:text-neutral-900"></span>
+    <span class="hover:text-neutral-900 hidden"></span>
 
     {{ $riGithubFill := resources.Get "img/ri/github-fill.svg" }}
     {{ $githubOrganization := .Site.Params.github.organization | default "" }}

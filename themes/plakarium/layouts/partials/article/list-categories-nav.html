@@ -72,13 +72,13 @@
     <div class="content flex flex-row items-center justify-between ">
             <div class="px-2 py-2 bg-neutral-50 flex flex-wrap items-center gap-3 rounded-lg mx-auto ">
                 <a href="/{{ $currentSection }}/#categories">
-                    <button class="px-2 py-4 {{ if eq .Kind "section" }}bg-primary-500 text-white {{ else }} hover:bg-neutral-300 transition {{ end }}  text-sm font-space-grotesk rounded-lg items-center">
+                    <button class="px-2 py-2 md:py-4 {{ if eq .Kind "section" }}bg-primary-500 text-white {{ else }} hover:bg-neutral-300 transition {{ end }}  text-sm font-space-grotesk rounded-lg items-center">
                         All articles
                     </button>
                 </a>
                 {{ range $name := $categories }}
                     <a href="/categories/{{ $name | urlize }}/#categories">
-                        <button class="px-2 py-4 {{ if eq $name $currentCategory }}bg-primary-500 text-white{{ else }} hover:bg-neutral-300 transition {{ end }} text-sm font-space-grotesk rounded-lg items-center">{{ $name | humanize }}</button>
+                        <button class="px-2 py-2 md:py-4 {{ if eq $name $currentCategory }}bg-primary-500 text-white{{ else }} hover:bg-neutral-300 transition {{ end }} text-sm font-space-grotesk rounded-lg items-center">{{ $name | humanize | replaceRE "(?i)connector(s)?" "" | strings.TrimSpace }}</button>
                     </a>
                 {{ end }}
             </div>

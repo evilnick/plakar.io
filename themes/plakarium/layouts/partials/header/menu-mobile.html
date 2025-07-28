@@ -79,10 +79,10 @@
         {{ end }}
     </nav>
 
-    <div class="flex flex-line mt-6 pr-4 justify-end gap-2 text-right text-sm">
+    <div class="flex flex-line mt-6 px-2 justify-end gap-1 text-right text-sm">
 
         <!-- Discord link -->
-        <div class="flex max-h-[38px] items-stretch gap-2 pr-4 p-[1px] border border-neutral-300 bg-neutral-50 rounded-lg font-space-text">
+        <div class="flex max-h-[32px] items-stretch gap-2 pr-2 p-[1px] border border-neutral-300 bg-neutral-50 rounded-lg font-space-text">
             {{ partial "social/discord-badge.html" (dict
                     "badgeSize" "7"
                     "format" "star_light"
@@ -90,7 +90,7 @@
                     ) }}
         </div>
 
-        <div class="flex max-h-[38px] items-stretch gap-2 pr-4 p-[1px] border border-neutral-300 bg-neutral-50 rounded-lg font-space-text">
+        <div class="flex max-h-[32px] items-stretch gap-2 pr-2 p-[1px] border border-neutral-300 bg-neutral-50 rounded-lg font-space-text">
             {{ partial "social/github-badge.html" (dict
                     "badgeSize" "7"
                     "format" "star_light"
@@ -98,9 +98,9 @@
                     ) }}
         </div>
         <a href="https://docs.plakar.io/en/quickstart/index.html" target="_blank" class="mt-0">
-            <div class="flex max-h-[38px] items-center gap-2 border border-neutral-900 px-3 py-2 rounded-lg">
+            <div class="flex max-h-[32px] items-center gap-2 border border-neutral-900 px-1 py-2 rounded-lg">
                 <span class="w-5 h-5">{{ $riCornerDownRightLine.Content | safeHTML }}</span>
-                <span class="font-space-text">Get started</span>
+                <span class="font-space-grotesk text-xs">Get started</span>
             </div>
         </a>
     </div>

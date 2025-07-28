@@ -1,0 +1,15 @@
+{{ if .Site.Params.reddit.enabled | default false }}
+    {{ $redditCommunityName := .Site.Params.reddit.communityName | default "" }}
+    {{ $riRedditFill := resources.Get "img/ri/reddit-fill.svg" }}
+
+    <!-- for tailwind safelist -->
+    <span class="hover:text-neutral-50"></span>
+
+    {{ partial "cta/based-button.html" (dict
+            "href" (print "https://www.reddit.com/r/" $redditCommunityName)
+            "target" "_blank"
+            "label" "Join Reddit"
+            "icon" $riRedditFill
+            "border" "border"
+            ) }}
+{{ end }}

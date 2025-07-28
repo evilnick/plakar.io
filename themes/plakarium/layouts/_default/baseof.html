@@ -11,7 +11,7 @@
 <div
         x-data="{
             isSmallScreen: window.innerWidth < 1280,
-            sidebarOpened: localStorage.getItem('sidebarState') === 'open' && document.referrer.includes(window.location.hostname),
+            sidebarOpened: localStorage.getItem('sidebarState') === 'open',
             toggleSidebar(state) {
                 this.sidebarOpened = state;
                 localStorage.setItem('sidebarState', state ? 'open' : 'closed');
@@ -48,15 +48,14 @@
                     class="fixed left-0 h-[calc(100vh-50px)] md:h-[calc(100vh-88px)] transition-all duration-300 bg-white border-r border-neutral-300 flex flex-col"
                     @mouseleave="isSmallScreen ? toggleSidebar(false) : null"
             >
-            <div class="flex-grow">
+                <div class="flex-grow">
                     {{ partial "sidebar/docs-menu.html" . }}
                 </div>
             </aside>
-            <div class="flex flex-row w-full">
-                <div :class="isSmallScreen ? (sidebarOpened ? 'ml-64' : 'ml-0') : 'ml-64'" class="relative max-w-[1280px] mx-auto w-full">
+            <div class="relative flex flex-row"
+                 :class="sidebarOpened ||  !isSmallScreen ? 'ml-64 w-full' : 'w-full ml-0'"
+                 @click="isSmallScreen && sidebarOpened ? toggleSidebar(false) : null">
                     {{ block "main" . }}{{ end }}
-                </div>
-
             </div>
 
         </div>
