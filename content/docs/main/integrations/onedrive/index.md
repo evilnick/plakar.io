@@ -2,110 +2,207 @@
 title: OneDrive integration documentation
 description: Back up and restore your OneDrive data, or store your Plakar backups on OneDrive, using the Rclone integration.
 technology_description: This integration uses Rclone’s official OneDrive remote to connect Plakar to your OneDrive account securely and efficiently.
-categories:
-  - integrations
-provides:
-  - source-connector
-  - destination-connector
-  - storage-connector
+categories: integrations
 tags:
-  - onedrive
+  - google drive
   - backup
-  - storage
+  - disaster recovery
   - encryption
-  - privacy
+  - deduplication
+  - versioning
+  - immutable storage
+  - compliance
+  - long-term archiving
+  - airgapped backup
+  - snapshot technology
+  - portable format
 stage: test
-date: 2025-07-29
+date: 2025-07-26
+plakar_version: ">=1.0.3"
+integration_version: 0.1.0
+resource_type: object-storage
+provides:
+  - source connector
+  - destination connector
+  - storage connector
+  - viewer
 ---
 
-# OneDrive Integration
+# Integration Package: OneDrive
 
 ## 1. Introduction
 
-> **Requirements:**
-> - **Plakar version**: {{< param "plakar_version" >}}
->   - **Integration version**: {{< param "integration_version" >}}
->   - **Access rights**: OneDrive account with read access for source; write access for destination/storage roles
-
-This integration allows you to back up and restore OneDrive data using Plakar’s Rclone plugin system. No extra package is needed beyond Rclone: Plakar calls the Rclone plugin via gRPC to connect and transfer data.
-
-Snapshots are stored in a reposiroty called Kloset, with full deduplication, encryption, and immutability. You can even use OneDrive itself as the storage backend for your Kloset snapshots.
+This integration allows you to snapshot and restore OneDrive data using Plakar to store it in a Kloset store, while minimizing storage usage and ensuring strong data security.
+It includes a Storage Connector that lets you persist snapshots to OneDrive itself, either from OneDrive or from other sources.
+A Viewer is also provided to inspect, search, and restore snapshots without requiring full extraction.
 
 **Use cases:**
-- Cold backup of OneDrive cloud storage
-  - Long-term archive and legal hold of OneDrive folders
-  - Offline export via `.ptar`
-  - Disaster recovery workflows
+
+* Cold backup of OneDrive folders
+* Long-term archiving and disaster recovery
+* Portable export and vendor escape to other platforms
 
 **Target technologies:**
-- **Supported versions**: All OneDrive accounts supported by Rclone
-  - **System compatibility**: Compatible with personal and business OneDrive accounts
+
+* Supported versions: All OneDrive accounts supported by Rclone
+* Supported editions: Personal and Business OneDrive
+* System compatibility: macOS, Linux, Windows via Rclone
+
+**Requirements:**
+
+* Plakar version: >=1.0.3
+* Integration version: 0.1.0
+* OneDrive API credentials configured in Rclone
 
 ## 2. Architecture
 
-> Architecture diagram:
-```plaintext
+```
+                                Viewer (CLI/UI)
+                                  ↑
 OneDrive ← Source Connector → Kloset Store ←→ Storage Connector → OneDrive
-                                 ↓
-                  OneDrive ← Destination Connector → Compatible cloud targets
+                                  ↓
+                   OneDrive ← Destination Connector → Other compatible resources
 ```
 
-The OneDrive integration uses Plakar's plugin system to interact with OneDrive via Rclone. Plakar communicates with the plugin over gRPC, allowing you to create snapshots and restore them as needed.
-A OneDrive account can also serve as the storage backend for Kloset snapshots, enabling you to leverage OneDrive's cloud storage capabilities directly.
+**Components provided:**
 
-**Components:**
-- **Source Connector**: read-only connector to extract data from OneDrive
-- **Destination Connector**: write connector to restore data into OneDrive
-- **Storage Connector**: used to persist snapshots directly in OneDrive
+* Source Connector: extract data from OneDrive
+* Destination Connector: restore snapshots to OneDrive
+* Storage Connector: persist snapshots inside OneDrive as the backend
+* Viewer: browse and search snapshots in UI/CLI
 
 ## 3. Installation
 
-Install Rclone and configure a OneDrive remote. See the [Rclone installation page](https://rclone.org/install/) and [OneDrive setup](https://rclone.org/onedrive/).
+### 3.1 Prerequisites 
+
+This integration is distributed as an Rclone-powered connector.
+You only need Plakar and Rclone installed.
+
+Install Rclone: [https://rclone.org/install/](https://rclone.org/install/)
+Configure your OneDrive remote: [https://rclone.org/onedrive/](https://rclone.org/onedrive/)
+
+```bash
+rclone config
+```
+
+After you can build and install it in a few seconds using Plakar’s built-in tooling.
+Build the package
+
+**Build the package:**
+
+Run the following command to fetch and compile the integration:
+
+```bash
+plakar pkg build rclone
+```
+
+This will generate a portable .ptar archive, for example:
+
+`rclone_v0.1.0-devel.xxxxxx_linux_amd64.ptar`
+
+**Install the package:**
+
+Once built, install it locally with:
+
+```bash
+plakar pkg add ./path/to/rclone_v0.1.0-devel.xxxxxx_linux_amd64.ptar
+```
+
+**Verify installation:**
+
+Check that the integration appears in your available connectors:
+
+```bash
+plakar version
+```
+
+You should now see all the rclone provider listed (which includes OneDrive) in the importers, exporters, or klosets:
+```plaintext
+importers: fs, s3, onedrive, ...
+exporters: fs, s3, onedrive, ...
+klosets: fs, s3, ptar, onedrive, ...
+```
+
 
 ## 4. Configuration
 
-Configure your remote in Rclone, then add it to Plakar’s config as shown in the Rclone integration doc.
+Once Rclone is configured, import it into Plakar.
 
-To include your configuration in your Plakar config, you can use the following command:
-
+### 4.1 Source Connector
 
 ```bash
-rclone config show `your_config_name` | ./plakar `source|destination|store` import
+rclone config show myonedrive | plakar config source import
 ```
 
-> Choose `source`, `destination`, or `store` based on your use case.
-> Source for backups, destination for restores, and store for Kloset.
+### 4.2 Destination Connector
 
+```bash
+rclone config show myonedrive | plakar config destination import
+```
+
+### 4.3 Storage Connector
+
+```bash
+rclone config show myonedrive | plakar config store import
+```
+
+> Replace `myonedrive` with your Rclone remote name.
 
 ## 5. Usage
 
-- Backup: `plakar at /repo backup @your_config_name`
-- Restore: `plakar at /repo restore -to @your_config_name <snapshot-id>`
-- Store: `plakar at your_config_name://kloset create`
+### 5.1 Snapshot
 
-## 6. Limitations
+```bash
+plakar at @myonedrive backup @myonedrive
+```
 
-- OneDrive API rate limits
-- Shared folders require extra config
+### 5.2 Inspection
 
-## 7. Permissions required
+```bash
+plakar at @myonedrive ls
+plakar at @myonedrive cat <snapshot-id>:/path/to/file
+plakar at @myonedrive ui
+```
 
-- Rclone must be authorized for your Microsoft account
+### 5.3 Restore
 
-## 8. Troubleshooting
+```bash
+plakar at @myonedrive restore -to @myonedrive <snapshot-id>
+```
 
-- Check Rclone logs for errors
+> Here `@myonedrive` had been used as a source, destination, and store connector.
 
-## 9. Backup strategy
+## 6. Integration-specific behaviors
 
-Follow the 3-2-1 rule: 3 copies, 2 media, 1 offsite.
+### 6.1 Limitations
 
-## 10. Appendix
+* OneDrive API has rate limits — heavy usage may require throttling
+* Only the latest version of files are snapshotted
+* Shared links and permissions are not preserved in snapshots
 
-- [Plakar CLI Reference](/docs/main)
-- [Rclone OneDrive documentation](https://rclone.org/onedrive/)
+### 6.2 Automation
 
-## 11. FAQ
+* Schedule snapshots using cron or systemd timers
+* Use `.ptar` archives for export/transport
 
-- Does Plakar back up all versions? No, only the latest.
-- Can I restore to another provider? Yes, if supported by Rclone.
+### 6.3 Restore Notes
+
+* Can restore into OneDrive or export to S3, filesystem, or other Plakar-compatible destinations
+
+## 7. Troubleshooting
+
+* Use `plakar log` and Rclone logs for diagnosis
+* Ensure OneDrive remote is authorized
+
+## 8. Backup strategy
+
+Follow 3-2-1 best practice:
+
+* 3 copies (original + 2 backups)
+* 2 different storage backends
+* 1 offsite (OneDrive, filesystem, or S3)
+
+## 9. Appendix
+
+* [Rclone OneDrive Docs](https://rclone.org/onedrive/)
+* [Plakar CLI Reference](/docs/main)

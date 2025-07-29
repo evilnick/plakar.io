@@ -1,110 +1,206 @@
 ---
-title: Google Drive integration documentation
-description: Back up and restore your Google Drive data, or store your Plakar backups on Google Drive, using the Rclone integration.
-technology_description: This integration uses Rclone’s official Google Drive remote to connect Plakar to your Google Drive account securely and efficiently.
-categories:
-  - integrations
-provides:
-  - source-connector
-  - destination-connector
-  - storage-connector
+title: Google Drive integration
+description: Backup and restore your Google Drive with Plakar — secure, portable, and deduplicated.
+technology_description: This integration uses the official Google Drive remote via Rclone to extract and restore data into a Kloset store.
+categories: integrations
 tags:
   - google drive
   - backup
-  - storage
+  - disaster recovery
   - encryption
-  - privacy
+  - deduplication
+  - versioning
+  - immutable storage
+  - compliance
+  - long-term archiving
+  - airgapped backup
+  - snapshot technology
+  - portable format
 stage: test
-date: 2025-07-29
+date: 2025-07-26
+plakar_version: ">=1.0.3"
+integration_version: 0.1.0
+resource_type: object-storage
+provides:
+  - source connector
+  - destination connector
+  - storage connector
+  - viewer
 ---
 
-# Google Drive Integration
+# Integration Package: Google Drive
 
 ## 1. Introduction
 
-> **Requirements:**
-> - **Plakar version**: {{< param "plakar_version" >}}
->   - **Integration version**: {{< param "integration_version" >}}
->   - **Access rights**: Google Drive account with read access for source; write access for destination/storage roles
-
-This integration allows you to back up and restore Google Drive data using Plakar’s Rclone plugin system. No extra package is needed beyond Rclone: Plakar calls the Rclone plugin via gRPC to connect and transfer data.
-
-Snapshots are stored in a reposiroty called Kloset, with full deduplication, encryption, and immutability. You can even use Google Drive itself as the storage backend for your Kloset snapshots.
+This integration allows you to snapshot and restore Google Drive data using Plakar to store it in a Kloset store, while minimizing storage usage and ensuring strong data security.
+It includes a Storage Connector that lets you persist snapshots to Google Drive itself, either from Google Drive or from other sources.
+A Viewer is also provided to inspect, search, and restore snapshots without requiring full extraction.
 
 **Use cases:**
-- Cold backup of Google Drive cloud storage
-  - Long-term archive and legal hold of Drive folders
-  - Offline export via `.ptar`
-  - Disaster recovery workflows
+
+* Cold backup of Google Drive folders
+* Long-term archiving and disaster recovery
+* Portable export and vendor escape to other platforms
 
 **Target technologies:**
-- **Supported versions**: All Google Drive accounts supported by Rclone
-  - **System compatibility**: Compatible with personal and business Google Drive accounts
+
+* Supported versions: All Google Drive accounts supported by Rclone
+* Supported editions: Personal and Business Google Drive
+* System compatibility: macOS, Linux, Windows via Rclone
+
+**Requirements:**
+
+* Plakar version: >=1.0.3
+* Integration version: 0.1.0
+* Google Drive API credentials configured in Rclone
 
 ## 2. Architecture
 
-> Architecture diagram:
-```plaintext
+```
+                                Viewer (CLI/UI)
+                                  ↑
 Google Drive ← Source Connector → Kloset Store ←→ Storage Connector → Google Drive
-                                 ↓
-                  Google Drive ← Destination Connector 
+                                  ↓
+                   Google Drive ← Destination Connector → Other compatible resources
 ```
 
-The Google Drive integration uses Plakar's plugin system to interact with Google Drive via Rclone. Plakar communicates with the plugin over gRPC, allowing you to create snapshots and restore them as needed.
-A Google Drive account can also serve as the storage backend for Kloset snapshots, enabling you to leverage Google Drive's cloud storage capabilities directly.
+**Components provided:**
 
-**Components:**
-- **Source Connector**: read-only connector to extract data from Google Drive
-- **Destination Connector**: write connector to restore data into Google Drive
-- **Storage Connector**: used to persist snapshots directly in Google Drive
+* Source Connector: extract data from Google Drive
+* Destination Connector: restore snapshots to Google Drive
+* Storage Connector: persist snapshots inside Google Drive as the backend
+* Viewer: browse and search snapshots in UI/CLI
 
 ## 3. Installation
 
-Install Rclone and configure a Google Drive remote. See the [Rclone installation page](https://rclone.org/install/) and [Google Drive setup](https://rclone.org/drive/).
+### 3.1 Prerequisites 
+
+This integration is distributed as an Rclone-powered connector.
+You only need Plakar and Rclone installed.
+
+Install Rclone: [https://rclone.org/install/](https://rclone.org/install/)
+Configure your Google Drive remote: [https://rclone.org/drive/](https://rclone.org/drive/)
+
+```bash
+rclone config
+```
+
+After you can build and install it in a few seconds using Plakar’s built-in tooling.
+
+**Build the package:**
+
+Run the following command to fetch and compile the integration:
+
+```bash
+plakar pkg build rclone
+```
+
+This will generate a portable .ptar archive, for example:
+
+`rclone_v0.1.0-devel.xxxxxx_linux_amd64.ptar`
+
+**Install the package:**
+
+Once built, install it locally with:
+
+```bash
+plakar pkg add ./path/to/rclone_v0.1.0-devel.xxxxxx_linux_amd64.ptar
+```
+
+**Verify installation:**
+
+Check that the integration appears in your available connectors:
+
+```bash
+plakar version
+```
+
+You should now see all the rclone provider listed (which includes Dropbox) in the importers, exporters, or klosets:
+```plaintext
+importers: fs, s3, googledrive, ...
+exporters: fs, s3, googledrive, ...
+klosets: fs, s3, ptar, googledrive, ...
+```
 
 ## 4. Configuration
 
-Configure your remote in Rclone, then add it to Plakar’s config as shown in the Rclone integration doc.
+Once Rclone is configured, import it into Plakar.
 
-To include your configuration in your Plakar config, you can use the following command:
-
+### 4.1 Source Connector
 
 ```bash
-rclone config show `your_config_name` | ./plakar `source|destination|store` import
+rclone config show mygoogledrive | plakar config source import
 ```
 
-> Choose `source`, `destination`, or `store` based on your use case.
-> Source for backups, destination for restores, and store for Kloset.
+### 4.2 Destination Connector
+
+```bash
+rclone config show mygoogledrive | plakar config destination import
+```
+
+### 4.3 Storage Connector
+
+```bash
+rclone config show mygoogledrive | plakar config store import
+```
+
+> Replace `mygoogledrive` with your Rclone remote name.
 
 ## 5. Usage
 
-- Backup: `plakar at /repo backup @your_config_name`
-- Restore: `plakar at /repo restore -to @your_config_name <snapshot-id>`
-- Store: `plakar at your_config_name://kloset create`
+### 5.1 Snapshot
 
-## 6. Limitations
+```bash
+plakar at @mygoogledrive backup @mygoogledrive
+```
 
-- Google Drive API rate limits
-- Shared drives require extra config
+### 5.2 Inspection
 
-## 7. Permissions required
+```bash
+plakar at @mygoogledrive ls
+plakar at @mygoogledrive cat <snapshot-id>:/path/to/file
+plakar at @mygoogledrive ui
+```
 
-- Rclone must be authorized for your Google account
+### 5.3 Restore
 
-## 8. Troubleshooting
+```bash
+plakar at @mygoogledrive restore -to @mygoogledrive <snapshot-id>
+```
 
-- Check Rclone logs for errors
+> Here `@mygoogledrive` had been used as a source, destination, and store connector.
 
-## 9. Backup strategy
+## 6. Integration-specific behaviors
 
-Follow the 3-2-1 rule: 3 copies, 2 media, 1 offsite.
+### 6.1 Limitations
 
-## 10. Appendix
+* Google Drive API has rate limits — heavy usage may require throttling
+* Only the latest version of files are snapshotted
+* Shared links and permissions are not preserved in snapshots
 
-- [Plakar CLI Reference](/docs/main)
-- [Rclone Google Drive documentation](https://rclone.org/drive/)
+### 6.2 Automation
 
-## 11. FAQ
+* Schedule snapshots using cron or systemd timers
+* Use `.ptar` archives for export/transport
 
-- Does Plakar back up all versions? No, only the latest.
-- Can I restore to another provider? Yes, if supported by Rclone.
+### 6.3 Restore Notes
+
+* Can restore into Google Drive or export to S3, filesystem, or other Plakar-compatible destinations
+
+## 7. Troubleshooting
+
+* Use `plakar log` and Rclone logs for diagnosis
+* Ensure Google Drive remote is authorized
+
+## 8. Backup strategy
+
+Follow 3-2-1 best practice:
+
+* 3 copies (original + 2 backups)
+* 2 different storage backends
+* 1 offsite (Google Drive, filesystem, or S3)
+
+## 9. Appendix
+
+* [Rclone Google Drive Docs](https://rclone.org/drive/)
+* [Plakar CLI Reference](/docs/main)
