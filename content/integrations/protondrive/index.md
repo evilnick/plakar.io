@@ -4,7 +4,9 @@ subtitle: "Private, encrypted backups for your Proton Drive files"
 description: Use Plakar to import, store, and export your Proton Drive data securely. Immutable, deduplicated, and fully under your control.
 technology_description: Proton Drive is a privacy-first cloud storage service from Proton, the company behind Proton Mail and Proton VPN, designed to protect sensitive files with end-to-end encryption.
 categories:
-  - cloud storage
+  - source connector
+  - destination connector
+  - storage connector
 tags:
   - proton drive
   - backup
