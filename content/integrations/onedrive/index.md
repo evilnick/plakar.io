@@ -88,12 +88,19 @@ OneDrive ⇄ Plakar Agent ⇄ Encrypted, Deduplicated Snapshots ⇄ OneDrive or 
 
 Your data flows in securely, is encrypted locally, and can be stored **back on OneDrive** or any other destination you choose.
 
-## 🚀 Ready to Make OneDrive Work on Your Terms?
+## � TL;DR: Backups You Control
 
-[Back up, store, and restore your OneDrive with Plakar →](docs/main/integrations/onedrive/)
+Plakar + OneDrive gives you:
+
+✅ Encrypted, versioned backups
+✅ End-to-end encryption (you own the keys)
+✅ Deduplication to save space
+✅ Zero-trust backup flows
+✅ Visual inspection and audit readiness
+✅ No cloud vendor lock-in
 
 ---
 
-💬 **Need help?** Join our [Discord](https://discord.gg/uuegtnF2Q5) or contribute on [GitHub](https://github.com/PlakarKorp/plakar).
+� Ready to make OneDrive work on your terms?
 
-Explore more integrations: [Dropbox](#) · [OneDrive](#) · [Icloud drive](#)
+[Back up, store, and restore your OneDrive with Plakar →](docs/main/integrations/onedrive/)

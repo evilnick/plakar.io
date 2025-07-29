@@ -62,10 +62,19 @@ Back up to Dropbox today, restore to S3 or OneDrive tomorrow. Snapshots are port
 
 Whether personal or business use, it’s important to explain that the user is ultimately responsible for backups. Dropbox doesn’t guarantee data retention or integrity. Using Plakar gives you control.
 
-## Ready to take control of your Dropbox data?
+## 🔄 TL;DR: Backups You Control
+
+Plakar + Dropbox gives you:
+
+✅ Encrypted, versioned backups
+✅ End-to-end encryption (you own the keys)
+✅ Deduplication to save space
+✅ Zero-trust backup flows
+✅ Visual inspection and audit readiness
+✅ No cloud vendor lock-in
+
+---
+
+💡 Ready to take control of your Dropbox data?
 
 [Back up, store, and restore your Dropbox with Plakar →](docs/main/integrations/dropbox/)
-
-**Need help?** Join our [Discord](https://discord.gg/uuegtnF2Q5) or contribute on [GitHub](https://github.com/PlakarKorp/plakar).
-
-Explore more integrations: [Google Drive](#) · [OneDrive](#) · [iCloud Drive](#)

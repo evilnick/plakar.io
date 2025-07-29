@@ -91,11 +91,8 @@ Plakar + Google Drive gives you:
 ✅ Visual inspection and audit readiness  
 ✅ No cloud vendor lock-in
 
+---
 
 💡 Ready to protect your Google Drive data?
 
-[Explore the setup guide →](docs/main/integrations/google-drive/)
-
-**Need help?** Join our [Discord](https://discord.gg/uuegtnF2Q5) or contribute on [GitHub](https://github.com/PlakarKorp/plakar).
-
-Explore more integrations: [Dropbox](#) · [OneDrive](#) · [iCloud Drive](#)
+[Get started with Plakar today!](https://plakar.io/docs/main/integrations/google-drive/)

@@ -88,12 +88,19 @@ Koofr ⇄ Plakar Agent ⇄ Encrypted, Deduplicated Snapshots ⇄ Koofr or Other 
 
 Files flow securely in, get chunked and encrypted, then stored wherever you want — Koofr included.
 
-## 🚀 Ready to Extend Your Koofr Privacy?
+## � TL;DR: Backups You Control
 
-[Import, store, and export your Koofr files with Plakar →](docs/main/integrations/koofr/)
+Plakar + Koofr gives you:
+
+✅ Encrypted, versioned backups
+✅ End-to-end encryption (you own the keys)
+✅ Deduplication to save space
+✅ Zero-trust backup flows
+✅ Visual inspection and audit readiness
+✅ No cloud vendor lock-in
 
 ---
 
-💬 **Need help?** Join our [Discord](https://discord.gg/uuegtnF2Q5) or contribute on [GitHub](https://github.com/PlakarKorp/plakar).
+💡 Ready to extend your Koofr privacy?
 
-Explore more integrations: [Dropbox](#) · [OneDrive](#) · [Icloud drive](#)
+[Import, store, and export your Koofr files with Plakar →](docs/main/integrations/koofr/)

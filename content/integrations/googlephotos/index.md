@@ -85,12 +85,19 @@ Google Photos ⇄ Plakar Agent ⇄ Encrypted, Deduplicated Repository ⇄ Export
 
 Photos flow in securely, are chunked and encrypted, and can be pushed back to Google Photos or another destination — with full history preserved.
 
-## 🚀 Ready to Take Control of Your Photos?
+## � TL;DR: Backups You Control
 
-[Import and export your Google Photos with Plakar →](docs/main/integrations/google-photos/)
+Plakar + Google Photos gives you:
+
+✅ Secure, versioned imports and exports
+✅ End-to-end encryption (you own the keys)
+✅ Deduplication to save space
+✅ Zero-trust backup flows
+✅ Visual inspection and audit readiness
+✅ No cloud vendor lock-in
 
 ---
 
-💬 **Need help?** Join our [Discord](https://discord.gg/uuegtnF2Q5) or contribute on [GitHub](https://github.com/PlakarKorp/plakar).
+💡 Ready to take control of your Google Photos?
 
-Explore more integrations: [Dropbox](#) · [OneDrive](#) · [Icloud drive](#)
+[Import and export your Google Photos with Plakar →](docs/main/integrations/google-photos/)

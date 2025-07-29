@@ -88,6 +88,19 @@ OpenDrive ⇄ Plakar Agent ⇄ Encrypted, Deduplicated Snapshots ⇄ OpenDrive o
 
 Files flow securely in, are chunked and encrypted, then stored where you decide — OpenDrive included.
 
-## 🚀 Ready to Make OpenDrive Work for You?
+## � TL;DR: Backups You Control
+
+Plakar + OpenDrive gives you:
+
+✅ Flexible, encrypted backups
+✅ End-to-end encryption (you own the keys)
+✅ Deduplication to save space
+✅ Zero-trust backup flows
+✅ Visual inspection and audit readiness
+✅ No cloud vendor lock-in
+
+---
+
+💡 Ready to make OpenDrive work for you?
 
 [Back up, store, and restore your OpenDrive with Plakar →](docs/main/integrations/opendrive/)

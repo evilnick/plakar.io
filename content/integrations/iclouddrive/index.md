@@ -89,12 +89,19 @@ iCloud Drive ⇄ Plakar Agent ⇄ Encrypted, Deduplicated Snapshots ⇄ iCloud D
 
 Your data flows securely in, gets chunked and encrypted, and can be stored **back on iCloud Drive** or elsewhere — you decide.
 
-## 🚀 Ready to Take Control of Your Apple Files?
+## � TL;DR: Backups You Control
 
-[Import, store, and restore your iCloud Drive with Plakar →](docs/main/integrations/icloud-drive/)
+Plakar + iCloud Drive gives you:
+
+✅ Encrypted, versioned backups
+✅ End-to-end encryption (you own the keys)
+✅ Deduplication to save space
+✅ Zero-trust backup flows
+✅ Visual inspection and audit readiness
+✅ No cloud vendor lock-in
 
 ---
 
-💬 **Need help?** Join our [Discord](https://discord.gg/uuegtnF2Q5) or contribute on [GitHub](https://github.com/PlakarKorp/plakar).
+💡 Ready to take control of your Apple files?
 
-Explore more integrations: [Dropbox](#) · [OneDrive](#) · [Icloud drive](#)
+[Import, store, and restore your iCloud Drive with Plakar →](docs/main/integrations/icloud-drive/)
