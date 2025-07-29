@@ -14,7 +14,7 @@ tags:
   - storage
   - encryption
   - privacy
-stage: testing
+stage: test
 date: 2025-07-29
 ---
 
@@ -63,10 +63,21 @@ Install Rclone and configure a Google Photos remote. See the [Rclone installatio
 
 Configure your remote in Rclone, then add it to Plakar’s config as shown in the Rclone integration doc.
 
+To include your configuration in your Plakar config, you can use the following command:
+
+
+```bash
+rclone config show `your_config_name` | ./plakar `source|destination` import
+```
+
+> Choose `source`, `destination`, or `store` based on your use case.
+> Source for backups and destination for restores.
+
+
 ## 5. Usage
 
-- Import: `plakar at /repo backup @googlephotos`
-- Export: `plakar at /repo restore -to @googlephotos <snapshot-id>`
+- Backup: `plakar at /repo backup @your_config_name`
+- Restore: `plakar at /repo restore -to @your_config_name <snapshot-id>`
 
 ## 6. Limitations
 

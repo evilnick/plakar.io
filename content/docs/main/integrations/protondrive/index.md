@@ -14,7 +14,7 @@ tags:
   - storage
   - encryption
   - privacy
-stage: testing
+stage: test
 date: 2025-07-29
 ---
 
@@ -66,11 +66,22 @@ Install Rclone and configure a Proton Drive remote. See the [Rclone installation
 
 Configure your remote in Rclone, then add it to Plakar’s config as shown in the Rclone integration doc.
 
+To include your configuration in your Plakar config, you can use the following command:
+
+
+```bash
+rclone config show `your_config_name` | ./plakar `source|destination|store` import
+```
+
+> Choose `source`, `destination`, or `store` based on your use case.
+> Source for backups, destination for restores, and store for Kloset.
+
+
 ## 5. Usage
 
-- Backup: `plakar at /repo backup @protondrive`
-- Restore: `plakar at /repo restore -to @protondrive <snapshot-id>`
-- Store: `plakar at protondrive://kloset create`
+- Backup: `plakar at /repo backup @your_config_name`
+- Restore: `plakar at /repo restore -to @your_config_name <snapshot-id>`
+- Store: `plakar at your_config_name://kloset create`
 
 ## 6. Limitations
 
