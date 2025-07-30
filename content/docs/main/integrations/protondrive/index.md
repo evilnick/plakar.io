@@ -75,28 +75,17 @@ Configure your Proton Drive remote: [https://rclone.org/protondrive/](https://rc
 rclone config
 ```
 
-After you can build and install it in a few seconds using Plakar’s built-in tooling.
-Build the package
-
-**Build the package:**
-
-Run the following command to fetch and compile the integration:
-
-```bash
-plakar pkg build rclone
-```
-
-This will generate a portable .ptar archive, for example:
-
-`rclone_v0.1.0-devel.xxxxxx_linux_amd64.ptar`
+After you can install it in a few seconds using Plakar’s built-in tooling.
 
 **Install the package:**
 
-Once built, install it locally with:
+Run the following command to install the integration:
 
 ```bash
-plakar pkg add ./path/to/rclone_v0.1.0-devel.xxxxxx_linux_amd64.ptar
+plakar pkg add rclone
 ```
+
+This will generate a portable .ptar archive and install it in your Plakar environment.
 
 **Verify installation:**
 
@@ -120,47 +109,81 @@ Once Rclone is configured, import it into Plakar.
 
 ### 4.1 Source Connector
 
+To import your rclone config as a source connector (to make backups), run:
+
 ```bash
-rclone config show myprotondrive | plakar config source import
+rclone config show myprotondrive | plakar source import
 ```
 
 ### 4.2 Destination Connector
 
+To import your rclone config as a destination connector (to restore backups), run:
+
 ```bash
-rclone config show myprotondrive | plakar config destination import
+rclone config show myprotondrive | plakar destination import
 ```
 
 ### 4.3 Storage Connector
 
+To import your rclone config as a storage connector (to store backups in Dropbox), run:
+
 ```bash
-rclone config show myprotondrive | plakar config store import
+rclone config show myprotondrive | plakar store import
 ```
 
 > Replace `myprotondrive` with your Rclone remote name.
 
 ## 5. Usage
 
-### 5.1 Snapshot
+For the following examples, we will use `@myprotondrive` as the Rclone remote name configured in Plakar.
+
+First, create a Kloset store to hold your snapshots:
 
 ```bash
-plakar at @myprotondrive backup @myprotondrive
+plakar at ./backup create
 ```
+
+A folder named `backup` will be created in the current directory, which will hold the snapshots.
+
+### 5.1 Snapshot
+
+To back up your Proton Drive data in the recently created Kloset store, use:
+
+```bash
+plakar at ./backup backup @myprotondrive
+```
+
+The last line of the output will show the snapshot ID, which you can use to inspect or restore later.
 
 ### 5.2 Inspection
 
+You can inspect your snapshots without extracting them. List or display the contents of the Kloset store:
+
 ```bash
-plakar at @myprotondrive ls
-plakar at @myprotondrive cat <snapshot-id>:/path/to/file
-plakar at @myprotondrive ui
+plakar at ./backup ls
+plakar at ./backup cat <snapshot-id>:/path/to/file
+plakar at ./backup ui
 ```
 
 ### 5.3 Restore
 
+To restore a snapshot back to Proton Drive, use:
+
 ```bash
-plakar at @myprotondrive restore -to @myprotondrive <snapshot-id>
+plakar at ./backup restore -to @myprotondrive <snapshot-id>
 ```
 
-> Here `@myprotondrive` had been used as a source, destination, and store connector.
+This will restore the snapshot to your Proton Drive account, preserving its original structure.
+
+### 5.4 Storage
+
+To use Proton Drive as a storage backend, create a Kloset store that uses the Proton Drive remote:
+
+```bash
+plakar at @myprotondrive create
+```
+
+This will create a Kloset store in your Proton Drive cloud, usable like any other Kloset store.
 
 ## 6. Integration-specific behaviors
 

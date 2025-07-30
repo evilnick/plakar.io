@@ -83,27 +83,17 @@ Configure your Google Photos remote: [https://rclone.org/googlephotos/](https://
 rclone config
 ```
 
-After you can build and install it in a few seconds using Plakar’s built-in tooling.
-
-**Build the package:**
-
-Run the following command to fetch and compile the integration:
-
-```bash
-plakar pkg build rclone
-```
-
-This will generate a portable .ptar archive, for example:
-
-`rclone_v0.1.0-devel.xxxxxx_linux_amd64.ptar`
+After you can install it in a few seconds using Plakar’s built-in tooling.
 
 **Install the package:**
 
-Once built, install it locally with:
+Run the following command to install the integration:
 
 ```bash
-plakar pkg add ./path/to/rclone_v0.1.0-devel.xxxxxx_linux_amd64.ptar
+plakar pkg add rclone
 ```
+
+This will generate a portable .ptar archive and install it in your Plakar environment.
 
 **Verify installation:**
 
@@ -126,41 +116,64 @@ Once Rclone is configured, import it into Plakar.
 
 ### 4.1 Source Connector
 
+To import your rclone config as a source connector (to make backups), run:
+
 ```bash
-rclone config show mygooglephotos | plakar config source import
+rclone config show mygooglephotos | plakar source import
 ```
 
 ### 4.2 Destination Connector
 
+To import your rclone config as a destination connector (to restore backups), run:
+
 ```bash
-rclone config show mygooglephotos | plakar config destination import
+rclone config show mygooglephotos | plakar destination import
 ```
 
 > Replace `mygooglephotos` with your Rclone remote name.
 
 ## 5. Usage
 
-### 5.1 Snapshot
+For the following examples, we will use `@mygooglephotos` as the Rclone remote name configured in Plakar.
+
+First over all, we need to create a Kloset store to hold our snapshots:
 
 ```bash
-plakar at @mygooglephotos backup @mygooglephotos
+plakar at ./backup create
 ```
+
+A folder named `backup` will be created in the current directory, which will hold the snapshots.
+
+### 5.1 Snapshot
+
+To back up your Google Photos data in the recently created Kloset store, use the following command:
+
+```bash
+plakar at ./backup backup @mygooglephotos
+```
+
+The last line of the output will show the snapshot ID, which you can use to inspect or restore later.
 
 ### 5.2 Inspection
 
+With Plakar, you can inspect your snapshots without extracting them.
+You can list or display the contents of the Kloset store:
+
 ```bash
-plakar at @mygooglephotos ls
-plakar at @mygooglephotos cat <snapshot-id>:/path/to/file
-plakar at @mygooglephotos ui
+plakar at ./backup ls
+plakar at ./backup cat <snapshot-id>:/path/to/file
+plakar at ./backup ui
 ```
 
 ### 5.3 Restore
 
+To restore a snapshot back to Google Photos, use the following command:
+
 ```bash
-plakar at @mygooglephotos restore -to @mygooglephotos <snapshot-id>
+plakar at ./backup restore -to @mygooglephotos <snapshot-id>
 ```
 
-> Here `@mygooglephotos` had been used as a source and destination connector.
+This will restore the snapshot to your Google Photos account, making it available in the same structure as it was when backed up.
 
 ## 6. Integration-specific behaviors
 
