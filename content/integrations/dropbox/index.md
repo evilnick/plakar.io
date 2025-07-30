@@ -1,7 +1,7 @@
 ---
 title: "Dropbox"
-meta_title: "Secure Dropbox backup with Plakar"
-meta_description: "Encrypted, versioned Dropbox backups with restore and storage capabilities"
+subtitle: "Secure Dropbox backup with Plakar"
+description: "Back up, restore, or replicate data on Dropbox while keeping full control over snapshots, history, and encryption."
 technology_description: "Dropbox is a cloud storage service used by individuals and teams to sync and share files across devices."
 categories:
   - source connector
