@@ -13,7 +13,7 @@ tags:
   - restore
   - storage
   - cloud
-stage: test
+stage: available
 date: 2025-07-28
 ---
 
