@@ -98,4 +98,4 @@ Plakar + Google Photos gives you:
 
 💡 Ready to take control of your Google Photos?
 
-[Import and export your Google Photos with Plakar →](docs/main/integrations/google-photos/)
+[Import and export your Google Photos with Plakar →](docs/main/integrations/googlephotos/)

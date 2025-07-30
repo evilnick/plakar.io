@@ -95,4 +95,4 @@ Plakar + Google Drive gives you:
 
 💡 Ready to protect your Google Drive data?
 
-[Get started with Plakar today!](https://plakar.io/docs/main/integrations/google-drive/)
+[Get started with Plakar today!](https://plakar.io/docs/main/integrations/googledrive/)

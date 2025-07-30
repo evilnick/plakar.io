@@ -105,4 +105,4 @@ Plakar + iCloud Drive gives you:
 
 💡 Ready to take control of your Apple files?
 
-[Import, store, and restore your iCloud Drive with Plakar →](docs/main/integrations/icloud-drive/)
+[Import, store, and restore your iCloud Drive with Plakar →](docs/main/integrations/iclouddrive/)
