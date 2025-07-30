@@ -13,7 +13,7 @@ tags:
   - restore
   - storage
 stage: test
-date: 2025‑07‑28
+date: 2025-07-28
 ---
 
 # Dropbox integration
