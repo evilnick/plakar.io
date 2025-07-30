@@ -21,9 +21,9 @@ tags:
 - airgapped backup
 - snapshot technology
 - portable format
-stage: beta
-date: 2025-07-26
-plakar_version: 1.0.3 or later
+stage: stable
+date: 2025-07-30
+plakar_version: 1.0.2 or later
 integration_version: 1.0.0
 resource_type: object-storage
 provides:
@@ -33,51 +33,52 @@ provides:
 - viewer
 ---
 
-## Introduction
+This documentation assumes Plakar v1.0.2 is installed.
 
-> **Requirements**
-> - **Plakar version**: {{< param "plakar_version" >}}
-> - **Integration version**: {{< param "integration_version" >}}
-> - **Access rights**: IAM user with read access (`s3:GetObject`, `s3:ListBucket`) on the bucket for source; `s3:PutObject` for destination/storage roles
+If you are running a newer version, the commands differ slightly as some of the **configuration commands have changed in v1.0.3**. Check the Changelog of v1.0.3 to adapt the commands accordingly.
+
+## Introduction
 
 Plakar's built-in MinIO integration includes three connectors:
 * **Storage connector**: to host a Kloset store in a MinIO bucket.
 * **Source connector**: to back up any MinIO bucket into an existing Kloset store.
 * **Destination connector**: to restore from any Kloset store into a MinIO bucket.
 
-This integration is built-in and does not require any additional package installation.
+**Use-cases for this integration**
 
-> Architecture diagram
-```plaintext
-                             Viewer (CLI/UI)
-                                 ↑
-MinIO ← Source Connector → Kloset Store ←→ Storage Connector → MinIO
-                                 ↓
-                  MinIO ← Destination Connector → Compatible S3 targets
-```
+* **Host a Kloset store in a MinIO bucket**, and use it to back up your local filesystem, remote servers, databases, or any other data source supported by Plakar.
+* **Backup a MinIO bucket** to any Kloset store, for example hosted on the local filesystem, in a remote SFTP server, or even in another MinIO bucket.
+* **Restore a snapshot from a Kloset store into a MinIO bucket**.
 
-**Use cases:**
-- Cold backup of your on-premise object storage.
-- Long-term archive and legal hold of MinIO buckets.
-- Offline export your buckets to a flat `.ptar` file.
-- Disaster recovery workflows.
+<!-- <div style="display: flex;">
+  <img src="./architecture-store.png" alt="Host a Kloset to a MinIO bucket" width="500px" />
+  <img src="./architecture-backup.png" alt="Backup a MinIO bucket" width="500px" />
+  <img src="./architecture-restore.png" alt="Restore a backup to a MinIO bucket" width="500px" />
+</div> -->
 
-**Compatibility:**
+<!-- > Architecture overview of the MinIO integration
+![Host a Kloset to a MinIO bucket](./architecture-store.png)
+![Backup a MinIO bucket](./architecture-backup.png)
+![Restore a backup to a MinIO bucket](./architecture-restore.png) -->
 
-- **Supported versions**: All versions of MinIO.
-- **System compatibility**: Compatible with local, on-premise and cloud-hosted MinIO servers.
 
+**Compatibility**
+
+- This integration is built-in in Plakar and available in all versions. No extra package installation is needed.
+- All versions of MinIO are supported.
 
 ## Installation
 
-Check that `s3` appears in the available connectors. No extra package installation is needed.
+To interact with MinIO, Plakar uses the S3-compatible API of MinIO which is supported natively.
 
-> Available connectors for your Plakar installation
+No additional packages or plugins are required.
+
+> The `s3` connectors are built-in, and are always available in your Plakar installation
 ```bash
 $ plakar version
 plakar/v1.0.2
 
-importers: fs, ftp, s3, sftp # <-- Check that `s3` is listed here
+importers: fs, ftp, s3, sftp # <-- `s3` is listed here
 exporters: fs, ftp, s3, sftp # <-- And here
 klosets: fs, http, https, ptar, s3, sftp, sqlite # <-- And here
 ```
@@ -91,11 +92,11 @@ MinIO supports fine-grained access control using IAM-style policies. You can ass
 ***Option 1: Using the mc CLI (MinIO Client)***
 
 This is the most common and scriptable method. You can:
-- Create users with mc admin user add
-- Define policies in JSON format compatible with AWS IAM
-- Attach policies to users with mc admin policy attach
+- Create users with `mc admin user add`
+- Define policies in JSON format
+- Attach policies to users with `mc admin policy attach`
 
-> Contents of readonly-policy.json
+> Contents of policy.json — Remember to remove comments or the JSON will be invalid
 ```json
 {
   "Version": "2012-10-17",
@@ -111,12 +112,12 @@ This is the most common and scriptable method. You can:
 }
 ```
 
-> Setup MinIO policy using the CLI
+> Create the user `plakar_user` with the password `mysecretpassword` and assign the policy `plakar-policy` to it
 ```bash
 $ mc alias set local http://localhost:9000 minioadmin minioadmin
 $ mc admin user add local plakar_user mysecretpassword
-$ mc admin policy create local plakar-readonly-policy readonly-policy.json
-$ mc admin policy attach local --user plakar_user plakar-readonly-policy
+$ mc admin policy create local plakar-policy policy.json
+$ mc admin policy attach local --user plakar_user plakar-policy
 ```
 
 ---
@@ -124,22 +125,31 @@ $ mc admin policy attach local --user plakar_user plakar-readonly-policy
 ***Option 2: Using the MinIO Console (Web UI)***
 
 If you have enabled the admin console, you can:
-- Create users via the Identity > Users panel
+- Create users via the `Identity` > `Users` panel
 - Assign predefined or custom policies
 - Review and manage access through the UI
 
+---
 
-## Configuration
+The policy you should attach to the user depends on your use-case:
+- **Read-only policy**: If you only need to back up a bucket, use a policy that allows `s3:GetObject` and `s3:ListBucket` actions. Write permissions are not needed.
+- **Read-write policy**: If you need to restore a snapshot into a bucket or host a Kloset store in a bucket, use a policy that also includes `s3:PutObject`.
 
-Depending on your needs, you can configure Plakar to use MinIO either as a Kloset store backend, as a source for backups, as a destination for restoring snapshots, or a combination of all three.
+
+## Storage connector
+
+The storage connector allows you to host a Kloset store in a MinIO bucket. This is useful if you want to use MinIO as a durable, S3-compatible backend for storing Plakar snapshots.
+
+> Host a Kloset store in a MinIO bucket
+> ![Host a Kloset to a MinIO bucket](./architecture-store.svg)
 
 ---
 
-### Storage Connector
+### Configuration
 
-Configure the storage connector, to host a Kloset store in a MinIO bucket.
+Use the commands `plakar config repository create <name>` and `plakar config repository set <name> <option> <value>` to configure a MinIO bucket as a Kloset store.
 
-> Configure the storage connector to host a Kloset store in MinIO
+> Configure Plakar to use MinIO to host a Kloset store
 ```bash
 $ plakar config repository create minio_store
 $ plakar config repository set minio_store location s3://localhost:9000/plakar-kloset
@@ -149,13 +159,52 @@ $ plakar config repository set minio_store secret_access_key minioadmin
 $ plakar config repository set minio_store use_tls false
 ```
 
-Use the syntax `plakar at @minio_store` to refer to this store in commands, for example `plakar at @minio_store ls` to list snapshots.
+**Configuration options**
+
+| Option | Value |
+|--------|-------------|
+| `location` | Bucket location in the format `s3://<hostname[:port]>/<bucket-name>`
+| `access_key` | Access key for the MinIO instance
+| `secret_access_key` | Secret key for the MinIO instance
+| `use_tls` | Whether to use TLS for the connection (default: `true`)
+| `storage_class` | The storage class to use for objects in the bucket (default: `STANDARD`)
+
+Once configured, use the syntax `plakar at @minio_store` to refer to this store in commands.
 
 ---
 
-### Source Connector
+### Use your Kloset store hosted on MinIO
 
-Configure the source connector, to backup a MinIO bucket.
+Once configured, use the Kloset store hosted in MinIO like any other Kloset store.
+
+> Use the Kloset store hosted in MinIO like any other Kloset store
+```bash
+# Initialize a new Kloset store in the MinIO bucket
+$ plakar at @minio_store create
+# List all snapshots in the Kloset store
+$ plakar at @minio_store ls
+# Backup a local folder to the Kloset store
+$ plakar at @minio_store backup /etc
+# Restore a file from a snapshot in the Kloset store
+$ plakar at @minio_store restore <snapshot_id>:/etc/passwd
+# Run the web UI to browse the Kloset store
+$ plakar at @minio_store ui
+```
+
+## Source connector
+
+The source connector allows you to create a snapshot of a MinIO bucket and store it in a Kloset store.
+
+The Kloset store can be hosted in any of the supported backends by Plakar (filesystem, SFTP, …), including MinIO itself.
+
+> Backup a MinIO bucket to a Kloset store
+> ![Backup a MinIO bucket](./architecture-backup.svg)
+
+---
+
+### Configuration
+
+Use the commands `plakar config remote create <name>` and `plakar config remote set <name> <option> <value>` to configure a MinIO bucket as a source for backups.
 
 > Configure the source connector to back up a MinIO bucket
 ```bash
@@ -167,162 +216,83 @@ $ plakar config remote set minio_src secret_access_key minioadmin
 $ plakar config remote set minio_src use_tls false
 ```
 
-Use the syntax `@minio_src` to refer to this source in commands, for example `plakar backup @minio_src` to create a snapshot of the bucket.
+**Configuration options**
+
+The configuration options for the source connector are similar to those of the storage connector. See the [Storage connector](#storage-connector) section for details.
 
 ---
 
-### Destination Connector
+### Backup a MinIO bucket
 
-Configure the destination connector, to restore a snapshot into a MinIO bucket.
+To backup a MinIO bucket into a Kloset store, use `plakar at <store> backup @minio_src`.
 
-> Configure the destination connector to restore a snapshot into a MinIO bucket
+> Create a Kloset store on the filesystem, and back up a configured MinIO bucket into it
 ```bash
-$ plakar config remote create minio_dst
-$ plakar config remote set minio_dst location s3://localhost:9000/restore-bucket
-$ plakar config remote set minio_dst access_key minioadmin
-$ plakar config remote set minio_dst secret_access_key minioadmin
+# Initialize a new Kloset store on the local filesystem
+$ plakar at ./my-store create
+# Run the backup, assuming @minio_src is configured
+$ plakar at ./my-store backup @minio_src
+```
+
+## Destination connector 
+
+The destination connector allows you to restore a snapshot from a Kloset store into a MinIO bucket.
+
+The Kloset store location does not matter: it can be hosted on the local filesystem, in a remote SFTP server, or even in another MinIO bucket.
+
+> Restore a snapshot to a MinIO bucket
+> ![Restore a backup to a MinIO bucket](./architecture-restore.svg)
+
+---
+
+### Configuration
+
+Use the commands `plakar config remote create <name>` and `plakar config remote set <name> <option> <value>` to configure a MinIO bucket as a destination for restores.
+
+> Configure the destination connector to back up a MinIO bucket
+```bash
+$ plakar config remote create minio_src
+$ plakar config remote set minio_src location s3://localhost:9000/mybucket
+$ plakar config remote set minio_src access_key minioadmin
+$ plakar config remote set minio_src secret_access_key minioadmin
 # Only if your MinIO instance does not use TLS
-$ plakar config remote set minio_dst use_tls false
-```
-
-Use the syntax `@minio_dst` to refer to this destination in commands, for example `plakar restore -to @minio_dst <snapshot-id>` to restore a snapshot into the bucket.
-
-
-## Usage
-
-### Backup a MinIO bucket to a Kloset store hosted on MinIO
-
-This commands performs a backup of the MinIO bucket configured in the source connector `@minio_src`, and stores it in the Kloset store configured in the storage connector `@minio_store`.
-
-> Store a snapshot of `@minio_src` in `@minio_store`
-```bash
-$ plakar at @minio_store backup @minio_src
-```
-
-Plakar uses a Source Connector to:
-- List all objects in the bucket using the S3-compatible API, 
-- Stream their content securely from the bucket, 
-- Break them down into small, content-addressed chunks, 
-- Deduplicate, compress and encrypt each chunk on the fly,
-- Write them to the Kloset store configured via minio_store.
-
-The resulting snapshot includes:
-- The object hierarchy (keys, prefixes) reconstructed as a virtual filesystem,
-- All associated metadata (timestamps, content-type, size), 
-- A manifest pointing to all chunks, forming a self-described, verifiable, immutable backup.
-
-The snapshot operation is stateless: only new or changed chunks are written to the store. Existing identical data is reused thanks to global deduplication.
-
-While MinIO does not offer native snapshot isolation, Plakar captures a consistent view of the data as seen during the listing and streaming phase. For consistency-sensitive use cases, consider freezing writes or restoring from versioned buckets.
-
----
-
-### Inspect your snapshots
-
-Plakar represents your bucket objects as a navigable file and folder tree structure, providing an intuitive way to browse your snapshots.
-
-This abstraction makes it easy to search and explore your backed-up data, whether you're using CLI commands or the web-based user interface.
-
-> List available snapshots
-```bash
-$ plakar at @minio_store ls
-```
-
-> Stream the contents of a file in a snapshot
-```bash
-$ plakar at @minio_store cat <snapshot-id>:/path/to/file
-```
-
-> Open the web UI
-```bash
-$ plakar at @minio_store ui
+$ plakar config remote set minio_src use_tls false
 ```
 
 ---
 
-### Restore a snapshot to a MinIO bucket, or to a local folder
+### Restore a snapshot to a MinIO bucket
 
-Plakar offers versatile restoration capabilities for your MinIO snapshots.
+To restore a snapshot from a Kloset store into a MinIO bucket, use `plakar at <store> restore -to @minio_dst <snapshot-id>`.
 
-Data can be restored not only to other MinIO instances or any compatible object store, but also directly to file systems where bucket paths are represented as directories and objects as files.
-
-This flexibility ensures your data remains accessible regardless of your target infrastructure.
-
-> Restore a snapshot to the MinIO bucket `@minio_dst`
+> Restore a snapshot from a Kloset store into a MinIO bucket
 ```bash
 $ plakar at @minio_store restore -to @minio_dst <snapshot-id>
 ```
 
-> Restore a snapshot to the local folder `./restore`
-```bash
-$ plakar at @minio_store restore -to ./restore <snapshot-id>
-```
+---
+
+## Limitations and considerations
+
+### Plakar rich-syntax vs simple-syntax
+
+Plakar supports two formats to specify the Kloset store location and the source or destination connector to operate on:
+- The **rich syntax** with `plakar at @<store>` referencing a storage connector, `plakar backup @<source>` referencing a source connector, and `plakar restore -to @<destination>` referencing a destination connector.
+- The **simple syntax** with `plakar at <store>` (eg. `plakar at ./mystore`), `plakar backup <source>` (eg. `plakar backup ./mybucket`), and `plakar restore -to <destination>` (eg. `plakar restore -to ./mybucket`).
+
+The rich syntax is the only way to refer to the MinIO storage connector, source connector, or destination connector.
+
+The reason is that only the rich syntax allows to provide the necessary configuration options (like `access_key`, `secret_access_key`, and `use_tls`) to connect to the MinIO instance.
 
 ---
 
-### Create a Kloset store in a MinIO bucket
+### Store MinIO configuration
 
-This command initializes a new Kloset store directly inside the specified MinIO bucket.
+The MinIO source connector makes a snapshots of a bucket by listing all objects in the bucket and downloading their contents. It **does not** store the bucket configuration itself, such as policies, lifecycle rules, or versioning settings.
 
-Once created, you can use this bucket as a durable, S3-compatible backend for storing Plakar snapshots.
+Also, if your MinIO instance uses server-side encryption (SSE) for storage-level encryption, the SSE configuration is not part of the data captured by Plakar. However, **Plakar performs its own encryption** before storing any chunk, ensuring data-at-rest security even without relying on SSE.
 
-Plakar does not require any additional server-side software to operate. It treats the MinIO bucket as a passive blob store and uses it to persist the Kloset index, snapshot manifests, and data chunks.
-
-
-Using MinIO as a Kloset store makes the integration completely self-contained. The same MinIO instance acts as both source/destination of data and as durable snapshot backend.
-
-> Create a Kloset store in a MinIO bucket
-```bash
-$ plakar at $minio_store create
-```
-
-> Then use it like any other store:
-```bash
-plakar at @minio_store ls
-plakar at @minio_store backup /etc
-plakar at @minio_store restore -to ./restored <snapshot-id>
-```
-
-
-
-## Integration-specific behaviors
-
-### Limitations
-
-While the integration is designed to be as complete and transparent as possible, certain elements of MinIO or S3-compatible storage systems are **not captured** during snapshot operations.
-
-This is due to either technical limitations of the API or the deliberate scope of Plakar, which focuses on user data and verifiable content.
-
-**Not included in the snapshot:**
-
-* **Bucket-level IAM policies**
-  Access control rules and IAM policies defined at the bucket level are managed externally to the object data itself. These policies must be preserved or reapplied separately when restoring to a new bucket or environment.
-* **Lifecycle rules**
-  Automatic object expiration, tiering, or transition rules configured in MinIO are not part of the snapshot and will not be preserved. After restore, you must manually reconfigure lifecycle settings if needed.
-* **Server-side encryption (SSE) configuration**
-  If your MinIO instance uses server-side encryption (SSE) for storage-level encryption, the SSE configuration is not part of the data captured by Plakar. However, **Plakar performs its own encryption** before storing any chunk, ensuring data-at-rest security even without relying on SSE.
-
-**Included in the snapshot:**
-
-* **All user-stored objects**
-  Every object listed in the bucket at the time of snapshot - regardless of size, storage class, or naming convention - is backed up in full.
-* **Object metadata**
-  Standard metadata such as:
-
-  * Timestamps (modification time, upload date)
-  * Object size
-  * MIME type / content-type
-  * User-defined metadata headers
-
-This ensures that object structure and identity are faithfully restored across environments or clouds.
-
----
-
-### Restore target considerations
-
-Restore to a namespace or sandbox bucket first to validate contents.
-
----
+--- 
 
 ### Snapshot consistency and limitations
 
@@ -338,41 +308,14 @@ The snapshot represents a consistent read of all objects at the time they were l
 
 ### Credential errors
 
-If you see 403/401 errors, verify access keys, secret keys, and that `use_tls` is correctly set.
+If you see 401/403 errors, verify access keys, secret keys, and that `use_tls` is correctly set.
 
+> Display the current Plakar configuration
 ```bash
-$ plakar at @minio_store ls
+$ plakar config
 ```
-
 
 ---
-
-### MinIO with Docker
-
-Use `docker logs` to view MinIO logs if running in a container.
-
-
-```bash
-$ docker logs <minio-container-name>
-```
-
-## Backup strategy
-
-The tipical backup strategy for Plakar with MinIO is the standard 3-2-1 rule:
-- Keep **3** copies
-- On **2** types of media
-- At least **1** copy offsite or offline
-
-Define your backup frequency and retention policy based on your business needs:
-- **RPO**: how much data can be lost
-- **RTO**: how fast you must restore
-
-
-## Appendix
-
-- [Plakar CLI Reference](/docs/main)
-- [Plakar Architecture (Kloset Engine)](https://www.plakar.io/posts/2025-04-29/kloset-the-immutable-data-store/)
-- [MinIO Documentation](https://min.io/docs/minio/linux/index.html)
 
 ## Frequently asked questions
 
@@ -398,6 +341,8 @@ $ plakar at @minio_prod sync <snapshot-id> to @minio_backup
 ```bash
 $ plakar at @minio_prod sync to @minio_backup
 ```
+
+Note that this is not specific to MinIO: two Kloset stores can be synchronized regardless of their underlying storage backend, even if they are different (e.g., one on MinIO and the other on a local filesystem).
 
 ---
 
@@ -428,7 +373,7 @@ $ plakar ptar -o ./export.ptar -k @minio_store
 
 ---
 
-**How to restore a `.ptar` file to a MinIO bucket?**
+**How to restore a flat `.ptar` file to a MinIO bucket?**
 
 Run the following command to restore a `.ptar` file into a MinIO bucket configured in the destination connector `@minio_dst`.
 
@@ -436,3 +381,9 @@ Run the following command to restore a `.ptar` file into a MinIO bucket configur
 ```bash
 $ plakar at ./export.ptar restore -to @minio_dst
 ```
+
+## Appendix
+
+- [Plakar CLI Reference](/docs/main)
+- [Plakar Architecture (Kloset Engine)](https://www.plakar.io/posts/2025-04-29/kloset-the-immutable-data-store/)
+- [MinIO Documentation](https://min.io/docs/minio/linux/index.html)
