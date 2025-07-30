@@ -10,9 +10,9 @@ categories:
 tags:
   - proton drive
   - backup
+  - restore
   - storage
-  - encryption
-  - privacy
+  - cloud
 stage: available
 date: 2025-07-25
 ---

@@ -1,5 +1,5 @@
 ---
-title: "Plakar + Dropbox"
+title: "Dropbox"
 meta_title: "Secure Dropbox backup with Plakar"
 meta_description: "Encrypted, versioned Dropbox backups with restore and storage capabilities"
 technology_description: "Dropbox is a cloud storage service used by individuals and teams to sync and share files across devices."
@@ -12,11 +12,12 @@ tags:
   - backup
   - restore
   - storage
+  - cloud
 stage: test
 date: 2025-07-28
 ---
 
-# Dropbox integration
+# Plakar + Dropbox
 
 Back up, restore, or replicate data between Dropbox and any Plakar-compatible backend — while keeping full control over snapshots, history, and encryption.
 

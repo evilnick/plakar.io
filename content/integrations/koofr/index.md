@@ -10,9 +10,9 @@ categories:
 tags:
   - koofr
   - backup
+  - restore
   - storage
-  - encryption
-  - zero trust
+  - cloud
 stage: available
 date: 2025-07-25
 ---

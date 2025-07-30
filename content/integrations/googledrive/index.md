@@ -1,5 +1,5 @@
 ---
-title: "Plakar + Google Drive"
+title: "Google Drive"
 subtitle: "Encrypted, versioned backups for your Google Drive—on your terms"
 description: Back up your Google Drive with Plakar to protect against accidental deletion, ransomware, and sync errors. Immutable, encrypted, and restorable—no vendor lock-in.
 technology_description: Google Drive is a widely used cloud storage service for individuals and businesses, syncing files across devices and teams.

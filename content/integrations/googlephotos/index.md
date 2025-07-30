@@ -10,8 +10,6 @@ tags:
   - google photos
   - import
   - export
-  - encryption
-  - privacy
 stage: available
 date: 2025-07-25
 ---

@@ -10,9 +10,10 @@ categories:
 tags:
   - icloud drive
   - backup
+  - restore
   - storage
-  - encryption
   - apple
+  - cloud
 stage: available
 date: 2025-07-25
 ---
