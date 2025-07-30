@@ -17,65 +17,82 @@ stage: available
 date: 2025-07-28
 ---
 
-# Plakar + Dropbox
+# Plakar + Dropbox: Secure, Encrypted Backups for Your Cloud Files
 
-Back up, restore, or replicate data between Dropbox and any Plakar-compatible backend — while keeping full control over snapshots, history, and encryption.
+Dropbox is everywhere—syncing your files, photos, and docs across devices and teams. But what happens when something goes wrong?
 
-## Why you need Plakar with Dropbox
+- 🧍 Accidental file deletion or overwrites
+- 🦠 Ransomware or malware encrypting your Dropbox
+- 🔓 Leaked credentials or compromised access
 
-Dropbox is convenient for file sync, but not designed for long-term retention or protection from ransomware or human error.
+Plakar gives you control: encrypted, deduplicated, and versioned snapshots of your Dropbox, stored wherever you choose. Restore, audit, or export—on your terms.
 
-Plakar turns your Dropbox files into encrypted, deduplicated backups stored anywhere you choose. You can later restore those backups to Dropbox or another platform — all while preserving full versioning and integrity.
+Because true resilience means owning your backup, not just trusting the cloud.
 
-## What is Dropbox?
+> *👉 Get started with the [setup guide](docs/main/integrations/dropbox/)*
 
-Dropbox is a file syncing and sharing service trusted by individuals and teams worldwide. It automatically syncs files across devices and enables collaboration.
+## 🧠 What is Dropbox?
 
-## Why integrate Plakar with Dropbox?
+Dropbox is a cloud storage platform used by millions to sync, share, and collaborate on files. It’s convenient, but not immune to data loss, sync errors, or attacks.
 
-- No guaranteed data immutability
-- Risk of sync-based deletion or overwrites
-- Shared links can expose sensitive data
-- Limited rollback capabilities
+## 🔗 How Plakar Integrates with Dropbox
 
-Plakar enhances Dropbox:
+Plakar supports Dropbox in three powerful ways:
 
-- ✅ Use it as a **source**: back up Dropbox folders
-- ✅ Use it as a **destination**: export encrypted snapshots into Dropbox
-- ✅ Use it as **storage**: store Plakar backup data directly on Dropbox
+- **Backup**: Import and snapshot your Dropbox data into Plakar’s encrypted, deduplicated backup system.
+- **Restore**: Restore data from any Plakar backup (even from other sources) directly into your Dropbox.
+- **Repository Storage**: Use Dropbox as the storage backend for your Plakar repository (Kloset), keeping your encrypted backups safe and portable in the cloud.
 
-## How it works
+This flexibility means you can use Dropbox as a source, a destination, or a storage location for your entire backup repository.
 
-Plakar pulls your files from Dropbox, chunks and encrypts them locally, then uploads only the new data to storage (if Dropbox is used as a backend). Snapshots are versioned and deduplicated. You can restore from any point-in-time version—even years later.
+## 🚨 Why Dropbox Needs Backup (Even With Sync)
 
-1. 📥 Import files and folders from Dropbox
-2. 🔐 Encrypt data client-side
-3. 📦 Create a snapshot (Kloset) with deduplication
-4. ☁️ Store snapshots to Dropbox or any target backend
+>Sync ≠ backup. It can spread mistakes, not protect against them.
 
-> Dropbox files are never modified directly — Plakar maintains separate encrypted structures.
+If a file is deleted, corrupted, or encrypted by ransomware, Dropbox’s sync can instantly propagate the problem across all devices and users. Dropbox’s retention policies are limited, and recovery is not guaranteed.
 
-## No more vendor lock-in
+That’s where Plakar steps in.
 
-Back up to Dropbox today, restore to S3 or OneDrive tomorrow. Snapshots are portable and never tied to one cloud. That’s real freedom.
+## 🛡️ How Plakar Protects Your Dropbox
+
+Plakar creates encrypted, content-aware snapshots of your Dropbox data.
+
+| **Risk**                        | **How Plakar Helps**                                            |
+|---------------------------------|------------------------------------------------------------------|
+| 🧍 Accidental deletion           | Restore from a snapshot to recover lost files                    |
+| 🦠 Ransomware or malware         | Snapshots are immutable and encrypted from the start             |
+| 🔓 Leaked credentials            | Backups are stored separately, with your own encryption keys     |
+| 📉 Sync errors or version loss   | Full history is preserved—restore any file, any time             |
+| 🪝 Vendor lock-in                | Export or restore to any provider, not just Dropbox              |
+
+## ⚠️ What Dropbox Sync Doesn’t Cover
+
+Dropbox’s built-in sync and trash features don’t protect you from:
+
+- Permanent deletion after trash expiry
+- Ransomware or mass overwrite
+- Account lockout or suspension
+- Audit and compliance needs
+
+Plakar snapshots are immutable, encrypted, and stored where you choose—giving you true control.
 
 ## Your responsibility
 
-Whether personal or business use, it’s important to explain that the user is ultimately responsible for backups. Dropbox doesn’t guarantee data retention or integrity. Using Plakar gives you control.
+Whether for personal or business use, you are ultimately responsible for your own backups. Dropbox does not guarantee data retention or integrity—using Plakar gives you true control over your data’s safety and recoverability.
 
-## 🔄 TL;DR: Backups You Control
+## 🔄 TL;DR: Backups You Own
 
 Plakar + Dropbox gives you:
 
-✅ Encrypted, versioned backups
-✅ End-to-end encryption (you own the keys)
-✅ Deduplication to save space
-✅ Zero-trust backup flows
-✅ Visual inspection and audit readiness
+✅ Snapshots with rollback and metadata  
+✅ End-to-end encryption (you own the keys)  
+✅ Deduplication to save space  
+✅ Zero-trust backup flows  
+✅ Visual inspection and audit readiness  
 ✅ No cloud vendor lock-in
 
 ---
 
-💡 Ready to take control of your Dropbox data?
+💡 Ready to protect your Dropbox data?
 
-[Back up, store, and restore your Dropbox with Plakar →](docs/main/integrations/dropbox/)
+[Get started with Plakar today!](docs/main/integrations/dropbox/)

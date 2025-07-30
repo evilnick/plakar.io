@@ -32,9 +32,9 @@ A single mistake or threat can ripple through every device:
 
 Because your files deserve more than sync — they deserve true resilience.
 
-> 👉 Get started with the [setup guide](docs/main/integrations/icloud-drive/)
+> *👉 Get started with the [setup guide](docs/main/integrations/iclouddrive/)*
 
-> ⚠️ **Note:** This integration covers **iCloud Drive files only** — it does **not** handle iCloud Photos. Use the [Google Photos integration](docs/main/integrations/google-photos/) for photo libraries.
+> ⚠️ **Note:** This integration covers **iCloud Drive files only** — it does **not** handle iCloud Photos.
 
 
 ## 🧠 What is iCloud Drive?

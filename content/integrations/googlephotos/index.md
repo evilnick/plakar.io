@@ -26,7 +26,7 @@ Google Photos keeps your memories in the cloud — but moving, securing, or mana
 
 Because your photos should belong to you, not just the cloud.
 
-> 👉 Get started with the [setup guide](docs/main/integrations/google-photos/)
+> *👉 Get started with the [setup guide](docs/main/integrations/googlephotos/)*
 
 ## 🧠 What is Google Photos?
 

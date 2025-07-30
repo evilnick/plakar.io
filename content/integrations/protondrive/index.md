@@ -29,7 +29,7 @@ Proton Drive is privacy-first, but sync alone can’t protect you from:
 
 Because resilience isn’t a feature. It’s a mindset.
 
-> *👉 Get started with the [setup guide](docs/main/integrations/proton-drive/)*
+> *👉 Get started with the [setup guide](docs/main/integrations/protondrive/)*
 
 ## 🧠 What is Proton Drive?
 

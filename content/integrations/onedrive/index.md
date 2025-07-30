@@ -31,7 +31,7 @@ Your data can vanish faster than you think:
 
 Because your files deserve more than just “cloud storage” — they deserve real resilience.
 
-> 👉 Get started with the [setup guide](docs/main/integrations/onedrive/)
+> *👉 Get started with the [setup guide](docs/main/integrations/onedrive/)*
 
 ## 🧠 What is OneDrive?
 
@@ -101,6 +101,6 @@ Plakar + OneDrive gives you:
 
 ---
 
-� Ready to make OneDrive work on your terms?
+💡 Ready to make OneDrive work on your terms?
 
 [Back up, store, and restore your OneDrive with Plakar →](docs/main/integrations/onedrive/)

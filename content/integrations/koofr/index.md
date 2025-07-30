@@ -29,7 +29,7 @@ Koofr is simple, private, and European — a great choice for secure cloud stora
 
 Because privacy doesn’t stop at cloud storage — it extends to backups too.
 
-> 👉 Get started with the [setup guide](docs/main/integrations/koofr/)
+> *👉 Get started with the [setup guide](docs/main/integrations/koofr/)*
 
 ## 🧠 What is Koofr?
 

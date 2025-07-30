@@ -29,7 +29,7 @@ Plakar gives you control: encrypted, deduplicated, and versioned snapshots of yo
 
 Because true resilience means owning your backup, not just trusting the cloud.
 
-> *👉 Get started with the [setup guide](docs/main/integrations/google-drive/)*
+> *👉 Get started with the [setup guide](docs/main/integrations/googledrive/)*
 
 ## 🧠 What is Google Drive?
 

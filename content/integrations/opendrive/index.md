@@ -31,7 +31,7 @@ Your files can disappear or get corrupted in an instant:
 
 Because your cloud files should always be yours to restore.
 
-> 👉 Get started with the [setup guide](docs/main/integrations/opendrive/)
+> *👉 Get started with the [setup guide](docs/main/integrations/opendrive/)*
 
 ## 🧠 What is OpenDrive?
 
