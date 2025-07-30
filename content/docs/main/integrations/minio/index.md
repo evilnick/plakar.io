@@ -141,12 +141,12 @@ Configure the storage connector, to host a Kloset store in a MinIO bucket.
 
 > Configure the storage connector to host a Kloset store in MinIO
 ```bash
-$ plakar config mini_store create minio_store
-$ plakar config mini_store set minio_store location s3://localhost:9000/plakar-kloset
-$ plakar config mini_store set minio_store access_key minioadmin
-$ plakar config mini_store set minio_store secret_access_key minioadmin
+$ plakar config repository create minio_store
+$ plakar config repository set minio_store location s3://localhost:9000/plakar-kloset
+$ plakar config repository set minio_store access_key minioadmin
+$ plakar config repository set minio_store secret_access_key minioadmin
 # Only if your MinIO instance does not use TLS
-$ plakar config mini_store set minio_store use_tls false
+$ plakar config repository set minio_store use_tls false
 ```
 
 Use the syntax `plakar at @minio_store` to refer to this store in commands, for example `plakar at @minio_store ls` to list snapshots.
@@ -159,12 +159,12 @@ Configure the source connector, to backup a MinIO bucket.
 
 > Configure the source connector to back up a MinIO bucket
 ```bash
-$ plakar config minio_src create minio_src
-$ plakar config minio_src set minio_src location s3://localhost:9000/mybucket
-$ plakar config minio_src set minio_src access_key minioadmin
-$ plakar config minio_src set minio_src secret_access_key minioadmin
+$ plakar config remote create minio_src
+$ plakar config remote set minio_src location s3://localhost:9000/mybucket
+$ plakar config remote set minio_src access_key minioadmin
+$ plakar config remote set minio_src secret_access_key minioadmin
 # Only if your MinIO instance does not use TLS
-$ plakar config minio_src set minio_src use_tls false
+$ plakar config remote set minio_src use_tls false
 ```
 
 Use the syntax `@minio_src` to refer to this source in commands, for example `plakar backup @minio_src` to create a snapshot of the bucket.
@@ -177,12 +177,12 @@ Configure the destination connector, to restore a snapshot into a MinIO bucket.
 
 > Configure the destination connector to restore a snapshot into a MinIO bucket
 ```bash
-$ plakar config minio_dest create minio_dst
-$ plakar config minio_dest set minio_dst location s3://localhost:9000/restore-bucket
-$ plakar config minio_dest set minio_dst access_key minioadmin
-$ plakar config minio_dest set minio_dst secret_access_key minioadmin
+$ plakar config remote create minio_dst
+$ plakar config remote set minio_dst location s3://localhost:9000/restore-bucket
+$ plakar config remote set minio_dst access_key minioadmin
+$ plakar config remote set minio_dst secret_access_key minioadmin
 # Only if your MinIO instance does not use TLS
-$ plakar config minio_dest set minio_dst use_tls false
+$ plakar config remote set minio_dst use_tls false
 ```
 
 Use the syntax `@minio_dst` to refer to this destination in commands, for example `plakar restore -to @minio_dst <snapshot-id>` to restore a snapshot into the bucket.
