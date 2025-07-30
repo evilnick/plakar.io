@@ -110,4 +110,4 @@ Plakar + Proton Drive gives you:
 
 💡 Ready to protect your Proton Drive data?
 
-[Explore the setup guide →](docs/main/integrations/proton-drive/)
+[Explore the setup guide →](docs/main/integrations/protondrive/)
