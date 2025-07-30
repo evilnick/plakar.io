@@ -1,108 +1,99 @@
 ---
 title: "iCloud Drive"
-subtitle: "Encrypted, versioned backups for your iCloud Drive files"
-description: Import, store, and export your iCloud Drive data securely with Plakar. Immutable, deduplicated, and fully under your control.
-technology_description: iCloud Drive is Apple’s cloud file storage service, keeping documents, folders, and app data synced across your Apple devices.
+
+subtitle: "Resilient, encrypted backups for your iCloud Drive environment"
+
+description: >
+  Back up your iCloud Drive files with Plakar to protect against data loss,
+  corruption, and ransomware. Immutable, encrypted, and restorable —
+  even offline and across environments.
+
+technology_title: iCloud Drive is everywhere and often underprotected
+
+technology_description: >
+  iCloud Drive is Apple’s cloud file storage service, keeping documents, folders, and app data synced across your Apple devices.
+  It’s trusted for seamless access and sharing, but native sync does not provide true backup, versioning, or protection against accidental deletion and compromise.
+  Plakar fills the gap by enabling encrypted, deduplicated, and versioned snapshots of your iCloud Drive files, giving you control over retention, recovery, and compliance.
+
 categories:
   - source connector
   - destination connector
   - storage connector
+  - viewer
+
 tags:
   - icloud drive
-  - backup
-  - restore
-  - storage
   - apple
-  - cloud
-stage: available
-date: 2025-07-25
+  - icloud
+  - storage
+
+seo_tags:
+  - iCloud Drive
+  - iCloud
+  - Apple cloud storage
+  - file sync
+  - backup
+  - disaster recovery
+  - encryption
+  - deduplication
+  - versioning
+  - immutable storage
+  - compliance
+  - long-term archiving
+  - airgapped backup
+  - snapshot technology
+  - portable format
+
+technical_documentation_link: docs/main/integrations/iclouddrive/
+
+stage: test
+
+date: 2025-07-28
+
+plakar_version: ">=1.0.3"
+
+resource: iCloud Drive
+
+resource_type: filesystem
 ---
 
-# Plakar + iCloud Drive: Keep Your Apple Files Safe on Your Terms
+## 🧠 Why protecting iCloud Drive matters
 
-iCloud Drive keeps your documents and app files accessible on all your Apple devices. But “sync” is not the same as “backup.”
+iCloud Drive syncs files across all your Apple devices, but sync is not backup. If files are deleted, corrupted, or compromised, those changes propagate everywhere instantly. Without immutable backups, you risk silent data loss, ransomware spread, or compliance failures — and recovery options are limited or unavailable.
 
-A single mistake or threat can ripple through every device:
+## 🔓 What happens when iCloud Drive files are deleted or compromised?
 
-- ❌ A deleted file vanishes everywhere
-- 🦠 Malware or corruption spreads automatically
-- 🔓 Stolen credentials put your files at risk
+A mistaken deletion, malware infection, or stolen credentials can wipe or corrupt your files across every device. Native versioning is limited and often hidden, making recovery unreliable. If you need to restore a specific version or recover from a major incident, iCloud Drive alone cannot guarantee data integrity or rollback.
+Icloud can be backed up by Apple but it is not free and after 180 days it is deleted, and it does not provide the level of control and security that Plakar offers.
 
-🔐 **Plakar lets you import, store, and export your iCloud Drive files as encrypted, versioned snapshots — so you decide what stays, what rolls back, and where it lives.**
+Plakar addresses these risks by:
 
-Because your files deserve more than sync — they deserve true resilience.
+- Creating immutable, encrypted snapshots outside the iCloud sync scope
+- Enabling granular recovery of files or folders without full restore
+- Supporting offline and air-gapped backup options for true isolation
 
-> *👉 Get started with the [setup guide](docs/main/integrations/iclouddrive/)*
+Your backups remain safe, verifiable, and restorable — even if your iCloud account is compromised.
 
-> ⚠️ **Note:** This integration covers **iCloud Drive files only** — it does **not** handle iCloud Photos.
+## 🛡️ How Plakar secures your iCloud Drive workflows
 
+Plakar integrates with iCloud Drive as both a source and destination:
 
-## 🧠 What is iCloud Drive?
+- **Source connector:** Import and snapshot your iCloud Drive files, encrypt and deduplicate them, and store in a trusted Plakar Kloset.
+- **Destination connector:** Export clean, verified files or folders back to iCloud Drive as needed.
+- **Storage connector:** Optionally store Plakar snapshots on iCloud Drive for redundancy or compliance.
 
-iCloud Drive is Apple’s cloud storage for files, folders, and app data. It syncs across Macs, iPhones, and iPads, keeping everything up to date — but it can’t roll back when accidents strike.
+Snapshots are immutable, versioned, and inspectable via CLI or UI, with end-to-end encryption and global deduplication.
 
-## 🚨 Why iCloud Drive Needs More Than Sync
+## 🧰 Everything in one tool: backup, verify, restore, browse
 
-Sync is great until something goes wrong:
+Plakar provides a unified platform for iCloud Drive protection:
 
-- Deleted files are gone on every device.
-- Versioning is limited and often hidden.
-- Malware or user error can overwrite valuable data instantly.
+- ✅ Immutable, versioned snapshots
+- 🔐 End-to-end encryption (you own the keys)
+- 🧠 Deduplication to save space and bandwidth
+- 🔎 Visual inspection and audit readiness via UI or CLI
+- 📦 Offline export and long-term retention
 
-🎯 Plakar fills the gap with encrypted, immutable snapshots you control — even storing them back on iCloud Drive if you want.
+From backup creation to granular restore, Plakar centralizes all workflows for iCloud Drive, ensuring your Apple files are resilient, compliant, and always under your control.
 
-## 🛡️ How Plakar Protects Your iCloud Drive
-
-Plakar securely **imports** your iCloud Drive files, encrypts and deduplicates them locally, and **stores** versioned snapshots in your Plakar backup repository (called a *Kloset*). You can even **store Plakar backups on iCloud Drive**, or export them back when needed.
-
-| **Risk**                       | **How Plakar Helps**                                             |
-|--------------------------------|-------------------------------------------------------------------|
-| ❌ Accidental deletion          | Restore any file or folder back to iCloud Drive exactly as it was |
-| 🦠 Malware or ransomware        | Immutable, encrypted snapshots protect your clean versions        |
-| 🔓 Account compromise           | Zero-trust design — you own the encryption keys                   |
-| 📂 Limited versioning           | Plakar keeps full file history with deduplication                 |
-| 🔄 Storage flexibility          | Store snapshots on iCloud Drive or another secure backend         |
-
-## ✅ Common Use Cases
-
-- Import iCloud Drive files into a secure Plakar repository
-- Store daily snapshots **on iCloud Drive** for redundancy
-- Export clean files or folders back to iCloud Drive anytime
-- Archive critical documents outside Apple’s ecosystem
-- Keep an offline, immutable copy for compliance
-
-## 📊 Integration Details
-
-| **Property**         | **Value**                           |
-|----------------------|-------------------------------------|
-| Category             | Cloud Storage                       |
-| Supported Methods    | CLI / Agent / Web UI                |
-| Protocols            | iCloud Drive API, HTTPS             |
-| Encryption Model     | Local key derivation, zero-trust    |
-
-## 🗺️ How It Works (At a Glance)
-
-```
-
-iCloud Drive ⇄ Plakar Agent ⇄ Encrypted, Deduplicated Snapshots ⇄ iCloud Drive or Other Storage
-
-```
-
-Your data flows securely in, gets chunked and encrypted, and can be stored **back on iCloud Drive** or elsewhere — you decide.
-
-## � TL;DR: Backups You Control
-
-Plakar + iCloud Drive gives you:
-
-✅ Encrypted, versioned backups
-✅ End-to-end encryption (you own the keys)
-✅ Deduplication to save space
-✅ Zero-trust backup flows
-✅ Visual inspection and audit readiness
-✅ No cloud vendor lock-in
-
----
-
-💡 Ready to take control of your Apple files?
-
-[Import, store, and restore your iCloud Drive with Plakar →](docs/main/integrations/iclouddrive/)
+⚠️ The ICloud Drive api does not give access to the picture in iCloud Photos, so you cannot back up your iCloud Photos library with this integration.

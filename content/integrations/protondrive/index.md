@@ -1,113 +1,98 @@
 ---
 title: "Proton Drive"
-subtitle: "Private, encrypted backups for your Proton Drive files"
-description: Use Plakar to import, store, and export your Proton Drive data securely. Immutable, deduplicated, and fully under your control.
-technology_description: Proton Drive is a privacy-first cloud storage service from Proton, the company behind Proton Mail and Proton VPN, designed to protect sensitive files with end-to-end encryption.
+
+subtitle: "Resilient, encrypted backups for your Proton Drive environment"
+
+description: >
+  Back up your Proton Drive workloads with Plakar to protect against data loss,
+  corruption, and ransomware. Immutable, encrypted, and restorable —
+  even offline and across environments.
+
+technology_title: Proton Drive is everywhere and often underprotected
+
+technology_description: >
+  Proton Drive is a privacy-first, end-to-end encrypted cloud storage service from Proton,
+  trusted for storing sensitive files and documents. Its encryption ensures privacy,
+  but native sync and trash features do not guarantee recovery from accidental deletion,
+  ransomware, or account compromise.
+
+  Plakar bridges this gap by enabling immutable, deduplicated, and encrypted backups
+  of Proton Drive data, giving you control over versioning, recovery, and compliance.
+
 categories:
   - source connector
   - destination connector
   - storage connector
+
 tags:
   - proton drive
+  - cloud storage
+
+seo_tags:
+  - Proton Drive
+  - Proton Drive providers
+  - cloud storage
   - backup
-  - restore
-  - storage
-  - cloud
-stage: available
-date: 2025-07-25
+  - disaster recovery
+  - encryption
+  - deduplication
+  - versioning
+  - immutable storage
+  - compliance
+  - long-term archiving
+  - airgapped backup
+  - snapshot technology
+  - portable format
+
+technical_documentation_link: docs/main/integrations/protondrive/
+
+stage: test
+
+date: 2025-07-28
+
+plakar_version: ">=1.0.3"
+
+resource: Proton Drive
+
+resource_type: object-storage
 ---
 
-# Plakar + Proton Drive: Immutable, Encrypted Backups for Your Private Cloud
+## 🧠 Why protecting Proton Drive matters
 
-Proton Drive is privacy-first, but sync alone can’t protect you from:
+Cloud sync and encryption protect privacy, but not against all risks. Files in Proton Drive can be lost to accidental deletion, overwritten by malware, or permanently removed after trash expiry. Account lockouts or credential loss can make data inaccessible, and compliance needs often require more than basic retention.
 
-- ❌ Accidental deletions or overwrites
-- 🦠 Malware or ransomware
-- 🔓 Lost credentials or locked accounts
+Without immutable backups, recovery from these scenarios is unreliable or impossible.
 
-🔐 Plakar makes your Proton Drive data immutable, encrypted, and rollback-ready, by design.
+## 🔓 What happens when Proton Drive files are deleted or compromised?
 
-Because resilience isn’t a feature. It’s a mindset.
+If files are deleted—intentionally or by mistake—across synced devices, or if ransomware overwrites originals, Proton Drive’s native features may not help. Trash expiry or account suspension can make recovery impossible, and sync can propagate errors instantly.
 
-> *👉 Get started with the [setup guide](docs/main/integrations/protondrive/)*
+Plakar addresses these risks by:
 
-## 🧠 What is Proton Drive?
+- Creating immutable, encrypted snapshots outside Proton Drive’s sync scope
+- Enabling granular recovery of files or folders without full restore
+- Supporting offline and air-gapped backup for true isolation
 
-Proton Drive is Proton’s secure, end-to-end encrypted cloud storage service. It keeps sensitive files safe from prying eyes, but like any sync service, it can’t always undo accidents or attacks.
+Your data remains safe, verifiable, and restorable—regardless of what happens in your live Proton Drive account.
 
-## 🚨 Why Proton Drive Needs Backup (Even With Sync)
+## 🛡️ How Plakar secures your Proton Drive workflows
 
->Sync ≠ backup. It can spread mistakes, not protect against them.
+Plakar integrates with Proton Drive as both a source and destination:
 
-Encryption protects privacy — but what about:
+- **Source connector:** Import and snapshot Proton Drive files, encrypt and deduplicate them, and store in a trusted Plakar Kloset.
+- **Destination connector:** Export verified snapshots back to Proton Drive, restoring clean data after loss or corruption.
+- **Storage connector:** Store Plakar snapshots on Proton Drive for redundancy and easy access.
 
-- Accidental deletion across synced devices
-- Ransomware or malware overwriting your originals
-- Restoring a file exactly as it was, months ago
+Snapshots are immutable, versioned, and inspectable via CLI or UI—even offline.
 
-🎯 Plakar fills the gap with encrypted, versioned snapshots you control — stored where you decide.
+## 🧰 Everything in one tool: backup, verify, restore, browse
 
-## 🛡️ How Plakar Protects Your Proton Drive
+Plakar provides a unified platform for Proton Drive protection:
 
-Plakar securely **imports** your Proton Drive files, encrypts and deduplicates them locally, then **stores** versioned snapshots in your Plakar repository (called a *Kloset*). You can even **store your Plakar backups on Proton Drive** for additional redundancy, or export them back when needed.
+- ✅ Immutable, versioned snapshots
+- 🔐 End-to-end encryption at the chunk level
+- 🧠 Global deduplication to minimize storage
+- 🔎 Full inspection and audit via UI or CLI
+- 📦 Offline export and long-term retention
 
-| **Risk**                        | **How Plakar Helps**                                              |
-|---------------------------------|--------------------------------------------------------------------|
-| ❌ Accidental deletion           | Restore files or folders back to Proton Drive anytime               |
-| 🦠 Malware or ransomware         | Immutable, encrypted snapshots protect clean versions               |
-| 🔓 Account compromise            | Zero-trust design — Plakar’s encryption stays in your hands         |
-| 📂 Limited versioning            | Plakar keeps full history with deduplication                        |
-| 🔄 Storage flexibility           | Store Plakar snapshots on Proton Drive or another secure backend    |
-
-## ⚠️ What Proton Drive Sync Doesn’t Cover
-
-Proton Drive’s sync and trash features don’t protect you from:
-
-- Permanent deletion after trash expiry
-- Ransomware or mass overwrite
-- Account lockout or suspension
-- Audit and compliance needs
-
-Plakar snapshots are immutable, encrypted, and stored where you choose—giving you true control.
-
-## ✅ Common Use Cases
-
-- Import Proton Drive files into an encrypted Plakar repository
-- Store versioned backups **on Proton Drive** for easy access
-- Export clean data back to Proton Drive after loss or corruption
-- Keep an immutable offline copy for peace of mind
-- Migrate Proton Drive content securely
-
-## 📊 Integration Details
-
-| **Property**         | **Value**                           |
-|----------------------|-------------------------------------|
-| Category             | Cloud Storage                       |
-| Supported Methods    | CLI / Agent / Web UI                |
-| Protocols            | Proton Drive API, HTTPS             |
-| Encryption Model     | Local key derivation, zero-trust    |
-
-## 🗺️ How It Works (At a Glance)
-
-```
-Proton Drive ⇄ Plakar Agent ⇄ Encrypted, Deduplicated Snapshots ⇄ Proton Drive or Other Storage
-```
-
-Files flow securely in, get chunked and double-encrypted, then stored wherever you decide.
-
-## 🔄 TL;DR: Backups You Control
-
-Plakar + Proton Drive gives you:
-
-✅ Snapshots with rollback and metadata
-✅ Encryption at the chunk level
-✅ Support for any topology
-✅ Zero-trust backup flows
-✅ Visual inspection and audit readiness
-✅ No cloud vendor lock-in
-
----
-
-💡 Ready to protect your Proton Drive data?
-
-[Explore the setup guide →](docs/main/integrations/protondrive/)
+From backup creation to visual browsing and recovery, Plakar handles every workflow, making Proton Drive both a secure source and a trusted backup destination.

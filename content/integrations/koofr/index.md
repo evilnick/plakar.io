@@ -1,106 +1,98 @@
 ---
 title: "Koofr"
-subtitle: "Encrypted, versioned storage and backup for your Koofr files"
-description: Use Plakar to import, store, and export your Koofr data securely. Immutable, deduplicated backups you fully control.
-technology_description: Koofr is a privacy-focused European cloud storage service that lets you connect multiple storage accounts under one roof.
+
+subtitle: "Resilient, encrypted backups for your Koofr environment"
+
+description: >
+  Back up your Koofr workloads with Plakar to protect against data loss,
+  corruption, and ransomware. Immutable, encrypted, and restorable —
+  even offline and across environments.
+
+technology_title: Koofr is everywhere and often underprotected
+
+technology_description: >
+  Koofr is a privacy-focused European cloud storage service that unifies multiple storage accounts
+  under one secure interface. It’s trusted for personal and business file storage, sharing, and
+  multi-cloud management, all with a strong commitment to privacy.
+
+  However, Koofr’s native tools do not provide true immutability, granular versioning, or portable
+  encrypted backups. Plakar extends Koofr’s protection by enabling encrypted, deduplicated, and
+  verifiable snapshots—giving you control over your data, even beyond Koofr’s own environment.
+
 categories:
   - source connector
   - destination connector
   - storage connector
+
 tags:
   - koofr
+  - cloud storage
+
+seo_tags:
+  - Koofr
+  - cloud storage providers
+  - privacy-focused storage
   - backup
-  - restore
-  - storage
-  - cloud
-stage: available
-date: 2025-07-25
+  - disaster recovery
+  - encryption
+  - deduplication
+  - versioning
+  - immutable storage
+  - compliance
+  - long-term archiving
+  - airgapped backup
+  - snapshot technology
+  - portable format
+
+technical_documentation_link: docs/main/integrations/koofr/
+
+stage: test
+
+date: 2025-07-28
+
+plakar_version: ">=1.0.3"
+
+resource: Koofr
+
+resource_type: object-storage
 ---
 
-# Plakar + Koofr: Take Privacy-First Backups Even Further
+## 🧠 Why protecting Koofr matters
 
-Koofr is simple, private, and European — a great choice for secure cloud storage. But even Koofr can’t save you from:
+Even privacy-first cloud storage like Koofr is vulnerable to risks beyond its control. Accidental deletions, silent corruption, ransomware, or account lockout can result in permanent data loss. Native versioning and sync features help, but they don’t guarantee recovery from every scenario—especially when compliance, audits, or long-term retention are required.
 
-- 🚫 Accidental deletions or sync errors
-- 🦠 Ransomware or silent corruption
-- 🔓 Leaked credentials
+Without immutable, externalized backups, your Koofr data remains exposed to operational mistakes and targeted attacks.
 
-🔐 **Plakar adds encrypted, versioned control to your Koofr files. Import, store, and export them with zero-trust encryption and point-in-time recovery.**
+## 🔓 What happens when Koofr credentials leak or files are deleted?
 
-Because privacy doesn’t stop at cloud storage — it extends to backups too.
+If Koofr credentials are compromised or files are deleted—whether by accident, sync error, or malware—data can be lost instantly. Native recovery options may be limited by retention policies or versioning gaps, and once files are purged, recovery is often impossible.
 
-> *👉 Get started with the [setup guide](docs/main/integrations/koofr/)*
+Plakar addresses these risks by:
 
-## 🧠 What is Koofr?
+- Creating immutable, encrypted snapshots outside Koofr’s access scope
+- Enabling offline or air-gapped backup storage for true isolation
+- Allowing granular recovery of individual files or folders without full restores
 
-Koofr is a secure cloud storage service based in Europe. It lets you store files, share them safely, and even connect other cloud accounts — all while respecting your privacy.
+Your data remains protected and restorable, even if your Koofr account is compromised or files are lost.
 
-But if you ever lose access or files go missing, native tools have limits.
+## 🛡️ How Plakar secures your Koofr workflows
 
-## 🚨 Why Koofr Needs Real Backup Control
+Plakar integrates with Koofr as both a source and destination:
 
-Koofr is private by design — but accidents and attacks don’t care where your data lives.
+- **Source connector:** Import Koofr files into encrypted, deduplicated Plakar snapshots
+- **Destination connector:** Store Plakar backups on Koofr for redundancy and multi-cloud resilience
+- **Restore destination:** Export verified snapshots back to Koofr or other environments
 
-Native versioning helps, but can’t cover:
+Plakar adds end-to-end encryption, global deduplication, versioning, and snapshot browsing—so you can inspect, verify, and restore your Koofr data on demand, even offline.
 
-- Permanent deletion or account lockout
-- Malware or ransomware overwriting files
-- The need to store clean, offline copies
+## 🧰 Everything in one tool: backup, verify, restore, browse
 
-🎯 Plakar steps in with encrypted, immutable snapshots — on your terms.
+Plakar centralizes all your Koofr backup workflows:
 
-## 🛡️ How Plakar Works with Koofr
+- Immutable, versioned snapshots for every change
+- End-to-end encryption—only you hold the keys
+- Deduplication to minimize storage and bandwidth
+- Visual inspection and audit readiness via UI or CLI
+- Cold storage export for compliance or long-term archiving
 
-Plakar securely **imports** your Koofr files, encrypts and deduplicates them locally, and **stores** snapshots in your Plakar repository (called a *Kloset*). You can even **store your Plakar backups back on Koofr**, or export files back when needed.
-
-| **Risk**                       | **How Plakar Helps**                                              |
-|--------------------------------|--------------------------------------------------------------------|
-| 🚫 Accidental deletion          | Restore any file or folder back to Koofr                           |
-| 🦠 Malware or ransomware        | Immutable, encrypted snapshots keep clean versions safe            |
-| 🔓 Account compromise           | Zero-trust: you own the keys, not Koofr                            |
-| 📂 Partial versioning gaps      | Content-aware deduplication covers every change                    |
-| 🔄 Storage flexibility          | Store snapshots on Koofr or another secure backend                 |
-
-## ✅ Common Use Cases
-
-- Import your Koofr files into an encrypted Plakar repository
-- Store daily Plakar snapshots **on Koofr** for redundancy
-- Export restored data back to Koofr if needed
-- Keep an offline, immutable copy of your cloud files
-- Migrate Koofr content without vendor lock-in
-
-## 📊 Integration Details
-
-| **Property**         | **Value**                           |
-|----------------------|-------------------------------------|
-| Category             | Cloud Storage                       |
-| Supported Methods    | CLI / Agent / Web UI                |
-| Protocols            | Koofr API, HTTPS                    |
-| Encryption Model     | Local key derivation, zero-trust    |
-
-## 🗺️ How It Works (At a Glance)
-
-```
-
-Koofr ⇄ Plakar Agent ⇄ Encrypted, Deduplicated Snapshots ⇄ Koofr or Other Storage
-
-```
-
-Files flow securely in, get chunked and encrypted, then stored wherever you want — Koofr included.
-
-## � TL;DR: Backups You Control
-
-Plakar + Koofr gives you:
-
-✅ Encrypted, versioned backups
-✅ End-to-end encryption (you own the keys)
-✅ Deduplication to save space
-✅ Zero-trust backup flows
-✅ Visual inspection and audit readiness
-✅ No cloud vendor lock-in
-
----
-
-💡 Ready to extend your Koofr privacy?
-
-[Import, store, and export your Koofr files with Plakar →](docs/main/integrations/koofr/)
+No matter how you use Koofr, Plakar ensures your data is protected, portable, and always under your control.
