@@ -59,37 +59,54 @@ resource: SFTP
 resource_type: file-transfer
 ---
 
+## 🧠 Why protecting SFTP matters
 
-Plakar’s SFTP integration lets you **back up**, **browse**, and **restore** data over a secure SSH channel. Whether you’re managing a single Linux server, a fleet of BSD hosts, or a NAS like Synology or QNAP, Plakar makes SFTP backups simple and resilient.
+SFTP is the backbone of secure file transfers across Linux servers 🐧, BSD hosts 🏴, and NAS devices 💾 like Synology and QNAP.
+But secure transfer is not backup:
+- Files can be overwritten or deleted immediately after upload
+- No versioning or immutable snapshots exist for recovery
+- Manual transfers or scripts are error‑prone and hard to audit
 
-## 🔐 Secure backups beyond file transfer
+When compliance, uptime, or disaster recovery is critical, simply storing files on SFTP is not enough.
+You need verifiable, immutable backups that can survive mistakes, misconfigurations, or attacks.
 
-SFTP is everywhere: from Linux and BSD servers to NAS devices like Synology or QNAP.
-It’s trusted for secure file transfer, but file transfer is not backup.
-- Files can be deleted or overwritten immediately after upload
-- No version history or snapshots exist for recovery
-- Relying on manual transfers leaves you exposed to mistakes or attacks
-If your only “backup” strategy is copying files over SFTP, you’re one compromise or misconfiguration away from data loss.
+## 🔓 What happens when SFTP credentials get compromised?
 
-**Plakar transforms SFTP into a reliable, encrypted backup workflow with immutable, verifiable snapshots.**
+SFTP relies on SSH keys or passwords to control access. If a key is leaked, misused, or an account is compromised:
+- Attackers can delete or overwrite files instantly
+- 🦠 Ransomware or rogue scripts can encrypt or destroy live data
+- Automated sync or replication can spread corruption across servers
 
-## 🛡️ Plakar + SFTP: full backup confidence
+Without independent, immutable snapshots, recovery can be impossible.
 
-With Plakar, your SFTP workflow becomes more than file transfer:
-- Store encrypted snapshots on any SFTP‑accessible server
-- Pull or push backups from multiple servers into a single Kloset repository
-- Inspect and verify snapshots without restoring them
-- Restore anywhere: local FS, SFTP, or cloud object storage
+Plakar closes this gap by:
+- 🔒 Immutable, deduplicated snapshots outside normal SFTP access
+- 🔐 End‑to‑end encryption, even if the SFTP server is compromised
+- 📦 Portable backups that support offline or air‑gapped storage
 
-**Whether it’s one NAS or an entire fleet of servers, Plakar adapts to your infrastructure.**
+Your snapshots stay safe, verifiable, and recoverable even if the server isn’t.
 
-## 🚀 From snapshot to recovery, all in one tool
+## 🛡️ How Plakar secures your SFTP workflows
 
-Plakar replaces ad‑hoc scripts and risky manual transfers with a unified solution:
+Plakar turns any SFTP‑accessible server into a flexible backup system:
+- Source Connector: Snapshot files from the SFTP server into a secure Kloset store
+- Storage Connector: Store encrypted, deduplicated backups on an SFTP server
+- Destination Connector: Restore snapshots to SFTP, anywhere in your environment
+
+With Push and Pull backup models, you can:
+- Push snapshots from each source server independently
+- Pull data centrally from multiple servers into a single Kloset
+- Scale to multi‑server environments without complicated scripts
+
+Snapshots remain immutable, portable, and browsable via CLI or UI, without rehydration.
+
+## 🧰 Everything in one tool: backup, verify, restore, browse
+
+With Plakar, SFTP becomes a complete backup workflow instead of just a file drop:
 - ✅ Immutable, versioned snapshots
-- 🔐 End‑to‑end encryption over SSH/SFTP
-- 🧠 Global deduplication and compression
-- 🔎 Browsing and inspection without rehydration
-- 📦 Optional offline export for compliance and long‑term retention
+- 🔐 End‑to‑end encryption with SSH transport
+- 🧠 Global deduplication to save space across multiple servers
+- 🔎 Browse and verify backups directly without restoring
+- 📦 Optional offline or air‑gapped retention for compliance
 
-**With Push and Pull models, Plakar lets you scale from a single host to a multi‑server environment while keeping backups secure, verifiable, and recoverable.**
+From snapshot creation to inspection to recovery, Plakar protects your SFTP‑based infrastructure — all in one tool.
