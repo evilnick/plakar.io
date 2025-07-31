@@ -78,9 +78,9 @@ Your backups remain safe, verifiable, and restorable, even if your iCloud accoun
 
 Plakar integrates with iCloud Drive as both a source and destination:
 
-- **Source connector:** Import and snapshot your iCloud Drive files, encrypt and deduplicate them, and store in a trusted Plakar Kloset.
+- **Source connector:** Import and snapshot your iCloud Drive files, encrypt and deduplicate them, and store in a trusted Plakar Kloset store.
 - **Destination connector:** Export clean, verified files or folders back to iCloud Drive as needed.
-- **Storage connector:** Optionally store Plakar snapshots on iCloud Drive for redundancy or compliance.
+- **Storage connector:** Optionally store Plakar snapshots in a Kloset store on iCloud Drive for redundancy or compliance.
 
 Snapshots are immutable, versioned, and inspectable via CLI or UI, with end-to-end encryption and global deduplication.
 

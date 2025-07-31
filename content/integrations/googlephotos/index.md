@@ -80,8 +80,8 @@ Your memories remain safe, verifiable, and portable even if your account is comp
 
 Plakar integrates with Google Photos as both a source and destination:
 
-- **Source connector:** Import your entire library or selected albums into an encrypted, deduplicated repository (Kloset)
-- **Destination connector:** Export verified snapshots back to Google Photos or another service, preserving structure and metadata
+- **Source connector:** Import your entire library or selected albums into an encrypted, deduplicated Kloset store.
+- **Destination connector:** Export verified snapshots back to Google Photos or another service, preserving structure and metadata.
 
 Plakar adds end-to-end encryption, global deduplication, versioning, and offline access. Snapshots are inspectable via UI or CLI, and can be exported for compliance or long-term archiving.
 

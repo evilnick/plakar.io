@@ -75,7 +75,7 @@ Plakar integrates with Dropbox as:
 
 - A **source connector** to snapshot Dropbox data into encrypted, deduplicated backups
 - A **restore destination** to rehydrate verified snapshots directly into Dropbox
-- A **storage backend** to persist Plakar repositories in Dropbox, keeping backups portable and secure
+- A **storage backend** to persist Plakar Kloset store in Dropbox, keeping backups portable and secure
 
 Plakar adds end-to-end encryption, global deduplication, versioning, and snapshot browsing online or offline so you control your data’s safety and recoverability.
 

@@ -78,7 +78,7 @@ No matter what happens in your live OneDrive, your snapshots remain safe, verifi
 
 Plakar integrates with OneDrive as both a source and destination:
 
-- **Source connector:** Import and snapshot your OneDrive files, encrypt and deduplicate them, and store in a trusted Plakar Kloset.
+- **Source connector:** Import and snapshot your OneDrive files, encrypt and deduplicate them, and store in a trusted Plakar Kloset store.
 - **Destination connector:** Export clean, verified snapshots back to OneDrive, restoring files or folders exactly as they were.
 - **Storage connector:** Store Plakar snapshots on OneDrive itself, adding a self-managed, encrypted backup layer inside your existing cloud.
 

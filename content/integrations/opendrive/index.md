@@ -69,8 +69,9 @@ Your data remains safe, verifiable, and restorable, regardless of what happens i
 
 Plakar integrates with OpenDrive as both a source and destination:
 
-- Snapshot files and folders from OpenDrive, encrypt and deduplicate them, and store them in a trusted Kloset backend
+- Snapshot files and folders from OpenDrive, encrypt and deduplicate them, and store them in a trusted Kloset store
 - Restore verified snapshots back into OpenDrive or other environments, on-prem or cloud-based
+- Use OpenDrive as a Plakar Kloset stores, keeping backups portable and secure
 
 Plakar adds end-to-end encryption, global deduplication, versioning, and snapshot browsing giving you full control over backup and restore, even offline or across providers.
 

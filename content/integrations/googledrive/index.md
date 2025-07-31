@@ -77,7 +77,7 @@ Your data remains safe, verifiable, and restorable no matter what happens in you
 
 Plakar integrates with Google Drive in multiple ways:
 
-- As a **source connector**, Plakar snapshots your Drive data, encrypts and deduplicates it, and stores it in a trusted Kloset repository.
+- As a **source connector**, Plakar snapshots your Drive data, encrypts and deduplicates it, and stores it in a trusted Kloset store.
 - As a **restore destination**, Plakar can rehydrate verified snapshots directly into Google Drive, preserving structure and metadata.
 - As a **storage backend**, you can use Google Drive to store encrypted Plakar snapshots from any source, keeping backups portable and accessible.
 
