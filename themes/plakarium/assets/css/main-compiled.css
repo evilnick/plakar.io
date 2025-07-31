@@ -1158,7 +1158,7 @@ video {
         .docs-content aside,
         .docs-content .head,
         .docs-content dl {
-    margin-right: 50%;
+    width: 50%;
     box-sizing: border-box;
     display: block;
     padding: 0 28px;
@@ -2746,26 +2746,6 @@ video {
   max-height:32px;
 }
 
-.max-h-\[100px\] {
-  max-height:100px;
-}
-
-.max-h-\[400px\] {
-  max-height:400px;
-}
-
-.max-h-\[100\%\] {
-  max-height:100%;
-}
-
-.max-h-\[600px\] {
-  max-height:600px;
-}
-
-.max-h-\[800px\] {
-  max-height:800px;
-}
-
 .min-h-\[150px\] {
   min-height:150px;
 }
@@ -2875,6 +2855,10 @@ video {
   width:2.25rem;
 }
 
+.w-\[100px\] {
+  width:100px;
+}
+
 .w-\[200px\] {
   width:200px;
 }
@@ -2898,30 +2882,6 @@ video {
 .w-max {
   width:-moz-max-content;
   width:max-content;
-}
-
-.w-\[50px\] {
-  width:50px;
-}
-
-.w-20 {
-  width:5rem;
-}
-
-.w-\[75px\] {
-  width:75px;
-}
-
-.w-\[60px\] {
-  width:60px;
-}
-
-.w-\[80px\] {
-  width:80px;
-}
-
-.w-\[100px\] {
-  width:100px;
 }
 
 .min-w-\[4ch\] {
@@ -2987,10 +2947,6 @@ video {
 
 .max-w-xl {
   max-width:36rem;
-}
-
-.max-w-\[10\%\] {
-  max-width:10%;
 }
 
 .flex-1 {
@@ -3920,10 +3876,6 @@ video {
   padding-top:60px;
 }
 
-.pt-12 {
-  padding-top:3rem;
-}
-
 .text-left {
   text-align:left;
 }
@@ -4580,6 +4532,11 @@ video {
   line-height:/* error - Missing end value */;
 }
 
+.\~text-xl\/2xl {
+  font-size:clamp(1.25rem,1.07rem + 0.45vw,1.5rem)/* fluid type from 1.25rem at 40rem to 1.5rem at 96rem */;
+  line-height:clamp(1.75rem,1.57rem + 0.45vw,2rem)/* fluid from 1.75rem at 40rem to 2rem at 96rem */;
+}
+
 .\~text-xl\/3xl {
   font-size:clamp(1.25rem,0.804rem + 1.116vw,1.875rem)/* fluid type from 1.25rem at 40rem to 1.875rem at 96rem */;
   line-height:clamp(1.75rem,1.39rem + 0.89vw,2.25rem)/* fluid from 1.75rem at 40rem to 2.25rem at 96rem */;
@@ -4633,11 +4590,6 @@ video {
 .\~text-xxs\/xs {
   font-size:clamp(0.625rem,0.536rem + 0.223vw,0.75rem)/* fluid type from 0.625rem at 40rem to 0.75rem at 96rem */;
   line-height:/* error - Missing start value */;
-}
-
-.\~text-xl\/2xl {
-  font-size:clamp(1.25rem,1.07rem + 0.45vw,1.5rem)/* fluid type from 1.25rem at 40rem to 1.5rem at 96rem */;
-  line-height:clamp(1.75rem,1.57rem + 0.45vw,2rem)/* fluid from 1.75rem at 40rem to 2rem at 96rem */;
 }
 
 .\~px-3\/6 {
@@ -5866,6 +5818,11 @@ details > summary {
     padding-right:2rem;
   }
 
+  .lg\:py-14 {
+    padding-top:3.5rem;
+    padding-bottom:3.5rem;
+  }
+
   .lg\:py-28 {
     padding-top:7rem;
     padding-bottom:7rem;
@@ -5874,11 +5831,6 @@ details > summary {
   .lg\:py-7 {
     padding-top:1.75rem;
     padding-bottom:1.75rem;
-  }
-
-  .lg\:py-14 {
-    padding-top:3.5rem;
-    padding-bottom:3.5rem;
   }
 
   .lg\:pb-14 {
@@ -5891,10 +5843,6 @@ details > summary {
 
   .lg\:ps-4 {
     padding-inline-start:1rem;
-  }
-
-  .lg\:pt-14 {
-    padding-top:3.5rem;
   }
 
   .lg\:pt-20 {
