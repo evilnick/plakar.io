@@ -44,7 +44,7 @@ seo_tags:
   - snapshot technology
   - portable format
 
-technical_documentation_link: docs/main/integrations/koofr/
+technical_documentation_link: /docs/main/integrations/koofr/
 
 stage: test
 

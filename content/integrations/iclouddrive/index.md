@@ -44,7 +44,7 @@ seo_tags:
   - snapshot technology
   - portable format
 
-technical_documentation_link: docs/main/integrations/iclouddrive/
+technical_documentation_link: /docs/main/integrations/iclouddrive/
 
 stage: test
 
