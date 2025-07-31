@@ -92,9 +92,11 @@ This is the most common and scriptable method. You can:
     {
       "Effect": "Allow",
       "Action": ["s3:GetObject", "s3:ListBucket"],
-      // Or, to allow writes for restoring snapshots
+      // To allow restoring into the bucket, you need to add the PutObject action
       // "Action": ["s3:GetObject", "s3:ListBucket", "s3:PutObject"],
-      "Resource": ["arn:aws:s3:::mybucket", "arn:aws:s3:::mybucket/*"]
+      // To allow using the bucket as a Kloset store, you also need to give permissions to create the bucket
+      // "Action": ["s3:GetObject", "s3:ListBucket", "s3:PutObject", "s3:CreateBucket"],
+      "Resource": ["arn:aws:s3:::plakar-kloset", "arn:aws:s3:::plakar-kloset/*"]
     }
   ]
 }
