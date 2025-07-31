@@ -1,5 +1,5 @@
 ---
-title: SFTP integration
+title: SFTP integration package
 description: Securely back up and restore remote directories over SFTP with Plakar — encrypted, verifiable, and portable.
 technology_description: This integration leverages the SFTP protocol over SSH to securely transfer and verify remote directories into a Plakar Kloset for backup and restoration.
 categories:
@@ -22,7 +22,7 @@ tags:
   - portable format
 stage: beta
 date: 2025-07-30
-plakar_version: ">=1.0.3"
+plakar_version: {1.0.2 or >=1.0.3}
 integration_version: "0.1.0"
 resource_type: filesystem
 provides:
@@ -31,7 +31,13 @@ provides:
   - storage connector
 ---
 
-## 1. Introduction
+## Introduction
+
+> **Requirements**
+> - Plakar version: "1.0.2 or >=1.0.3"
+>  - Integration version: "0.1.0"
+>  - SFTP/SSH server accessible with read/write permissions
+
 This integration enables **backing up, restoring, and storing** remote directories using Plakar’s built-in SFTP connector over SSH. SFTP is supported natively, requiring only that the target system has SSH and SFTP access enabled.
 
 Snapshots are stored in a Kloset store with full deduplication, encryption, and immutability, whether hosted locally or on an SFTP-accessible remote server. All data transfers are encrypted end-to-end, and Plakar automatically verifies each snapshot to ensure data integrity.
@@ -50,7 +56,7 @@ Snapshots are stored in a Kloset store with full deduplication, encryption, and 
     - Legacy SSH servers below 7.0
     - Proprietary or vendor-specific SFTP implementations that do not follow standard SSH protocol
 
-## 2. Architecture
+## Architecture
 
 **Components provided:**
 
@@ -59,26 +65,29 @@ Snapshots are stored in a Kloset store with full deduplication, encryption, and 
 - **Storage Connector**: Supports hosting Kloset stores on SFTP servers, enabling offsite, encrypted, and air‑gapped snapshot storage.
 - **Viewer**: Accessible via the Plakar CLI or UI, allowing users to browse, search, and verify snapshots stored on SFTP-hosted Kloset stores.
 
-## 3. Installation
+## Installation
 This integration is bundled natively with Plakar. No additional package installation is required.
 
 ***Verify SFTP Support:***
-Check that SFTP is listed in your available connectors by running the command ```plakar version```.
-
 ```bash
+plakar/v1.0.2
+
 importers: fs, ftp, s3, sftp # <--- SFTP LISTED
 exporters: fs, ftp, s3, sftp # <--- SFTP LISTED
 klosets: fs, http, https, ptar, s3, sftp, sqlite # <--- SFTP LISTED
 ```
+
+Check that SFTP is listed in your available connectors by running the command ```plakar version```.
+
 You should see `sftp` listed under **importers**, **exporters**, and **klosets**, for example:
 
 This verifies integration is now ready for use.
 
-## 4. Configuration
+## Configuration
 
 No special installation is required to use SFTP with Plakar.
 
-### 4.1 Using direct SFTP URLs
+### Using direct SFTP URLs
 
 ```bash
 # Create a Kloset store on the local SFTP server
@@ -91,100 +100,54 @@ Direct URLs are the simplest way to use SFTP with Plakar:
 
 Direct URLs are fully self‑contained and require no prior configuration, ideal for ad‑hoc or one‑off operations.
 
-### 4.2 Configure and use a named remote
+### Configure a named remote
 
 ```bash
 plakar config remote create mysftp
-plakar config remote set mysftp location sftp://local-sftp/uploads
 
-# Backup to the named SFTP remote
-plakar at @mysftp backup /home/<user>/Documents
+# Point 'mysftp' to your SFTP server via an SSH host alias
+plakar config remote set mysftp location sftp://local-sftp/uploads
 ```
+Named remotes let you simplify and reuse SFTP URLs in Plakar commands without typing the full connection string each time.
 This allows using `sftp://local-sftp` instead of the full `sftp://sftpuser@localhost.`
 
-> (optional) create an SSH host alias
-```
+### Configure an SSH host alias
+
+> (required) create an SSH host alias
+```bash
 Host local-sftp
-    HostName localhost
-    User sftpuser
-    IdentityFile ~/.ssh/id_ed25519_plakar
+    HostName localhost # <--- Creates the alias used in the Plakar URL
+    User sftpuser # <--- Specifies the SFTP account
+    IdentityFile ~/.ssh/id_ed25519_plakar # <--- Enables passwordless SSH for reliable backups
 ```
 
+> Test the alias
+```bash
+# If it logs in without a password, the alias works
+sftp local-sftp
+```
 
-### 4.3 Ensure passwordless SSH access
+Since `local-sftp` is not a real hostname, you must define it in your `~/.ssh/config`:
+
+
+### Ensure passwordless SSH access
 
 ```bash
-#  Must connect without a password for Plakar to work reliably.
+#  Must connect without a password for Plakar.
 ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_plakar
 sftp -i ~/.ssh/id_ed25519_plakar sftpuser@localhost
 ```
+Plakar relies on unattended SSH sessions for SFTP operations. To avoid interruptions or failed backups, configure passwordless login with an SSH key:
 
 > Test passwordless login with
 ```
 sftp -i ~/.ssh/id_ed25519_plakar sftpuser@localhost
 ```
-
+The command should log in directly without prompting for a password, this verifies that
+Plakar can reliably perform backups and restores over SFTP.
 
 ## 5. Setup backup model with SFTP Integration
 
-When using Plakar with an SFTP backend, backups can be organized using two **operational models**
-
-- **Push Model:**  Each source server **initiates** its own backup to the SFTP storage.
-- **Pull Model:** A central backup server **collects** data from sources and stores it in a Kloset repository.
-
-Plakar’s flexibility comes from its **connector architecture**:
-- **Source Connectors:** Where data originates (local paths, SFTP servers, or other remotes)
-- **Storage Connectors:** Where the Kloset repository resides (local FS, SFTP, S3, MinIO)
-- **Destination Connectors:** Where data is restored (local FS, SFTP, or cloud storage)
-
-The separation allows administrators to choose between distributed (push) or centralized (pull) backup strategies, depending on infrastructure scale and operational preferences.
-
-## 5.1  Push Model (Example)
-```bash
-# On each source server, configure a repository pointing to the SFTP storage:
-plakar config repository create mybackup
-plakar config repository set mybackup location sftp://backup.tld.com/var/backups
-
-# Trigger the backup process independently from the source server:
-plakar at @mybackup backup /home
-```
-In the push model, each source server initiates its own backup to the central SFTP Kloset repository.
-
-## 5.2 Push Model (Example)
-```bash
-# On backup.tld.com (central node)
-plakar config remote create server1
-plakar config remote set server1 location sftp://server1.tld.com
-
-plakar config remote create server2
-plakar config remote set server2 location sftp://server2.tld.com
-
-# Pull data from all servers
-plakar at /var/backups backup @server1
-plakar at /var/backups backup @server2
-```
-In the push model, each source server independently initiates its own backup to the central SFTP Kloset repository. 
-
-Backup server orchestrates all pulls. This simplifies retention management, monitoring, and scheduling centrally.
-
-
-### 5.3 Restoring Snapshots (Destination Connectors)
-
-```bash
-# Restore locally
-plakar at sftp://sftpuser@localhost/uploads restore -to ./restored <snapshot-id>
-
-# Restore to SFTP
-plakar at sftp://sftpuser@localhost/uploads restore -to sftp://sftpuser@localhost/restored <snapshot-id>
-
-# Restore to S3 (example)
-plakar at sftp://sftpuser@localhost/uploads restore -to s3://my-bucket/restored <snapshot-id>
-```
-
-Plakar restores snapshots to any supported destination connector:
-- Local filesystem
-- SFTP paths
-- S3 or MinIO buckets
 
 
 
