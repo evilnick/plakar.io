@@ -1131,8 +1131,11 @@ video {
   padding-bottom:0.25rem;
 }
 
-.docs-content blockquote ul {
-  width: 100%;
+.docs-content blockquote,
+    .docs-content details,
+    .docs-content pre {
+  margin-left:2rem;
+  margin-right:2rem;
 }
 
 .docs-content h1,
@@ -1148,16 +1151,34 @@ video {
     .docs-content aside,
     .docs-content .head,
     .docs-content dl {
-  padding: 0 28px;
+  padding: 12px 28px;
 }
 
-.docs-content h2 {
+.
+
+    .docs-content h2 {
   border-bottom-width:1px;
   border-top-width:1px;
   --tw-border-opacity:1;
   border-color:rgb(79 78 102 / var(--tw-border-opacity, 1));
   --tw-bg-opacity:1;
   background-color:rgb(245 244 251 / var(--tw-bg-opacity, 1));
+}
+
+.\!
+
+    .docs-content h2 {
+  border-bottom-width:1px;
+  border-top-width:1px;
+  --tw-border-opacity:1;
+  border-color:rgb(79 78 102 / var(--tw-border-opacity, 1));
+  --tw-bg-opacity:1;
+  background-color:rgb(245 244 251 / var(--tw-bg-opacity, 1));
+}
+
+.
+
+    .docs-content h2 {
   font-size: 25px;
   padding-top: .5em;
   padding-bottom: .5em;
@@ -1165,39 +1186,14 @@ video {
   margin-top: 2em;
 }
 
-.docs-content pre {
-  padding-top: 2em;
-  padding-bottom: 2em;
-  padding: 2em 28px;
-  border-radius: 0rem;
-  margin-top: 0!important;
-  margin-bottom: 0!important;
-}
+.\!
 
-.docs-content pre>p {
-  margin: 0;
-}
-
-.docs-content blockquote {
-  --tw-bg-opacity:1;
-  background-color:rgb(79 78 102 / var(--tw-bg-opacity, 1));
-  font-style:normal;
-  --tw-text-opacity:1;
-  color:rgb(255 255 255 / var(--tw-text-opacity, 1));
-  border-inline-start-width: 0;
-  padding-inline-start: 0;
-  margin-top: 0!important;
-  margin-bottom: 0!important;
-}
-
-.docs-content blockquote > p {
-  padding: 13px 2em;
-  margin-top: 0!important;
-  margin-bottom: 0!important;
-}
-
-.docs-content aside.notice:before {
-  content: "\e602";
+    .docs-content h2 {
+  font-size: 25px !important;
+  padding-top: .5em !important;
+  padding-bottom: .5em !important;
+  margin-bottom: 21px !important;
+  margin-top: 2em !important;
 }
 
 /* Indent lists inside box content for better readability */
@@ -2799,10 +2795,6 @@ video {
 
 .w-\[343px\] {
   width:343px;
-}
-
-.w-\[50\%\] {
-  width:50%;
 }
 
 .w-full {
