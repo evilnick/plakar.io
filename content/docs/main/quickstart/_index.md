@@ -13,14 +13,14 @@ This article will guide you through the creation of your first backup with plaka
 > Install **plakar**:
 
 ```bash
-$ go install github.com/PlakarKorp/plakar@v1.0.2
+$ go install github.com/PlakarKorp/plakar@main
 ```
 
 > To verify the installation was successful, run:
 
 ```bash
 $ plakar version
-v1.0.2
+v1.0.3-devel.c88dc607691070e29b39c3be11c330394bbb431f
 ```
 
 {{% notice style="info" title="Requisites" expanded="true" %}}
@@ -42,29 +42,13 @@ By default, *plakar* is installed in *~/go/bin*. Run `export PATH=$PATH:~/go/bin
 
 ## Running the local agent
 
-> Start the agent:
-```bash
-$ plakar agent
-agent started with pid=12539
-```
-
-> The agent can be stopped with the following command:
-```bash
-$ plakar agent stop
-```
-
 To work efficiently,
-**plakar** requires each user to run a local agent that will provide caching among other things.
+**plakar** requires each user to run their local agent that will provide caching among other things.
 If the agent is not running,
-the **plakar** CLI will operate in degraded mode as a safety net,
-but will disallow concurrent commands and won't benefit from caching.
+the **plakar** CLI will spawn it on first use.
 
-
-
-*If you follow the quickstart but the agent is not running, a warning message will be displayed for each command. You can safely ignore this message: the agent is not mandatory but recommended for optimal performance. This warning can be removed by setting the PLAKAR_AGENTLESS environment variable as such `export PLAKAR_AGENTLESS=`*
 
 ## Creating your first local repository
-
 
 The **plakar** software reads your data,
 splits it into smaller chunks that it deduplicates and stores in a **repository**,
@@ -99,10 +83,10 @@ A lost passphrase means the data within the repository can no longer be recovere
 
 > It is also possible to create unencrypted repositories,
 should your backups remain local,
-in which case the `-no-encryption` option has to be passed at creation:
+in which case the `-plaintext` option has to be passed at creation:
 
 ```bash
-$ plakar at ~/backups create -no-encryption
+$ plakar at ~/backups create -plaintext
 ```
 
 Note that once a repository is created,
@@ -124,14 +108,14 @@ $ plakar at ~/backups backup /private/etc
 9abc3294: OK ✓ /private/etc
 9abc3294: OK ✓ /private
 9abc3294: OK ✓ /
-backup: created unsigned snapshot 9abc3294 of size 3.1 MB in 72.55875ms
+backup: created unsigned snapshot 9abc3294 of size 3.1 MiB in 72.55875ms
 ```
 
 > You can verify that it is properly recorded:
 
 ```bash
 $ plakar at ~/backups ls
-2025-02-19T21:38:16Z   9abc3294    3.1 MB      0s   /private/etc
+2025-02-19T21:38:16Z   9abc3294    3.1 MiB      0s   /private/etc
 ```
 
 > Verify the integrity of its content:
@@ -266,13 +250,11 @@ check: verification of 9abc3294:/ completed successfully
 > Let’s create yet another repository on a remote S3 bucket!
 
 ```bash
-$ plakar config repository create s3
 # for AWS, set s3://s3.<region>.amazonaws.com/<bucket>
-$ plakar config repository set s3 location s3://minio.plakar.io:9001/mybackups
-$ plakar config repository set s3 passphrase ****************
-$ plakar config repository set s3 access_key gilles
-$ plakar config repository set s3 secret_access_key ********
-$ plakar at @s3 create
+$ plakar store add s3 s3://minio.plakar.io:9001/mybackups   \
+    passphrase=****************                             \
+    access_key=gilles                                       \
+    secret_access_key=********
 ```
 
 > Let's do another synchronization!
