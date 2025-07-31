@@ -5,7 +5,7 @@ subtitle: "Resilient, encrypted backups for your Proton Drive environment"
 
 description: >
   Back up your Proton Drive workloads with Plakar to protect against data loss,
-  corruption, and ransomware. Immutable, encrypted, and restorable —
+  corruption, and ransomware. Immutable, encrypted, and restorable
   even offline and across environments.
 
 technology_title: Proton Drive is everywhere and often underprotected
@@ -65,7 +65,7 @@ Without immutable backups, recovery from these scenarios is unreliable or imposs
 
 ## 🔓 What happens when Proton Drive files are deleted or compromised?
 
-If files are deleted—intentionally or by mistake—across synced devices, or if ransomware overwrites originals, Proton Drive’s native features may not help. Trash expiry or account suspension can make recovery impossible, and sync can propagate errors instantly.
+If files are deleted intentionally or by mistake across synced devices, or if ransomware overwrites originals, Proton Drive’s native features may not help. Trash expiry or account suspension can make recovery impossible, and sync can propagate errors instantly.
 
 Plakar addresses these risks by:
 
@@ -73,7 +73,7 @@ Plakar addresses these risks by:
 - Enabling granular recovery of files or folders without full restore
 - Supporting offline and air-gapped backup for true isolation
 
-Your data remains safe, verifiable, and restorable—regardless of what happens in your live Proton Drive account.
+Your data remains safe, verifiable, and restorable regardless of what happens in your live Proton
 
 ## 🛡️ How Plakar secures your Proton Drive workflows
 
@@ -83,7 +83,7 @@ Plakar integrates with Proton Drive as both a source and destination:
 - **Destination connector:** Export verified snapshots back to Proton Drive, restoring clean data after loss or corruption.
 - **Storage connector:** Store Plakar snapshots on Proton Drive for redundancy and easy access.
 
-Snapshots are immutable, versioned, and inspectable via CLI or UI—even offline.
+Snapshots are immutable, versioned, and inspectable via CLI or UI even offline.
 
 ## 🧰 Everything in one tool: backup, verify, restore, browse
 

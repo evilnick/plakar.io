@@ -5,7 +5,7 @@ subtitle: "Resilient, encrypted backups for your Google Photos library"
 
 description: >
   Back up your Google Photos content with Plakar to protect against data loss,
-  accidental deletion, and privacy breaches. Immutable, encrypted, and restorable —
+  accidental deletion, and privacy breaches. Immutable, encrypted, and restorable 
   even offline and across devices.
 
 technology_title: Google Photos is everywhere and often underprotected
@@ -74,7 +74,7 @@ Native tools do not guarantee full recovery or verification. Plakar addresses th
 - Storing backups outside Google’s ecosystem for true ownership
 - Enabling granular recovery and inspection without full restores
 
-Your memories remain safe, verifiable, and portable — even if your account is compromised or deleted.
+Your memories remain safe, verifiable, and portable even if your account is compromised or deleted.
 
 ## 🛡️ How Plakar secures your Google Photos workflows
 
@@ -90,9 +90,9 @@ Plakar adds end-to-end encryption, global deduplication, versioning, and offline
 With Plakar, you get:
 
 - ✅ Immutable, versioned snapshots of your Google Photos library
-- 🔐 End-to-end encryption — you own the keys
+- 🔐 End-to-end encryption, you own the keys
 - 🧠 Deduplication to save space and bandwidth
 - 🔎 Visual inspection and audit readiness
 - 📦 Offline export and long-term retention
 
-Plakar centralizes backup, verification, restoration, and browsing for Google Photos, giving you full control and peace of mind — no cloud lock-in, no manual exports, no guesswork.
+Plakar centralizes backup, verification, restoration, and browsing for Google Photos, giving you full control and peace of mind no cloud lock-in, no manual exports, no guesswork.

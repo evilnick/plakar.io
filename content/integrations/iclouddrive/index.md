@@ -5,7 +5,7 @@ subtitle: "Resilient, encrypted backups for your iCloud Drive environment"
 
 description: >
   Back up your iCloud Drive files with Plakar to protect against data loss,
-  corruption, and ransomware. Immutable, encrypted, and restorable —
+  corruption, and ransomware. Immutable, encrypted, and restorable 
   even offline and across environments.
 
 technology_title: iCloud Drive is everywhere and often underprotected
@@ -59,7 +59,7 @@ resource_type: filesystem
 
 ## 🧠 Why protecting iCloud Drive matters
 
-iCloud Drive syncs files across all your Apple devices, but sync is not backup. If files are deleted, corrupted, or compromised, those changes propagate everywhere instantly. Without immutable backups, you risk silent data loss, ransomware spread, or compliance failures — and recovery options are limited or unavailable.
+iCloud Drive syncs files across all your Apple devices, but sync is not backup. If files are deleted, corrupted, or compromised, those changes propagate everywhere instantly. Without immutable backups, you risk silent data loss, ransomware spread, or compliance failures, and recovery options are limited or unavailable.
 
 ## 🔓 What happens when iCloud Drive files are deleted or compromised?
 
@@ -72,7 +72,7 @@ Plakar addresses these risks by:
 - Enabling granular recovery of files or folders without full restore
 - Supporting offline and air-gapped backup options for true isolation
 
-Your backups remain safe, verifiable, and restorable — even if your iCloud account is compromised.
+Your backups remain safe, verifiable, and restorable, even if your iCloud account is compromised.
 
 ## 🛡️ How Plakar secures your iCloud Drive workflows
 

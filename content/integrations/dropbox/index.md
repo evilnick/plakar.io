@@ -5,7 +5,7 @@ subtitle: "Resilient, encrypted backups for your Dropbox environment"
 
 description: >
   Back up your Dropbox workloads with Plakar to protect against data loss,
-  corruption, and ransomware. Immutable, encrypted, and restorable —
+  corruption, and ransomware. Immutable, encrypted, and restorable
   even offline and across environments.
 
 technology_title: Dropbox is everywhere and often underprotected
@@ -67,7 +67,7 @@ Plakar addresses these risks by:
 - Storing backups with your own encryption keys, isolated from Dropbox access
 - Allowing granular recovery of files or folders without full restore
 
-Your data remains safe, verifiable, and restorable—no matter what happens in your live Dropbox environment.
+Your data remains safe, verifiable, and restorable no matter what happens in your live Dropbox environment.
 
 ## 🛡️ How Plakar secures your Dropbox workflows
 
@@ -77,7 +77,7 @@ Plakar integrates with Dropbox as:
 - A **restore destination** to rehydrate verified snapshots directly into Dropbox
 - A **storage backend** to persist Plakar repositories in Dropbox, keeping backups portable and secure
 
-Plakar adds end-to-end encryption, global deduplication, versioning, and snapshot browsing—online or offline—so you control your data’s safety and recoverability.
+Plakar adds end-to-end encryption, global deduplication, versioning, and snapshot browsing online or offline so you control your data’s safety and recoverability.
 
 ## 🧰 Everything in one tool: backup, verify, restore, browse
 
@@ -89,4 +89,4 @@ With Plakar, you get:
 - 🔎 Full inspection and audit via UI or CLI, without restoring
 - 📦 Offline export and long-term retention options
 
-Plakar centralizes backup, verification, restore, and browsing for Dropbox, eliminating the need for complex scripts or third-party tools. Your Dropbox data is protected, compliant, and always recoverable—on your terms.
+Plakar centralizes backup, verification, restore, and browsing for Dropbox, eliminating the need for complex scripts or third-party tools. Your Dropbox data is protected, compliant, and always recoverable on your terms.

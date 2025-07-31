@@ -5,7 +5,7 @@ subtitle: "Resilient, encrypted backups for your OneDrive environment"
 
 description: >
   Back up your OneDrive workloads with Plakar to protect against data loss,
-  corruption, and ransomware. Immutable, encrypted, and restorable —
+  corruption, and ransomware. Immutable, encrypted, and restorable 
   even offline and across environments.
 
 technology_title: OneDrive is everywhere and often underprotected
@@ -17,7 +17,7 @@ technology_description: >
 
   Yet, OneDrive’s native protection is limited: deletions, ransomware, or account breaches
   can propagate instantly, and retention policies may not cover every scenario.
-  Plakar adds a layer of encrypted, versioned, and deduplicated backups—giving you
+  Plakar adds a layer of encrypted, versioned, and deduplicated backups giving you
   control, auditability, and resilience beyond standard cloud storage.
 
 categories:
@@ -64,7 +64,7 @@ Cloud sync is not backup. OneDrive’s convenience can mask risks: silent corrup
 
 ## 🔓 What happens when OneDrive is compromised?
 
-If files are deleted locally, OneDrive syncs those deletions to the cloud—sometimes before you notice. Ransomware or malware can encrypt files and sync the damage across all devices. A breach of your Microsoft account can expose or wipe entire libraries. Native recovery options are limited by retention windows and version history, which may not cover every scenario.
+If files are deleted locally, OneDrive syncs those deletions to the cloud sometimes before you notice. Ransomware or malware can encrypt files and sync the damage across all devices. A breach of your Microsoft account can expose or wipe entire libraries. Native recovery options are limited by retention windows and version history, which may not cover every scenario.
 
 Plakar addresses these risks by:
 
@@ -82,7 +82,7 @@ Plakar integrates with OneDrive as both a source and destination:
 - **Destination connector:** Export clean, verified snapshots back to OneDrive, restoring files or folders exactly as they were.
 - **Storage connector:** Store Plakar snapshots on OneDrive itself, adding a self-managed, encrypted backup layer inside your existing cloud.
 
-Snapshots are immutable, portable, and inspectable via CLI or UI—even if stored offline.
+Snapshots are immutable, portable, and inspectable via CLI or UI even if stored offline.
 
 ## 🧰 Everything in one tool: backup, verify, restore, browse
 
@@ -94,4 +94,4 @@ With Plakar, you get:
 - 🔎 Visual inspection and audit readiness via UI or CLI
 - 📦 Offline export and long-term retention options
 
-Plakar centralizes backup, verification, restore, and browsing—making OneDrive truly resilient, compliant, and under your control.
+Plakar centralizes backup, verification, restore, and browsing making OneDrive truly resilient, compliant, and under your control.
