@@ -7,7 +7,7 @@ categories:
   - source connector
 tags:
 - stdio
-stage: "coming soon"
+stage: stable
 date: 2025-05-13
 hidden: true
 ---
