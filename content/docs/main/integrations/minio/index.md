@@ -50,18 +50,6 @@ Plakar's built-in MinIO integration includes three connectors:
 * **Backup a MinIO bucket** to any Kloset store, for example hosted on the local filesystem, in a remote SFTP server, or even in another MinIO bucket.
 * **Restore a snapshot from a Kloset store into a MinIO bucket**.
 
-<!-- <div style="display: flex;">
-  <img src="./architecture-store.png" alt="Host a Kloset to a MinIO bucket" width="500px" />
-  <img src="./architecture-backup.png" alt="Backup a MinIO bucket" width="500px" />
-  <img src="./architecture-restore.png" alt="Restore a backup to a MinIO bucket" width="500px" />
-</div> -->
-
-<!-- > Architecture overview of the MinIO integration
-![Host a Kloset to a MinIO bucket](./architecture-store.png)
-![Backup a MinIO bucket](./architecture-backup.png)
-![Restore a backup to a MinIO bucket](./architecture-restore.png) -->
-
-
 **Compatibility**
 
 - This integration is built-in in Plakar and available in all versions. No extra package installation is needed.
@@ -185,6 +173,8 @@ $ plakar at @minio_store create
 $ plakar at @minio_store ls
 # Backup a local folder to the Kloset store
 $ plakar at @minio_store backup /etc
+# Backup any source connector to the Kloset store
+$ plakar at @minio_store backup @myconnector
 # Restore a file from a snapshot in the Kloset store
 $ plakar at @minio_store restore <snapshot_id>:/etc/passwd
 # Run the web UI to browse the Kloset store
@@ -232,6 +222,8 @@ To backup a MinIO bucket into a Kloset store, use `plakar at <store> backup @min
 $ plakar at ./my-store create
 # Run the backup, assuming @minio_src is configured
 $ plakar at ./my-store backup @minio_src
+# Or, reference any Kloset store configured
+$ plakar at @mystore backup @minio_src
 ```
 
 ## Destination connector 
@@ -259,6 +251,10 @@ $ plakar config remote set minio_src secret_access_key minioadmin
 $ plakar config remote set minio_src use_tls false
 ```
 
+**Configuration options**
+
+The configuration options for the destination connector are similar to those of the storage connector. See the [Storage connector](#storage-connector) section for details.
+
 ---
 
 ### Restore a snapshot to a MinIO bucket
@@ -267,7 +263,9 @@ To restore a snapshot from a Kloset store into a MinIO bucket, use `plakar at <s
 
 > Restore a snapshot from a Kloset store into a MinIO bucket
 ```bash
-$ plakar at @minio_store restore -to @minio_dst <snapshot-id>
+$ plakar at ./my-store restore -to @minio_dst <snapshot-id>
+# Or, reference any Kloset store configured
+$ plakar at @mystore restore -to @minio_dst <snapshot-id>
 ```
 
 ---
@@ -346,19 +344,24 @@ Note that this is not specific to MinIO: two Kloset stores can be synchronized r
 
 ---
 
-**Does Plakar support TLS?**  
+**How to enable or disable TLS?**
 
-Yes. TLS is fully supported.
+Update the configuration option `use_tls` to `true` or `false` depending on whether your MinIO instance uses TLS. For local development, you probably want to disable TLS.
 
-In the examples, `use_tls` is disabled only for local development.
-
-If your MinIO instance uses a certificate, set `use_tls` to `true`.
+> Enable or disable TLS for the MinIO integration
+```bash
+# Disable TLS for the Kloset store
+$ plakar config repository set minio_store use_tls false
+# Disable TLS for the Source or Destination connector
+$ plakar config remote set minio_src use_tls false
+$ plakar config remote set minio_dst use_tls false
+```
 
 ---
 
 **Can I restore data from MinIO to another provider (e.g., AWS, Azue, GCP, Wasabi, Scaleway, OVH)?**  
 
-Yes.
+Yes. Configure the storage connector to point to the MinIO bucket, and set the destination connector to point to the target provider.
 
 ---
 
