@@ -220,9 +220,9 @@ You can restore:
 Provide different examples with different compatible resources:
 
 ```bash
-plakar at @mystore restore <snapshot-id> -to s3://mybucket/restore/
-plakar at @mystore restore <snapshot-id> -to /example
-plakar at @mystore restore <snapshot-id> -to @another-compatible-resource
+plakar at @mystore restore -to s3://mybucket/restore/ <snapshot-id>
+plakar at @mystore restore -to /example <snapshot-id>
+plakar at @mystore restore -to @another-compatible-resource <snapshot-id>
 ```
 
 ### Using {resource type} as Storage Connector
