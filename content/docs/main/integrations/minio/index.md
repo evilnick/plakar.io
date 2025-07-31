@@ -388,7 +388,7 @@ For MinIO in Docker, view logs here.
 
 ## 9. Backup strategy
 
-The tipical backup strategy for Plakar with MinIO is the standard 3-2-1 rule:
+The typical backup strategy for Plakar with MinIO is the standard 3-2-1 rule:
 - Keep **3** copies
 - On **2** types of media
 - At least **1** copy offsite or offline
