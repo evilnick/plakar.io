@@ -153,4 +153,3 @@ No, Plakar backs up only the latest version of each object to avoid redundant st
 
 **Can I replicate between buckets?**\
 Use Plakar CLI to push snapshots from one bucket to another by configuring multiple remotes and using `plakar at` commands.
-
