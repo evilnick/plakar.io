@@ -60,9 +60,11 @@ provides:
 
 ---
 
+{{< doc-section name="integration-package" >}}
 # Integration package: {name of the resource}
 
-## 1. Introduction
+{{< doc-section name="introduction" >}}
+## Introduction
 
 This integration allows you to snapshot and restore a {resource type} using Plakar to store it in a Kloset store, while minimizing storage usage and ensuring strong data security.
 It includes a Storage Connector that lets you persist snapshots to the {resource type} itself, either from the same kind of resource or from entirely different sources.
@@ -72,7 +74,7 @@ A Viewer is also provided to inspect, search, and restore snapshots without requ
 - ...
 - ...
 
-**Target technologies:** 
+**Target technologies:**
 
 This integration supports the following versions and deployment models of {resource type}:
 
@@ -87,9 +89,10 @@ This integration supports the following versions and deployment models of {resou
 - Optional: Resource access credentials (describe them briefly, e.g. API token, database URI, etc.)
 - Optional: Resource version compatibility (e.g. "compatible with PostgreSQL 12+")
 
-## 2. Architecture
+{{< /doc-section >}}
 
-## 2. Architecture
+{{< doc-section name="architecture" >}}
+## Architecture
 
 ```plaintext
                                 Viewer (CLI/UI)
@@ -110,12 +113,16 @@ This integration supports the following versions and deployment models of {resou
 
 > _Tip: include a diagram showing extraction → snapshot → export/restore flow._
 
-## 3. Installation
+{{< /doc-section >}}
+
+{{< doc-section name="installation" >}}
+## Installation
 
 This integration is distributed as an **integration package**.  
 You can build and install it in a few seconds using Plakar’s built-in tooling.
 
-### Build the package
+{{< doc-section name="how-to-package" >}}
+### How to build the package
 
 Run the following command to fetch and compile the integration:
 
@@ -128,7 +135,8 @@ This will generate a portable `.ptar` archive, for example:
 ```text
 /tmp/{integration}_v0.1.0-devel.xxxxxx_linux_amd64.ptar
 ```
-
+{{< /doc-section >}}
+{{< doc-section name="install-package" >}}
 ### Install the package
 
 Once built, install it locally with:
@@ -136,7 +144,8 @@ Once built, install it locally with:
 ```bash
 plakar pkg add ./path/to/{integration}_v0.1.0-devel.xxxxxx_linux_amd64.ptar
 ```
-
+{{< /doc-section >}}
+{{< doc-section name="verify-installation" >}}
 ### Verify installation
 
 Check that the integration appears in your available connectors:
@@ -155,7 +164,9 @@ klosets: fs, s3, ptar, {integration}, ...
 
 The integration is now ready for use.
 
-## 4. Configuration
+{{< /doc-section >}}
+{{< doc-section name="setup" >}}
+## Setup  {resource type}
 
 This integration provides three types of connectors to interact with your {resource type}:
 - **Source Connector** to extract data from the resource
@@ -164,10 +175,17 @@ This integration provides three types of connectors to interact with your {resou
 
 The configuration is done using `plakar config` commands. Each parameter is set explicitly and separately.
 
-### 4.1 Source Connector
+Depending on the type of usage, you can configure {resource} as a source, destination, or storage connector.
 
-To declare a resource as a source:
+{{< doc-section name="backup-restore" >}}
+### Backup & Restore using the {resource type}
 
+{{< doc-section name="source-connector-configuration" >}}
+#### Source Connector configuration
+
+To declare a resource as a source to backup it.
+
+> Configure the source connector:
 ```bash
 plakar config source create myresource
 plakar config source set myresource type {resource}
@@ -177,10 +195,13 @@ plakar config source set myresource access_key {your-access-key}
 plakar config source set myresource secret_access_key {your-secret-key}
 ```
 
-### 4.2 Destination Connector
+{{< /doc-section >}}
+{{< doc-section name="destination-connector-configuration" >}}
+##### Destination Connector configuration
 
-To declare a resource as a destination:
+To declare a resource as a destination to restore data into it.
 
+> Configure the destination connector:
 ```bash
 plakar config destination create myresource
 plakar config destination set myresource type {resource}
@@ -188,8 +209,48 @@ plakar config destination set myresource uri {resource-uri}
 plakar config destination set myresource access_key {your-access-key}
 plakar config destination set myresource secret_access_key {your-secret-key}
 ```
+{{< /doc-section >}}
+{{< doc-section name="snapshot" >}}
+#### Snapshot: make a backup
 
-### 4.3 Storage Connector
+Provide diffrent examples to make a backup
+> To take a snapshot of your configured resource:
+```bash
+plakar at @mystore backup @myresource
+plakar at @mystore backup ressource://
+```
+
+Plakar connects to the resource and lists all accessible objects in the specified bucket.
+Each object is streamed, chunked into smaller blocks, then deduplicated, compressed, and encrypted locally before being written to the Kloset store.
+
+{{< /doc-section >}}
+{{< doc-section name="restore" >}}
+#### Restore a snapshot
+
+To restore all or part of a snapshot:
+
+```bash
+plakar at @mystore restore -to @restore-target <snapshot-id>:/optional/path
+```
+
+You can restore:
+- To the local filesystem
+- To a specific resource of the same type or a compatible type (if registered as destination)
+
+Provide different examples with different compatible resources:
+
+```bash
+plakar at @mystore restore <snapshot-id> -to s3://mybucket/restore/
+plakar at @mystore restore <snapshot-id> -to /example
+plakar at @mystore restore <snapshot-id> -to @another-compatible-resource
+```
+{{< /doc-section >}}
+{{< /doc-section >}}
+{{< doc-section name="storage-connector" >}}
+### Using {resource type} as Storage Connector
+
+{{< doc-section name="storage-connector-configuration" >}}
+#### Configuration
 
 To configure the resource itself as a **Kloset store backend**:
 
@@ -202,22 +263,17 @@ plakar config store set mystore secret_access_key {your-secret-key}
 ```
 
 This setup enables you to use the resource not just as a data target, but also as the durable storage backend for your snapshots — making the integration self-contained and portable.
+{{< /doc-section >}}
+{{< doc-section name="inspection" >}}
+#### Kloset creation
 
-## 5. Usage
-
-### 5.1 Snapshot
-
-To take a snapshot of your configured resource:
-
+> Create a Kloset store to use the resource as a backend:
 ```bash
-plakar at @mystore backup @myresource
+plakar at @mystore create
 ```
-
-Plakar connects to the resource and lists all accessible objects in the specified bucket.
-Each object is streamed, chunked into smaller blocks, then deduplicated, compressed, and encrypted locally before being written to the Kloset store.
-
-
-### 5.2 Inspection
+{{< /doc-section >}}
+{{< doc-section name="inspection" >}}
+#### Kloset inspection: test your Kloset store is functional
 
 > List available snapshots:
 
@@ -236,30 +292,16 @@ plakar at @mystore cat <snapshot-id>:/path/to/file
 ```bash
 plakar at @mystore ui
 ```
-
-### 5.3 Restore
-
-To restore all or part of a snapshot:
-
-```bash
-plakar at @mystore restore -to @restore-target <snapshot-id>:/optional/path
-```
-
-You can restore:
-- To the local filesystem
-- To a specific resource of the same type or a compatible type (if registered as destination)
-
-List examples of compatible resources:
-
-```bash
-plakar at @mystore restore <snapshot-id> -to @myresource
-```
-
-## 6. Integration-specific behaviors
+{{< /doc-section >}}
+{{< /doc-section >}}
+{{< doc-section name="integration-behavors" >}}
+## Integration-specific behaviors
 
 > This section documents behaviors that are specific to how this integration interacts with the {resource type}, especially those that affect consistency, performance, or compatibility.
 
-### 6.1 Limitations
+{{< /doc-section >}}
+{{< doc-section name="limitations" >}}
+### Limitations
 
 The following components of the resource are **not included** in the snapshot:
 
@@ -273,29 +315,38 @@ Only the following elements are backed up:
 
 - Raw data buckets and their contents
 - Bucket-level metadata (e.g. creation time, owner ID)
-
-### 6.2 Automation and scheduling
+  {{< /doc-section >}}
+  {{< doc-section name="automation-and-scheduling" >}}
+### Automation and scheduling
 
 > List any specific automation or scheduling features that are available or to take into account for this integration.
 
-### 6.3 Restore behavior specifics
+{{< /doc-section >}}
+{{< doc-section name="restore-behavior-specifics" >}}
+### Restore behavior specifics
 
 Recommended practice:
 - Restore to a temporary or namespaced destination (e.g. {resource}/restore-preview/)
 - Manually validate content before promoting to production
 
-
-## 7. Troubleshooting
+{{< /doc-section >}}
+{{< doc-section name="troubleshooting" >}}
+## Troubleshooting
 
 > List here specific logging, debugging, or troubleshooting steps for the integration.
 
-
-### 8. Backup strategy
-
-> Recommended backup strategies for this integration
-
-
-## 9. Appendix
+{{< /doc-section >}}
+{{< doc-section name="appendix" >}}
+## Appendix
 
 - CLI reference
 - Example automation scripts
+
+{{< /doc-section >}}
+
+{{< doc-section name="faq" >}}
+## FAQ
+
+Create a FAQ section to address common questions or issues users might encounter with this integration.
+
+{{< /doc-section >}}
