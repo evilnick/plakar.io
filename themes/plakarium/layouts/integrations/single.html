@@ -10,52 +10,76 @@
         </div>
     </section>
 
+
     <!-- Title -->
     <section class="section-light-2 grid-background">
-        <div class="bg-gradient-section-light-1 pt-14 lg:pt-20 pb-7 lg:pb-14 p-4">
+        <div class="bg-gradient-section-light-1 p-4">
+            <div class="content pt-14 lg:pt-20 pb-7 lg:pb-14">
+                <div class="flex flex-col gap-4 items-start justify-start">
+                    <div class="flex flex-row gap-8 w-full items-stretch">
+                        <!-- Left block: Title -->
+                        <div class="flex flex-col gap-4 md:gap-2 text-left justify-end w-full lg:w-1/2">
+                            <h2 class="~text-3xl/6xl font-space-grotesk font-medium lg:text-left w-full text-start">
+                                {{ partial "functions/colorize-word" (dict "text" .Params.subtitle "word" .Params.resource "class" "text-primary-500") | safeHTML }}
+                            </h2>
+                            <p class="~text-xl/2xl text-neutral-600 font-space-grotesk font-medium leading-snug w-full pt-8 items-start">
+                                {{ .Description }}
+                            </p>
+                        </div>
 
-        <div class="content flex flex-row items-end text-center px-4 gap-8">
-
-            <div class="h-32 w-32">
-                {{ $image := or (.Resources.GetMatch "featured.webp") (index (.Resources.Match "featured.*") 0) }}
-                <img class="w-full h-auto object-cover rounded-sm"
-                     src="{{ or $image.RelPermalink (resources.Get "img/placeholder-1600x1200.png").RelPermalink }}"
-                     alt="Article image">
-            </div>
-
-            <!-- Right block: Category + Title -->
-            <div class="flex flex-col gap-4 md:gap-2 text-left justify-end w-full lg:w-2/3">
-
-                <h1 class="font-space-grotesk font-medium ~text-2xl/5xl">
-                    {{ .Title | emojify }}
-                </h1>
-                <div class="text-primary-500 ~text-xs/sm">
-                    {{ $categories := .GetTerms "categories" }}
-                    {{ range $i, $category := $categories }}
-                        {{ $category.LinkTitle }}{{ if lt $i (sub (len $categories) 1) }} /{{ end }}
-                    {{ end }}
+                        <!-- Right block: Image -->
+                        <div class="hidden lg:flex flex-row items-center justify-end w-full max-w-[50%]">
+                            {{ $image := or (.Resources.GetMatch "featured.webp") (index (.Resources.Match "featured.*") 0) }}
+                            <img class="max-w-[50%] max-h-[200px] object-cover rounded-lg"
+                                 src="{{ or $image.RelPermalink (resources.Get "img/placeholder-1600x1200.png").RelPermalink }}"
+                                 alt="Article image">
+                            <div class="w-[100px] h-auto">
+                                {{ $riArrowRightLongFill := resources.Get "img/ri/arrow-right-long-fill.svg" }}
+                                {{ $riArrowRightLongFill.Content | safeHTML }}
+                            </div>
+                            <!-- Plakar Logo -->
+                            {{ $logoDark := resources.Get .Site.Params.logoIcon }}
+                            <img class="h-auto max-h-[200px] object-contain rounded-sm"
+                                 src="{{ $logoDark.RelPermalink }}"
+                                 alt="Plakar logo">
+                        </div>
+                    </div>
+                    <div class="flex text-center items-center justify-center">
+                        {{ partial "cta/get-started-button.html" . }}
+                    </div>
+                    <div class="">
+                        <!-- CTA -->
+                        <a href="{{ .Params.technical_documentation_link }}"
+                           class="inline-flex items-center gap-2 text-base font-space-grotesk font-medium text-neutral-900 hover:text-primary-500 transition-colors">
+                            <span class="w-[20px] h-[20px]">
+                            {{ $riCornerDownRightLine.Content | safeHTML }}
+                            </span>
+                            Read the {{ .Params.resource }} docs
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-        </div>
     </section>
 
-    <!-- Intro -->
-    <section class="section-light-1 text-neutral-900 pb-14 lg:pb-28 pt-7 lg:pt-14">
-        <div class="content px-4">
-            <div class="flex flex-col gap-8 items-start w-full">
-                <h2 class="~text-2xl/5xl font-space-grotesk font-medium text-center lg:text-left w-full">
-                    {{ .Params.subtitle }}
-                </h2>
-                <p class="~text-base/lg text-neutral-600 font-space-grotesk font-medium leading-snug w-full">
-                    {{ .Description }}
-                </p>
+    <!-- Technology -->
+    <section class="section-light-2 py-7 lg:py-14">
+        <div class="content flex flex-col lg:flex-row gap-12 items-start px-4">
+            <div class="flex flex-row gap-4 md:gap-2 items-end justify-end w-full">
+                <div class="flex flex-col w-full lg:w-2/3">
+                    <h2 class="~text-3xl/5xl font-space-grotesk font-medium lg:text-end w-full text-end">
+                        {{ partial "functions/colorize-word" (dict "text" .Params.technology_title "word" .Params.resource "class" "text-primary-500") | safeHTML }}
+                    </h2>
+                    <p class="~text-lg/xl text-neutral-700 font-space-grotesk font-medium leading-snug w-full pt-8 items-start">
+                        {{ .Params.technology_description }}
+                    </p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Article body -->
-    <section class="section-light-2 py-14 lg:py-28">
+    <section class="section-light-1 py-14 lg:py-28">
         <div class="content flex flex-col lg:flex-row gap-12 items-start px-4">
 
             <!-- Article content -->
@@ -80,6 +104,23 @@
                 </div>
             </article>
 
+        </div>
+    </section>
+
+    <!-- Call to action: Explore the setup guide -->
+    <section class="section-primary-1 py-14 lg:py-28">
+        <div class="content">
+            <div class="flex flex-col gap-8 items-end px-4">
+                <h2 class="~text-3xl/5xl font-space-grotesk font-medium lg:text-end w-full text-end">
+                    Ready to protect your MinIO data?
+                </h2>
+
+                {{ partial "cta/read-the-docs.html" (dict
+                        "href" .Params.technical_documentation_link
+                        "label" (printf "Read the %s docs" .Params.resource)
+                        "labelShort" (printf "%s docs" .Params.resource)
+                        ) }}
+            </div>
         </div>
     </section>
 

@@ -1158,7 +1158,7 @@ video {
         .docs-content aside,
         .docs-content .head,
         .docs-content dl {
-    margin-right: 50%;
+    width: 50%;
     box-sizing: border-box;
     display: block;
     padding: 0 28px;
@@ -2855,6 +2855,10 @@ video {
   width:2.25rem;
 }
 
+.w-\[100px\] {
+  width:100px;
+}
+
 .w-\[200px\] {
   width:200px;
 }
@@ -3888,6 +3892,10 @@ video {
   text-align:start;
 }
 
+.text-end {
+  text-align:end;
+}
+
 .font-dm-mono {
   font-family:"DM Mono", monospace;
 }
@@ -4522,6 +4530,11 @@ video {
 .\~text-xl {
   font-size:/* error - Missing end value */;
   line-height:/* error - Missing end value */;
+}
+
+.\~text-xl\/2xl {
+  font-size:clamp(1.25rem,1.07rem + 0.45vw,1.5rem)/* fluid type from 1.25rem at 40rem to 1.5rem at 96rem */;
+  line-height:clamp(1.75rem,1.57rem + 0.45vw,2rem)/* fluid from 1.75rem at 40rem to 2rem at 96rem */;
 }
 
 .\~text-xl\/3xl {
@@ -5805,6 +5818,11 @@ details > summary {
     padding-right:2rem;
   }
 
+  .lg\:py-14 {
+    padding-top:3.5rem;
+    padding-bottom:3.5rem;
+  }
+
   .lg\:py-28 {
     padding-top:7rem;
     padding-bottom:7rem;
@@ -5827,10 +5845,6 @@ details > summary {
     padding-inline-start:1rem;
   }
 
-  .lg\:pt-14 {
-    padding-top:3.5rem;
-  }
-
   .lg\:pt-20 {
     padding-top:5rem;
   }
@@ -5845,6 +5859,10 @@ details > summary {
 
   .lg\:text-left {
     text-align:left;
+  }
+
+  .lg\:text-end {
+    text-align:end;
   }
 }
 
