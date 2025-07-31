@@ -108,7 +108,7 @@ parent = "solutions"
 [[main]]
 identifier = "engineering-learn-quickstart"
 name = "Quick start"
-url = "https://docs.plakar.io/en/quickstart/index.html"
+url = "/docs/main/"
 weight = 10
 parent = "engineering"
 [[main.params]]
@@ -122,7 +122,7 @@ parent = "engineering"
 [[main]]
 identifier = "engineering-learn-docs"
 name = "Documentation"
-url = "https://docs.plakar.io/en/index.html"
+url = "/docs/main/"
 weight = 20
 parent = "engineering"
 [[main.params]]
