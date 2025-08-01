@@ -1,6 +1,6 @@
 +++
 title = "Concepts"
-date = 2025-07-31T21:37:00+01:00
+date = "2025-03-18T10:07:31Z"
 weight = 2
 chapter = false
 pre = "<b>2. </b>"
