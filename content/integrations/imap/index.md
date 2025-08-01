@@ -8,7 +8,7 @@ categories:
 tags:
 - Mail
 - IMAP
-stage: testing
+stage: beta
 date: 2025-07-07
 ---
 

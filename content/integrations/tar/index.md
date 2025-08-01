@@ -9,7 +9,7 @@ categories:
   - viewer
 tags:
 - stdio
-stage: "coming soon"
+stage: stable
 date: 2025-05-13
 ---
 

@@ -42,7 +42,7 @@ seo_tags:
 
 technical_documentation_link: /docs/main/integrations/dropbox/
 
-stage: test
+stage: beta
 
 date: 2025-07-28
 

@@ -46,7 +46,7 @@ seo_tags:
 
 technical_documentation_link: /docs/main/integrations/googledrive
 
-stage: test
+stage: beta
 
 date: 2025-07-28
 

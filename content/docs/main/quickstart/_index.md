@@ -13,14 +13,14 @@ This article will guide you through the creation of your first backup with plaka
 > Install **plakar**:
 
 ```bash
-$ go install github.com/PlakarKorp/plakar/cmd/plakar@latest
+$ go install github.com/PlakarKorp/plakar@main
 ```
 
 > To verify the installation was successful, run:
 
 ```bash
 $ plakar version
-v1.0.1-beta.13
+v1.0.3-devel.c88dc607691070e29b39c3be11c330394bbb431f
 ```
 
 {{% notice style="info" title="Requisites" expanded="true" %}}
@@ -42,29 +42,13 @@ By default, *plakar* is installed in *~/go/bin*. Run `export PATH=$PATH:~/go/bin
 
 ## Running the local agent
 
-> Start the agent:
-```bash
-$ plakar agent
-agent started with pid=12539
-```
-
-> The agent can be stopped with the following command:
-```bash
-$ plakar agent -stop
-```
-
 To work efficiently,
-**plakar** requires each user to run a local agent that will provide caching among other things.
+**plakar** requires each user to run their local agent that will provide caching among other things.
 If the agent is not running,
-the **plakar** CLI will operate in degraded mode as a safety net,
-but will disallow concurrent commands and won't benefit from caching.
+the **plakar** CLI will spawn it on first use.
 
-
-
-*If you follow the quickstart but the agent is not running, a warning message will be displayed for each command. You can safely ignore this message: the agent is not mandatory but recommended for optimal performance. This warning can be removed by setting the PLAKAR_AGENTLESS environment variable as such `export PLAKAR_AGENTLESS=`*
 
 ## Creating your first local repository
-
 
 The **plakar** software reads your data,
 splits it into smaller chunks that it deduplicates and stores in a **repository**,
@@ -76,10 +60,10 @@ a remote directory over SFTP,
 a bucket on an S3 object store,
 or any storage we provide (or you write) a connector for.
 
-> Our first repository will be a directory at `/var/backups`:
+> Our first repository will be a directory at `~/backups`:
 
 ```bash
-$ plakar at /var/backups create
+$ plakar at ~/backups create
 repository passphrase: 
 repository passphrase (confirm):
 ```
@@ -99,10 +83,10 @@ A lost passphrase means the data within the repository can no longer be recovere
 
 > It is also possible to create unencrypted repositories,
 should your backups remain local,
-in which case the `-no-encryption` option has to be passed at creation:
+in which case the `-plaintext` option has to be passed at creation:
 
 ```bash
-$ plakar at /var/backups create -no-encryption
+$ plakar at ~/backups create -plaintext
 ```
 
 Note that once a repository is created,
@@ -115,7 +99,7 @@ such changes require creating a new repository and performing a synchronization 
 > Once the repository is created, we can do the first backup to it:
 
 ```bash
-$ plakar at /var/backups backup /private/etc
+$ plakar at ~/backups backup /private/etc
 9abc3294: OK ✓ /private/etc/ftpusers
 9abc3294: OK ✓ /private/etc/asl/com.apple.iokit.power
 9abc3294: OK ✓ /private/etc/pam.d/screensaver_new_ctk
@@ -124,20 +108,20 @@ $ plakar at /var/backups backup /private/etc
 9abc3294: OK ✓ /private/etc
 9abc3294: OK ✓ /private
 9abc3294: OK ✓ /
-backup: created unsigned snapshot 9abc3294 of size 3.1 MB in 72.55875ms
+backup: created unsigned snapshot 9abc3294 of size 3.1 MiB in 72.55875ms
 ```
 
 > You can verify that it is properly recorded:
 
 ```bash
-$ plakar at /var/backups ls
-2025-02-19T21:38:16Z   9abc3294    3.1 MB      0s   /private/etc
+$ plakar at ~/backups ls
+2025-02-19T21:38:16Z   9abc3294    3.1 MiB      0s   /private/etc
 ```
 
 > Verify the integrity of its content:
 
 ```bash
-$ plakar at /var/backups check 9abc3294
+$ plakar at ~/backups check 9abc3294
 9abc3294: ✓ /private/etc/afpovertcp.cfg
 9abc3294: ✓ /private/etc/apache2/extra/httpd-autoindex.conf
 9abc3294: ✓ /private/etc/apache2/extra/httpd-dav.conf
@@ -152,7 +136,7 @@ check: verification of 9abc3294:/private/etc completed successfully
 > And restore it to a local directory:
 
 ```bash
-$ plakar at /var/backups restore -to /tmp/restore 9abc3294
+$ plakar at ~/backups restore -to /tmp/restore 9abc3294
 9abc3294: OK ✓ /private/etc/afpovertcp.cfg
 9abc3294: OK ✓ /private/etc/apache2/extra/httpd-autoindex.conf
 9abc3294: OK ✓ /private/etc/apache2/extra/httpd-dav.conf
@@ -179,7 +163,7 @@ drwxr-xr-x@ 16 gilles  wheel     512 Feb 19 22:47 asl
 > Plakar provides a web interface to view the backups and their content. To start the web interface, run:
 
 ```bash
-$ plakar at /var/backups ui
+$ plakar at ~/backups ui
 ```
 
 Your default browser will open a new tab. You can navigate through the snapshots, view the files, and restore them.
@@ -222,7 +206,7 @@ SFTP is the Secure File Transfer Protocol that comes with OpenSSH.
 > This can be done by creating a new repository there, with its own passphrase:
 
 ```bash
-$ plakar at sftp://gilles@nas.plakar.io/var/backups create
+$ plakar at sftp://gilles@nas.plakar.io/home/gilles/backups create
 repository passphrase: 
 repository passphrase (confirm):
 ```
@@ -234,19 +218,19 @@ Instead, we can perform a repository synchronization.
 > A repository synchronization ensures that backups are transferred from a repository to another, using the recorded data,and performing necessary decryption and encryption to produce a similar copy:
 
 ```bash
-$ plakar at /var/backups sync to sftp://gilles@nas.plakar.io/var/backups
+$ plakar at ~/backups sync to sftp://gilles@nas.plakar.io/home/gilles/backups
 peer repository passphrase: 
 peer repository passphrase (confirm):
 sync: synchronized 1 snapshot
-info: sync: synchronization from /var/backups to sftp://gilles@nas.plakar.io/var/backups completed: 1 snapshots synchronized
-$ plakar at sftp://gilles@nas.plakar.io/var/backups ls
+info: sync: synchronization from /home/gilles/backups to sftp://gilles@nas.plakar.io/home/gilles/backups completed: 1 snapshots synchronized
+$ plakar at sftp://gilles@nas.plakar.io/home/gilles/backups ls
 2025-02-19T21:38:16Z   9abc3294    3.1 MB      0s   /private/etc
 ```
 
 > We can verify integrity of the snapshot on the second repository:
 
 ```bash
-$ plakar at sftp://gilles@nas.plakar.io/var/backups check 9abc3294
+$ plakar at sftp://gilles@nas.plakar.io/home/gilles/backups check 9abc3294
 9abc3294: ✓ /private/etc/afpovertcp.cfg
 9abc3294: ✓ /private/etc/apache2/extra/httpd-autoindex.conf
 9abc3294: ✓ /private/etc/apache2/extra/httpd-dav.conf
@@ -266,20 +250,18 @@ check: verification of 9abc3294:/ completed successfully
 > Let’s create yet another repository on a remote S3 bucket!
 
 ```bash
-$ plakar config repository create s3
 # for AWS, set s3://s3.<region>.amazonaws.com/<bucket>
-$ plakar config repository set s3 location s3://minio.plakar.io:9001/mybackups
-$ plakar config repository set s3 passphrase ****************
-$ plakar config repository set s3 access_key gilles
-$ plakar config repository set s3 secret_access_key ********
-$ plakar at @s3 create
+$ plakar store add s3 s3://minio.plakar.io:9001/mybackups   \
+    passphrase=****************                             \
+    access_key=gilles                                       \
+    secret_access_key=********
 ```
 
 > Let's do another synchronization!
 
 ```bash
-$ plakar at /var/backups sync to @s3
-sync: synchronization from /var/backups to s3://minio.plakar.io:9001/mybackups completed: 1 snapshots synchronized
+$ plakar at ~/backups sync to @s3
+sync: synchronization from /home/gilles/backups to s3://minio.plakar.io:9001/mybackups completed: 1 snapshots synchronized
 $ plakar at @s3 ls
 2025-02-19T21:38:16Z   9abc3294    3.1 MB      0s   /private/etc
 ```
@@ -313,19 +295,19 @@ But what if both my drive died AND the data center hosting my NAS burst in flame
 then sends them over:
 
 ```bash
-$ plakar at /var/backups sync to @s3
+$ plakar at ~/backups sync to @s3
 ```
 
 > This second command locates snapshots that exist in the remote repository but not in the local one to bring them over:
 
 ```bash
-$ plakar at /var/backups sync from @s3
+$ plakar at ~/backups sync from @s3
 ```
 
 > And this last command does it both ways, pushing to the remote repositories snapshots that exist locally and are missing, but also fetching locally snapshots that only exist remotely:
 
 ```bash
-$ plakar at /var/backups sync with @s3
+$ plakar at ~/backups sync with @s3
 ```
 
 

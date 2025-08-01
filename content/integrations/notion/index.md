@@ -10,7 +10,7 @@ tags:
 - saas
 - workspace
 - productivity
-stage: testing
+stage: beta
 date: 2025-07-08
 ---
 ## Backup your Notion data with Plakar

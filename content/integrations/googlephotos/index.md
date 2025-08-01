@@ -43,7 +43,7 @@ seo_tags:
 
 technical_documentation_link: /docs/main/integrations/googlephotos/
 
-stage: test
+stage: beta
 
 date: 2025-07-28
 

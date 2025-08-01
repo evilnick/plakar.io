@@ -2,6 +2,11 @@
 <html lang="{{ site.Language.LanguageCode }}" dir="{{ or site.Language.LanguageDirection `ltr` }}">
 <head>
     {{ partial "head.html" . }}
+    {{ if eq .RelPermalink "/docs/" }}
+        <script>
+            window.location.replace("/docs/main/");
+        </script>
+    {{ end }}
 </head>
 <body>
 

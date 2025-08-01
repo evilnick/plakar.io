@@ -10,7 +10,7 @@ tags:
 - caldav
 - calendar
 - backup
-stage: testing
+stage: beta
 date: 2025-07-21
 ---
 ## Back up your calendar with Plakar

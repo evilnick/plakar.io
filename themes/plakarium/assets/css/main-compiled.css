@@ -1131,78 +1131,11 @@ video {
   padding-bottom:0.25rem;
 }
 
-.docs-content blockquote ul {
-  width: 100%;
-}
-
-.docs-content>h1,
-    .docs-content>h2,
-    .docs-content>h3,
-    .docs-content>h4,
-    .docs-content>hr{
-  clear: both;
-}
-
-@media (min-width: 1024px) {
-  .docs-content h1,
-        .docs-content h2,
-        .docs-content h3,
-        .docs-content h4,
-        .docs-content h5,
-        .docs-content h6,
-        .docs-content p,
-        .docs-content hr,
-        .docs-content table,
-        .docs-content ul,
-        .docs-content ol,
-        .docs-content aside,
-        .docs-content .head,
-        .docs-content dl {
-    margin-right: 50%;
-    box-sizing: border-box;
-    display: block;
-    padding: 0 28px;
-  }
-
-  .docs-content ul ul,
-        .docs-content li p,
-        .docs-content ul ol,
-        .docs-content ol ul,
-        .docs-content ol ol {
-    margin-right: 0;
-  }
-
-  .docs-content .box-content > h1,
-        .docs-content .box-content > h2,
-        .docs-content .box-content > h3,
-        .docs-content .box-content > h4,
-        .docs-content .box-content > h5,
-        .docs-content .box-content > h6,
-        .docs-content .box-content > p,
-        .docs-content .box-content > table,
-        .docs-content .box-content > ul,
-        .docs-content .box-content > ol,
-        .docs-content .box-content > aside,
-        .docs-content .box-content > dl {
-    margin-right: 0%;
-  }
-
-  .docs-content details {
-    margin-right: 50%;
-  }
-
-  .docs-content pre,
-        .docs-content blockquote {
-    margin: 0;
-    width: 50%;
-    float: right;
-    clear: right;
-    box-sizing: border-box;
-  }
-
-  .docs-content blockquote p {
-    margin-right: 0 !important;
-  }
+.docs-content blockquote,
+    .docs-content details,
+    .docs-content pre {
+  margin-left:2rem;
+  margin-right:2rem;
 }
 
 .docs-content h1,
@@ -1218,16 +1151,34 @@ video {
     .docs-content aside,
     .docs-content .head,
     .docs-content dl {
-  padding: 0 28px;
+  padding: 12px 28px;
 }
 
-.docs-content h2 {
+.
+
+    .docs-content h2 {
   border-bottom-width:1px;
   border-top-width:1px;
   --tw-border-opacity:1;
   border-color:rgb(79 78 102 / var(--tw-border-opacity, 1));
   --tw-bg-opacity:1;
   background-color:rgb(245 244 251 / var(--tw-bg-opacity, 1));
+}
+
+.\!
+
+    .docs-content h2 {
+  border-bottom-width:1px;
+  border-top-width:1px;
+  --tw-border-opacity:1;
+  border-color:rgb(79 78 102 / var(--tw-border-opacity, 1));
+  --tw-bg-opacity:1;
+  background-color:rgb(245 244 251 / var(--tw-bg-opacity, 1));
+}
+
+.
+
+    .docs-content h2 {
   font-size: 25px;
   padding-top: .5em;
   padding-bottom: .5em;
@@ -1235,39 +1186,14 @@ video {
   margin-top: 2em;
 }
 
-.docs-content pre {
-  padding-top: 2em;
-  padding-bottom: 2em;
-  padding: 2em 28px;
-  border-radius: 0rem;
-  margin-top: 0!important;
-  margin-bottom: 0!important;
-}
+.\!
 
-.docs-content pre>p {
-  margin: 0;
-}
-
-.docs-content blockquote {
-  --tw-bg-opacity:1;
-  background-color:rgb(79 78 102 / var(--tw-bg-opacity, 1));
-  font-style:normal;
-  --tw-text-opacity:1;
-  color:rgb(255 255 255 / var(--tw-text-opacity, 1));
-  border-inline-start-width: 0;
-  padding-inline-start: 0;
-  margin-top: 0!important;
-  margin-bottom: 0!important;
-}
-
-.docs-content blockquote > p {
-  padding: 13px 2em;
-  margin-top: 0!important;
-  margin-bottom: 0!important;
-}
-
-.docs-content aside.notice:before {
-  content: "\e602";
+    .docs-content h2 {
+  font-size: 25px !important;
+  padding-top: .5em !important;
+  padding-bottom: .5em !important;
+  margin-bottom: 21px !important;
+  margin-top: 2em !important;
 }
 
 /* Indent lists inside box content for better readability */
@@ -2746,26 +2672,6 @@ video {
   max-height:32px;
 }
 
-.max-h-\[100px\] {
-  max-height:100px;
-}
-
-.max-h-\[400px\] {
-  max-height:400px;
-}
-
-.max-h-\[100\%\] {
-  max-height:100%;
-}
-
-.max-h-\[600px\] {
-  max-height:600px;
-}
-
-.max-h-\[800px\] {
-  max-height:800px;
-}
-
 .min-h-\[150px\] {
   min-height:150px;
 }
@@ -2875,6 +2781,10 @@ video {
   width:2.25rem;
 }
 
+.w-\[100px\] {
+  width:100px;
+}
+
 .w-\[200px\] {
   width:200px;
 }
@@ -2887,10 +2797,6 @@ video {
   width:343px;
 }
 
-.w-\[50\%\] {
-  width:50%;
-}
-
 .w-full {
   width:100%;
 }
@@ -2898,30 +2804,6 @@ video {
 .w-max {
   width:-moz-max-content;
   width:max-content;
-}
-
-.w-\[50px\] {
-  width:50px;
-}
-
-.w-20 {
-  width:5rem;
-}
-
-.w-\[75px\] {
-  width:75px;
-}
-
-.w-\[60px\] {
-  width:60px;
-}
-
-.w-\[80px\] {
-  width:80px;
-}
-
-.w-\[100px\] {
-  width:100px;
 }
 
 .min-w-\[4ch\] {
@@ -2987,10 +2869,6 @@ video {
 
 .max-w-xl {
   max-width:36rem;
-}
-
-.max-w-\[10\%\] {
-  max-width:10%;
 }
 
 .flex-1 {
@@ -3920,10 +3798,6 @@ video {
   padding-top:60px;
 }
 
-.pt-12 {
-  padding-top:3rem;
-}
-
 .text-left {
   text-align:left;
 }
@@ -4580,6 +4454,11 @@ video {
   line-height:/* error - Missing end value */;
 }
 
+.\~text-xl\/2xl {
+  font-size:clamp(1.25rem,1.07rem + 0.45vw,1.5rem)/* fluid type from 1.25rem at 40rem to 1.5rem at 96rem */;
+  line-height:clamp(1.75rem,1.57rem + 0.45vw,2rem)/* fluid from 1.75rem at 40rem to 2rem at 96rem */;
+}
+
 .\~text-xl\/3xl {
   font-size:clamp(1.25rem,0.804rem + 1.116vw,1.875rem)/* fluid type from 1.25rem at 40rem to 1.875rem at 96rem */;
   line-height:clamp(1.75rem,1.39rem + 0.89vw,2.25rem)/* fluid from 1.75rem at 40rem to 2.25rem at 96rem */;
@@ -4633,11 +4512,6 @@ video {
 .\~text-xxs\/xs {
   font-size:clamp(0.625rem,0.536rem + 0.223vw,0.75rem)/* fluid type from 0.625rem at 40rem to 0.75rem at 96rem */;
   line-height:/* error - Missing start value */;
-}
-
-.\~text-xl\/2xl {
-  font-size:clamp(1.25rem,1.07rem + 0.45vw,1.5rem)/* fluid type from 1.25rem at 40rem to 1.5rem at 96rem */;
-  line-height:clamp(1.75rem,1.57rem + 0.45vw,2rem)/* fluid from 1.75rem at 40rem to 2rem at 96rem */;
 }
 
 .\~px-3\/6 {
@@ -5866,6 +5740,11 @@ details > summary {
     padding-right:2rem;
   }
 
+  .lg\:py-14 {
+    padding-top:3.5rem;
+    padding-bottom:3.5rem;
+  }
+
   .lg\:py-28 {
     padding-top:7rem;
     padding-bottom:7rem;
@@ -5874,11 +5753,6 @@ details > summary {
   .lg\:py-7 {
     padding-top:1.75rem;
     padding-bottom:1.75rem;
-  }
-
-  .lg\:py-14 {
-    padding-top:3.5rem;
-    padding-bottom:3.5rem;
   }
 
   .lg\:pb-14 {
@@ -5891,10 +5765,6 @@ details > summary {
 
   .lg\:ps-4 {
     padding-inline-start:1rem;
-  }
-
-  .lg\:pt-14 {
-    padding-top:3.5rem;
   }
 
   .lg\:pt-20 {
