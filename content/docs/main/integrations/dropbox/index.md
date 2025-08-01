@@ -102,16 +102,10 @@ This will generate a portable .ptar archive and install it in your Plakar enviro
 Check that the integration appears in your available connectors:
 
 ```bash
-plakar version
+plakar pkg
 ```
 
-You should now see all the rclone providers listed (including Dropbox) in the importers, exporters, or klosets:
-
-```plaintext
-importers: fs, s3, dropbox, ...
-exporters: fs, s3, dropbox, ...
-klosets: fs, s3, ptar, dropbox, ...
-```
+You should now see the rclone.
 
 ## Setup Dropbox with Rclone
 
@@ -218,8 +212,6 @@ plakar at @mystore ui
 ```
 
 ## Integration-specific behaviors
-
-> This section documents behaviors that are specific to how this integration interacts with the {resource type}, especially those that affect consistency, performance, or compatibility.
 
 ### Limitations
 

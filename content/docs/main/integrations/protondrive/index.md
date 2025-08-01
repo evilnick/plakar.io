@@ -20,7 +20,7 @@ date: 2025-07-29
 
 # Integration Package: Proton Drive
 
-## 1. Introduction
+## Introduction
 
 This integration allows you to snapshot and restore Proton Drive data using Plakar to store it in a Kloset store, while minimizing storage usage and ensuring strong data security.
 It includes a Storage Connector that lets you persist snapshots to Proton Drive itself, either from Proton Drive or from other sources.
@@ -44,7 +44,7 @@ A Viewer is also provided to inspect, search, and restore snapshots without requ
 * Integration version: 0.1.0
 * Proton Drive API credentials configured in Rclone
 
-## 2. Architecture
+## Architecture
 
 ```
                                 Viewer (CLI/UI)
@@ -61,9 +61,9 @@ Proton Drive ← Source Connector → Kloset Store ←→ Storage Connector → 
 * Storage Connector: persist snapshots inside Proton Drive as the backend
 * Viewer: browse and search snapshots in UI/CLI
 
-## 3. Installation
+## Installation
 
-### 3.1 Prerequisites 
+### Prerequisites 
 
 This integration is distributed as an Rclone-powered connector.
 You only need Plakar and Rclone installed.
@@ -92,22 +92,16 @@ This will generate a portable .ptar archive and install it in your Plakar enviro
 Check that the integration appears in your available connectors:
 
 ```bash
-plakar version
+plakar pkg
 ```
 
-You should now see all the rclone provider listed (which includes Proton Drive) in the importers, exporters, or klosets:
-```plaintext
-importers: fs, s3, protondrive, ...
-exporters: fs, s3, protondrive, ...
-klosets: fs, s3, ptar, protondrive, ...
-```
+You should now see the rclone.
 
-
-## 4. Configuration
+## Configuration
 
 Once Rclone is configured, import it into Plakar.
 
-### 4.1 Source Connector
+### Source Connector
 
 To import your rclone config as a source connector (to make backups), run:
 
@@ -115,7 +109,7 @@ To import your rclone config as a source connector (to make backups), run:
 rclone config show myprotondrive | plakar source import
 ```
 
-### 4.2 Destination Connector
+### Destination Connector
 
 To import your rclone config as a destination connector (to restore backups), run:
 
@@ -123,7 +117,7 @@ To import your rclone config as a destination connector (to restore backups), ru
 rclone config show myprotondrive | plakar destination import
 ```
 
-### 4.3 Storage Connector
+### Storage Connector
 
 To import your rclone config as a storage connector (to store backups in Dropbox), run:
 
@@ -133,7 +127,7 @@ rclone config show myprotondrive | plakar store import
 
 > Replace `myprotondrive` with your Rclone remote name.
 
-## 5. Usage
+## Usage
 
 For the following examples, we will use `@myprotondrive` as the Rclone remote name configured in Plakar.
 
@@ -145,7 +139,7 @@ plakar at ./backup create
 
 A folder named `backup` will be created in the current directory, which will hold the snapshots.
 
-### 5.1 Snapshot
+### Snapshot
 
 To back up your Proton Drive data in the recently created Kloset store, use:
 
@@ -155,7 +149,7 @@ plakar at ./backup backup @myprotondrive
 
 The last line of the output will show the snapshot ID, which you can use to inspect or restore later.
 
-### 5.2 Inspection
+### Inspection
 
 You can inspect your snapshots without extracting them. List or display the contents of the Kloset store:
 
@@ -165,7 +159,7 @@ plakar at ./backup cat <snapshot-id>:/path/to/file
 plakar at ./backup ui
 ```
 
-### 5.3 Restore
+### Restore
 
 To restore a snapshot back to Proton Drive, use:
 
@@ -175,7 +169,7 @@ plakar at ./backup restore -to @myprotondrive <snapshot-id>
 
 This will restore the snapshot to your Proton Drive account, preserving its original structure.
 
-### 5.4 Storage
+### Storage
 
 To use Proton Drive as a storage backend, create a Kloset store that uses the Proton Drive remote:
 
@@ -185,29 +179,29 @@ plakar at @myprotondrive create
 
 This will create a Kloset store in your Proton Drive cloud, usable like any other Kloset store.
 
-## 6. Integration-specific behaviors
+## Integration-specific behaviors
 
-### 6.1 Limitations
+### Limitations
 
 * Proton Drive API has rate limits, heavy usage may require throttling
 * Only the latest version of files are snapshotted
 * Shared links and permissions are not preserved in snapshots
 
-### 6.2 Automation
+### Automation
 
 * Schedule snapshots using cron or systemd timers
 * Use `.ptar` archives for export/transport
 
-### 6.3 Restore Notes
+### Restore Notes
 
 * Can restore into Proton Drive or export to S3, filesystem, or other Plakar-compatible destinations
 
-## 7. Troubleshooting
+## Troubleshooting
 
 * Use `plakar log` and Rclone logs for diagnosis
 * Ensure Proton Drive remote is authorized
 
-## 8. Backup strategy
+## Backup strategy
 
 Follow 3-2-1 best practice:
 
@@ -215,37 +209,8 @@ Follow 3-2-1 best practice:
 * 2 different storage backends
 * 1 offsite (Proton Drive, filesystem, or S3)
 
-## 9. Appendix
+## Appendix
 
 * [Rclone Proton Drive Docs](https://rclone.org/protondrive/)
 * [Plakar CLI Reference](/docs/main)
 
-- Backup: `plakar at /repo backup @your_config_name`
-- Restore: `plakar at /repo restore -to @your_config_name <snapshot-id>`
-- Store: `plakar at your_config_name://kloset create`
-
-## 6. Limitations
-
-- Proton Drive API limitations
-
-## 7. Permissions required
-
-- Rclone must be authorized for your Proton Drive account
-
-## 8. Troubleshooting
-
-- Check Rclone logs for errors
-
-## 9. Backup strategy
-
-Follow the 3-2-1 rule: 3 copies, 2 media, 1 offsite.
-
-## 10. Appendix
-
-- [Plakar CLI Reference](/docs/main)
-- [Rclone Proton Drive documentation](https://rclone.org/protondrive/)
-
-## 11. FAQ
-
-- Does Plakar back up all versions? No, only the latest.
-- Can I restore to another provider? Yes, if supported by Rclone.

@@ -29,7 +29,7 @@ provides:
 
 # Integration Package: Google Photos
 
-## 1. Introduction
+## Introduction
 
 This integration allows you to snapshot and restore Google Photos data using Plakar to store it in a Kloset store, while minimizing storage usage and ensuring strong data security.
 It includes connectors that let you import and export snapshots to Google Photos itself, either from Google Photos or from other sources.
@@ -53,7 +53,7 @@ A Viewer is also provided to inspect, search, and restore snapshots without requ
 * Integration version: 0.1.0
 * Google Photos API credentials configured in Rclone
 
-## 2. Architecture
+## Architecture
 
 ```
                                 Viewer (CLI/UI)
@@ -69,9 +69,9 @@ Google Photos ← Source Connector → Kloset Store
 * Destination Connector: restore snapshots to Google Photos
 * Viewer: browse and search snapshots in UI/CLI
 
-## 3. Installation
+## Installation
 
-### 3.1 Prerequisites 
+### Prerequisites 
 
 This integration is distributed as an Rclone-powered connector.
 You only need Plakar and Rclone installed.
@@ -100,21 +100,16 @@ This will generate a portable .ptar archive and install it in your Plakar enviro
 Check that the integration appears in your available connectors:
 
 ```bash
-plakar version
+plakar pkg
 ```
 
-You should now see all the rclone provider listed (which includes Dropbox) in the importers, exporters, or klosets:
-```plaintext
-importers: fs, s3, googlephotos, ...
-exporters: fs, s3, googlephotos, ...
-klosets: fs, s3, ptar, ...
-```
+You should now see the rclone.
 
-## 4. Configuration
+## Configuration
 
 Once Rclone is configured, import it into Plakar.
 
-### 4.1 Source Connector
+### Source Connector
 
 To import your rclone config as a source connector (to make backups), run:
 
@@ -122,7 +117,7 @@ To import your rclone config as a source connector (to make backups), run:
 rclone config show mygooglephotos | plakar source import
 ```
 
-### 4.2 Destination Connector
+### Destination Connector
 
 To import your rclone config as a destination connector (to restore backups), run:
 
@@ -132,7 +127,7 @@ rclone config show mygooglephotos | plakar destination import
 
 > Replace `mygooglephotos` with your Rclone remote name.
 
-## 5. Usage
+## Usage
 
 For the following examples, we will use `@mygooglephotos` as the Rclone remote name configured in Plakar.
 
@@ -144,7 +139,7 @@ plakar at ./backup create
 
 A folder named `backup` will be created in the current directory, which will hold the snapshots.
 
-### 5.1 Snapshot
+### Snapshot
 
 To back up your Google Photos data in the recently created Kloset store, use the following command:
 
@@ -154,7 +149,7 @@ plakar at ./backup backup @mygooglephotos
 
 The last line of the output will show the snapshot ID, which you can use to inspect or restore later.
 
-### 5.2 Inspection
+### Inspection
 
 With Plakar, you can inspect your snapshots without extracting them.
 You can list or display the contents of the Kloset store:
@@ -165,7 +160,7 @@ plakar at ./backup cat <snapshot-id>:/path/to/file
 plakar at ./backup ui
 ```
 
-### 5.3 Restore
+### Restore
 
 To restore a snapshot back to Google Photos, use the following command:
 
@@ -175,38 +170,16 @@ plakar at ./backup restore -to @mygooglephotos <snapshot-id>
 
 This will restore the snapshot to your Google Photos account, making it available in the same structure as it was when backed up.
 
-## 6. Integration-specific behaviors
+## Integration-specific behaviors
 
-### 6.1 Limitations
+### Limitations
 
 * Google Photos API has rate limits, heavy usage may require throttling
 * Only the latest version of files are snapshotted
 * Shared links and permissions are not preserved in snapshots
 * Cannot be used as a Kloset storage backend
 
-### 6.2 Automation
-
-* Schedule snapshots using cron or systemd timers
-* Use `.ptar` archives for export/transport
-
-### 6.3 Restore Notes
-
-* Can restore into Google Photos or export to S3, filesystem, or other Plakar-compatible destinations
-
-## 7. Troubleshooting
-
-* Use `plakar log` and Rclone logs for diagnosis
-* Ensure Google Photos remote is authorized
-
-## 8. Backup strategy
-
-Follow 3-2-1 best practice:
-
-* 3 copies (original + 2 backups)
-* 2 different storage backends
-* 1 offsite (Google Photos, filesystem, or S3)
-
-## 9. Appendix
+## Appendix
 
 * [Rclone Google Photos Docs](https://rclone.org/googlephotos/)
 * [Plakar CLI Reference](/docs/main)
