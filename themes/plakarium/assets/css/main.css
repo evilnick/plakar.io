@@ -229,12 +229,23 @@
     section.section-dark-1 {
         @apply bg-neutral-900 text-neutral-50;
     }
+    section.section-secondary-1 {
+        @apply bg-secondary-100 text-neutral-900;
+    }
     section.section-primary-1 {
         @apply bg-primary-500 text-neutral-50;
     }
     section.section-gradient-blue-1 {
         @apply text-neutral-50;
         background-image: url(/img/GRADIENT_BLUE.png);
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    section.section-gradient-secondary-1 {
+        @apply text-neutral-900;
+        background-image: url(/img/GRADIENT_ORANGE.png);
         background-size: 100% 100%;
         background-repeat: no-repeat;
         background-position: center;
