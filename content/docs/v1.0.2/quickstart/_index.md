@@ -333,4 +333,4 @@ Repository synchronization is slightly more advanced than what was shown,
 and you are encouraged to experiment with it to find the best workflow for your use-case.
 
 
-In addition, all these commands support passing snapshot identifiers and various options to perform partial synchronizations, only exchanging snapshots that match certain criteria. More information can be found in the [documentation](/docs/commands/sync/).
+In addition, all these commands support passing snapshot identifiers and various options to perform partial synchronizations, only exchanging snapshots that match certain criteria. More information can be found in the [documentation]({{<find-doc-base>}}/commands/plakar-sync/).
