@@ -137,16 +137,16 @@ The storage connector allows you to host a Kloset store in a MinIO bucket. This 
 
 ### Configuration
 
-Use the commands `plakar config repository create <name>` and `plakar config repository set <name> <option> <value>` to configure a MinIO bucket as a Kloset store.
+Use the commands `plakar store repository create <name>` and `plakar store repository set <name> <option> <value>` to configure a MinIO bucket as a Kloset store.
 
 > Configure Plakar to use MinIO to host a Kloset store
 ```bash
-$ plakar config repository create minio_store
-$ plakar config repository set minio_store location s3://localhost:9000/plakar-kloset
-$ plakar config repository set minio_store access_key minioadmin
-$ plakar config repository set minio_store secret_access_key minioadmin
+$ plakar store repository create minio_store
+$ plakar store repository set minio_store location s3://localhost:9000/plakar-kloset
+$ plakar store repository set minio_store access_key minioadmin
+$ plakar store repository set minio_store secret_access_key minioadmin
 # Only if your MinIO instance does not use TLS
-$ plakar config repository set minio_store use_tls false
+$ plakar store repository set minio_store use_tls false
 ```
 
 **Configuration options**
@@ -196,16 +196,16 @@ The Kloset store can be hosted in any of the supported backends by Plakar (files
 
 ### Configuration
 
-Use the commands `plakar config remote create <name>` and `plakar config remote set <name> <option> <value>` to configure a MinIO bucket as a source for backups.
+Use the commands `plakar source remote create <name>` and `plakar source remote set <name> <option> <value>` to configure a MinIO bucket as a source for backups.
 
 > Configure the source connector to back up a MinIO bucket
 ```bash
-$ plakar config remote create minio_src
-$ plakar config remote set minio_src location s3://localhost:9000/mybucket
-$ plakar config remote set minio_src access_key minioadmin
-$ plakar config remote set minio_src secret_access_key minioadmin
+$ plakar source remote create minio_src
+$ plakar source remote set minio_src location s3://localhost:9000/mybucket
+$ plakar source remote set minio_src access_key minioadmin
+$ plakar source remote set minio_src secret_access_key minioadmin
 # Only if your MinIO instance does not use TLS
-$ plakar config remote set minio_src use_tls false
+$ plakar source remote set minio_src use_tls false
 ```
 
 **Configuration options**
@@ -241,16 +241,16 @@ The Kloset store location does not matter: it can be hosted on the local filesys
 
 ### Configuration
 
-Use the commands `plakar config remote create <name>` and `plakar config remote set <name> <option> <value>` to configure a MinIO bucket as a destination for restores.
+Use the commands `plakar destination remote create <name>` and `plakar destination remote set <name> <option> <value>` to configure a MinIO bucket as a destination for restores.
 
 > Configure the destination connector to back up a MinIO bucket
 ```bash
-$ plakar config remote create minio_src
-$ plakar config remote set minio_src location s3://localhost:9000/mybucket
-$ plakar config remote set minio_src access_key minioadmin
-$ plakar config remote set minio_src secret_access_key minioadmin
+$ plakar destination remote create minio_src
+$ plakar destination remote set minio_src location s3://localhost:9000/mybucket
+$ plakar destination remote set minio_src access_key minioadmin
+$ plakar destination remote set minio_src secret_access_key minioadmin
 # Only if your MinIO instance does not use TLS
-$ plakar config remote set minio_src use_tls false
+$ plakar destination remote set minio_src use_tls false
 ```
 
 **Configuration options**
@@ -353,10 +353,10 @@ Update the configuration option `use_tls` to `true` or `false` depending on whet
 > Enable or disable TLS for the MinIO integration
 ```bash
 # Disable TLS for the Kloset store
-$ plakar config repository set minio_store use_tls false
+$ plakar store repository set minio_store use_tls false
 # Disable TLS for the Source or Destination connector
-$ plakar config remote set minio_src use_tls false
-$ plakar config remote set minio_dst use_tls false
+$ plakar source remote set minio_src use_tls false
+$ plakar destination remote set minio_dst use_tls false
 ```
 
 ---
