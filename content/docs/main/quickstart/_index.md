@@ -234,7 +234,7 @@ How long did it take? That's how easy **plakar** is for simple, secure backups.
 
 ## Next steps
 
-there is plenty more to discover about **plakar**. Here are our suggestions on what to try next
+There is plenty more to discover about **plakar**. Here are our suggestions on what to try next:
 
  - Enable integrations and backup more things to and from more places
  - Reduce the risk of data loss by creating multiple copies of your backups across different locations.
