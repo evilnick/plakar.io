@@ -74,6 +74,7 @@ Supported options:
 - `location`: Full S3 URL, e.g. `s3://s3.<region>.amazonaws.com/mybucket`.
 - `access_key` / `secret_access_key`: Your provider’s credentials.
 - `use_tls`: Enable or disable TLS (default: true).
+- `tls_insecure_no_verify`: Disables certificate verification (default: false).
 
 ### Provider Examples
 
