@@ -127,7 +127,7 @@ backup: created unsigned snapshot 9abc3294 of size 3.1 MB in 72.55875ms
 >The output lists the short form of the snapshot's id number. This is used to identify a particular snapshot and is also how you identify the snapshot to use for various **plakar** commands.
 
 {{% notice style="info" title="Command help" expanded="true" %}}
-Learning new tools can be confusing. To make things easier, **plakar** includes built-in help for all commands. Just add '-h' after the command for specific help. For example, if you forget what the options are for restoring files from a snapshot: `plakar at $HOME/backups restore -h`
+Learning new tools can be confusing. To make things easier, **plakar** includes built-in help for all commands. Just use `plakar help` and then the command you need help with for a full list of options and examples. For example, if you forget what the options are for restoring files from a snapshot: `plakar help restore`
 
 {{% /notice %}}
 
@@ -198,7 +198,7 @@ drwxr-xr-x@ 16 gilles  wheel     512 Feb 19 22:47 asl
 
 By default, **plakar** works without requiring you to create an account or log in. You can back up and restore your data with just a few commands, no external services involved.
 
-However, logging in unlocks optional features that improve usability and monitoring, most importantly by adding the ability to install additional integrations. In plakar, an integration is a package which supports an additional protocol as a source, destination or storage method (or all three), such as ftp, Google Cloud Storage or an s3 bucket.
+However, logging in unlocks optional features that improve usability and monitoring, and by adding the ability to easily install pre-built integrations. In plakar, an integration is a package which supports an additional protocol as a source, destination or storage method (or all three), such as ftp, Google Cloud Storage or an s3 bucket.
 
 Logging in is simple and needs only an email address or github account for authentication.
 
