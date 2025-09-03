@@ -1,0 +1,42 @@
+<p>toto</p>
+
+{{ $tabButtons := findRE "<!--tab-button-->([\\s\\S]*?)<!--/tab-button-->" .Inner }}
+{{ $tabPanes := findRE "<!--tab-pane-->([\\s\\S]*?)<!--/tab-pane-->" .Inner }}
+
+{{ if gt (len $tabButtons) 0 }}
+<div class="tabs">
+    <div class="tabs-header">
+        {{/* Extract and render all tab buttons */}}
+        {{ range $tabButtons }}
+            {{ replaceRE "<!--/?tab-button-->" "" . | safeHTML }}
+        {{ end }}
+    </div>
+    <div class="tabs-content">
+        {{/* Extract and render all tab panes */}}
+        {{ range $tabPanes }}
+            {{ replaceRE "<!--/?tab-pane-->" "" . | safeHTML }}
+        {{ end }}
+    </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.tabs').forEach(function(tabContainer) {
+        const buttons = tabContainer.querySelectorAll('.tab-button');
+        const panes = tabContainer.querySelectorAll('.tab-pane');
+        buttons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                const tabIndex = this.getAttribute('data-tab');
+                buttons.forEach(btn => btn.classList.remove('active'));
+                panes.forEach(pane => pane.classList.remove('active'));
+                this.classList.add('active');
+                tabContainer.querySelector('.tab-pane[data-tab-content="' + tabIndex + '"]').classList.add('active');
+            });
+        });
+    });
+});
+</script>
+{{ else }}
+<div class="tabs-empty-notice">
+    <p>No tabs defined. Please add at least one tab using the tab shortcode.</p>
+</div>
+{{ end }}

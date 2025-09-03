@@ -1,0 +1,10 @@
+{{ $name := .Get 0 }}
+{{ $active := .Get 1 | default false }}
+<!--tab-button-->
+<button class="tab-button{{ if $active }} active{{ end }}" data-tab="{{ $name | urlize }}">{{ $name }}</button>
+<!--/tab-button-->
+<!--tab-pane-->
+<div class="tab-pane{{ if $active }} active{{ end }}" data-tab-content="{{ $name | urlize }}">
+    {{ .Inner | markdownify }}
+</div>
+<!--/tab-pane-->
