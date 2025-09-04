@@ -34,6 +34,7 @@
     .docs-content ol,
     .docs-content aside,
     .docs-content .head,
+    .docs-content > a.content-tabs,
     .docs-content dl {
         padding: 12px 28px;
     }
@@ -74,4 +75,6 @@
     }
 
 
+
 }
+

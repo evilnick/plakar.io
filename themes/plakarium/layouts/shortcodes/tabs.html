@@ -1,42 +1,154 @@
-<p>toto</p>
+{{/* Parent tabs shortcode: Tailwind with updated style */}}
 
-{{ $tabButtons := findRE "<!--tab-button-->([\\s\\S]*?)<!--/tab-button-->" .Inner }}
-{{ $tabPanes := findRE "<!--tab-pane-->([\\s\\S]*?)<!--/tab-pane-->" .Inner }}
+{{- .Page.Scratch.Add "tabset-counter" 1 -}}
+{{- $tab_set_id := .Get "name" | default (printf "tabset-%s-%d" (.Page.RelPermalink) (.Page.Scratch.Get "tabset-counter")) | anchorize -}}
+{{- $tabs := .Scratch.Get "tabs" -}}
 
-{{ if gt (len $tabButtons) 0 }}
-<div class="tabs">
-    <div class="tabs-header">
-        {{/* Extract and render all tab buttons */}}
-        {{ range $tabButtons }}
-            {{ replaceRE "<!--/?tab-button-->" "" . | safeHTML }}
-        {{ end }}
+{{- if .Inner -}}{{- /* silence unused .Inner warning */ -}}{{- end -}}
+
+<div id="{{ $tab_set_id }}" class="content-tabs border rounded-xl not-prose mx-6" data-tabs-root>
+  <!-- Mobile: select -->
+  <div class="grid grid-cols-1 sm:hidden relative">
+    <select aria-label="Select a tab"
+            class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-neutral-50 py-2 pr-8 pl-3 ~text-base text-neutral-900
+                   outline outline-1 -outline-offset-1 outline-neutral-300
+                   focus:outline-2 focus:-outline-offset-2 focus:outline-primary-600"
+            data-tabs-select>
+      {{- range $i, $e := $tabs -}}
+        {{- $id := printf "%s-%d" $tab_set_id $i -}}
+        <option value="{{ $id }}" {{ if eq $i 0 }}selected{{ end }}>{{- trim $e.name " " -}}</option>
+      {{- end -}}
+    </select>
+  </div>
+
+  <!-- Desktop: tab bar -->
+  <div class="hidden sm:block">
+    <div class="border-b border-neutral-300">
+      <nav aria-label="Tabs" class="mx-6 flex space-x-8" role="tablist">
+        {{- range $i, $e := $tabs -}}
+          {{- $id := printf "%s-%d" $tab_set_id $i -}}
+          <button type="button"
+                  id="{{ $id }}-tab"
+                  data-target="{{ $id }}"
+                  aria-controls="{{ $id }}"
+                  aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}"
+                  role="tab"
+                  class="py-4 px-1 inline-flex items-center gap-x-2 border-b-2 border-transparent text-sm
+                    whitespace-nowrap text-neutral-500 hover:text-primary-600 focus:outline-hidden
+                    focus:text-primary-600 disabled:opacity-50 disabled:pointer-events-none
+                    data-[selected=true]:font-semibold data-[selected=true]:border-primary-600
+                    data-[selected=true]:text-primary-600">
+            <!-- Optional icon could be included here -->
+            <span>{{- trim $e.name " " -}}</span>
+          </button>
+        {{- end -}}
+      </nav>
     </div>
-    <div class="tabs-content">
-        {{/* Extract and render all tab panes */}}
-        {{ range $tabPanes }}
-            {{ replaceRE "<!--/?tab-pane-->" "" . | safeHTML }}
-        {{ end }}
-    </div>
+  </div>
+
+  <!-- Panels -->
+  <div class="my-3 mx-6">
+    {{- range $i, $e := $tabs -}}
+      {{- $id := printf "%s-%d" $tab_set_id $i -}}
+      <div id="{{ $id }}"
+           role="tabpanel"
+           aria-labelledby="{{ $id }}-tab"
+           class="{{ if ne $i 0 }}hidden{{ end }} prose max-w-none w-full">
+        <div class="prose max-w-none w-full prose-pre:max-w-none">
+          {{- with .content -}}
+            {{- . -}}
+          {{- else -}}
+            {{- if eq $.Page.BundleType "leaf" -}}
+              {{- with $.Page.Resources.GetMatch (printf "**%s*" $e.include) -}}
+                {{- if ne .ResourceType "page" -}}
+                  {{- $codelang := $e.codelang | default (path.Ext .Name | strings.TrimPrefix ".") -}}
+                  {{- highlight .Content $codelang "" -}}
+                {{- else -}}
+                  {{- .Content -}}
+                {{- end -}}
+              {{- end -}}
+            {{- else -}}
+              {{- $path := path.Join $.Page.File.Dir $e.include -}}
+              {{- with site.GetPage "page" $path -}}
+                {{- .Content -}}
+              {{- else -}}
+                {{- errorf "[%s] tabs include not found for path %q" site.Language.Lang $path -}}
+              {{- end -}}
+            {{- end -}}
+          {{- end -}}
+        </div>
+      </div>
+    {{- end -}}
+  </div>
 </div>
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.tabs').forEach(function(tabContainer) {
-        const buttons = tabContainer.querySelectorAll('.tab-button');
-        const panes = tabContainer.querySelectorAll('.tab-pane');
-        buttons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                const tabIndex = this.getAttribute('data-tab');
-                buttons.forEach(btn => btn.classList.remove('active'));
-                panes.forEach(pane => pane.classList.remove('active'));
-                this.classList.add('active');
-                tabContainer.querySelector('.tab-pane[data-tab-content="' + tabIndex + '"]').classList.add('active');
-            });
-        });
+  /* Tabs behavior: sync select + desktop tabs, toggle hidden class */
+  (() => {
+    const root = document.currentScript.previousElementSibling;
+    if (!root || root.dataset.enhanced) return;
+    root.dataset.enhanced = "1";
+
+    const buttons = Array.from(root.querySelectorAll('[role="tab"]'));
+    const select = root.querySelector('select[data-tabs-select]');
+    const panels = Array.from(root.querySelectorAll('[role="tabpanel"]'));
+
+    const activate = (targetId, {push=true} = {}) => {
+      buttons.forEach(btn => {
+        const isSelected = btn.dataset.target === targetId;
+        btn.setAttribute('aria-selected', String(isSelected));
+        btn.dataset.selected = isSelected;
+      });
+
+      panels.forEach(p => p.classList.toggle('hidden', p.id !== targetId));
+
+      if (select) select.value = targetId;
+
+      if (push) {
+        const hash = `${root.id}:${targetId}`;
+        try { history.replaceState(null, '', `#${hash}`); } catch {}
+      }
+    };
+
+    // Tab button clicks
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        activate(btn.dataset.target);
+        btn.focus();
+      });
     });
-});
+
+    // Keyboard navigation
+    root.addEventListener('keydown', (e) => {
+      if (!['ArrowLeft','ArrowRight','Home','End'].includes(e.key)) return;
+      const current = buttons.findIndex(btn => btn.getAttribute('aria-selected') === 'true');
+      if (current === -1) return;
+
+      e.preventDefault();
+      let next = current;
+
+      if (e.key === 'ArrowLeft') next = (current - 1 + buttons.length) % buttons.length;
+      if (e.key === 'ArrowRight') next = (current + 1) % buttons.length;
+      if (e.key === 'Home') next = 0;
+      if (e.key === 'End') next = buttons.length - 1;
+
+      buttons[next].click();
+    });
+
+    // Mobile select
+    if (select) {
+      select.addEventListener('change', (e) => activate(e.target.value));
+    }
+
+    // Initial from hash
+    const [gid, pid] = (location.hash || '').slice(1).split(':');
+    const initial = (gid === root.id && pid) ? pid : (panels[0] && panels[0].id);
+    if (initial) activate(initial, {push:false});
+
+    // React to external hash changes
+    window.addEventListener('hashchange', () => {
+      const [g, p] = (location.hash || '').slice(1).split(':');
+      if (g === root.id && p) activate(p, {push:false});
+    });
+  })();
 </script>
-{{ else }}
-<div class="tabs-empty-notice">
-    <p>No tabs defined. Please add at least one tab using the tab shortcode.</p>
-</div>
-{{ end }}
