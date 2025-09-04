@@ -80,7 +80,7 @@ The default package manager for FreeBSD uses simple tar files for packaging. Dow
 
 Before we can backup any data, we need to define where the backup will go. In **plakar** terms, this storage location is called a 'Kloset'. You can find out more about the concept and rationale behind Kloset in [this post on our blog](https://www.plakar.io/posts/2025-04-29/kloset-the-immutable-data-store/).
 
-For our first backup, we will create a local Kloset on the filesystem of the host OS. 
+For our first backup, we will create a local Kloset on the filesystem of the host OS. In a real backup scenario you would want to create a backup on a different physical device so substitute in a better location if you have one.
 
 > In the CLI enter the following command:
 ```shell
