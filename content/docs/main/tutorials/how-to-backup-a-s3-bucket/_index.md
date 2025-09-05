@@ -1,8 +1,13 @@
 ---
 date: "2025-09-04T06:20:40Z"
 title: How to backup a S3 bucket?
+last_reviewed: "2025-09-04"
+last_reviewed_version: "v1.0.3"
 summary: "Learn how to configure and use the Plakar S3 integration to back up an S3 bucket into a Kloset store. This tutorial covers installation, credential setup, bucket URL construction, and running backups."
 ---
+
+*Last reviewed: {{<param "last_reviewed">}} / Plakar {{<param "last_reviewed_version">}}*
+
 
 This tutorial explains how to configure the Plakar S3 source integration to back up an existing S3 bucket into an already configured Kloset store. You'll learn how to install the integration, set up your credentials, build the correct bucket URL for your provider, and run backups.
 
