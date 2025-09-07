@@ -20,7 +20,7 @@
 <section class="section-light-1 w-full">
     <!-- Article content (right)  -->
         <article class="max-w-full flex-1 flex flex-col gap-4 bg-neutral-50 overflow-hidden">
-            <div class="article-header px-8 flex flex-col gap-4 pt-8">
+            <div class="article-header ps-8 pe-2 md:pe-8 flex flex-col gap-4 pt-8">
                 <!-- Breadcrumbs -->
                 <div class="flex flex-wrap items-center gap-2 text-sm font-space-grotesk">
                     <a href="/docs/" class="flex items-center text-primary-500 hover:text-primary-600 transition-colors">
@@ -84,15 +84,16 @@
                 <div class="inline-flex px-2 w-max py-1 rounded-md text-xs font-space-grotesk  text-neutral-900 border border-neutral-900">
                     <span>Version {{ $versionName | default "latest" }}</span>
                 </div>
+                <h1 class="font-prose font-bold leading-tight ~text-3xl/4xl">
+                    {{ .Title | emojify }}
+                </h1>
             </div>
-            <h1 class="font-prose px-4 md:px-8 font-bold leading-tight ~text-3xl/4xl">
-                {{ .Title | emojify }}
-            </h1>
+
             <div class="article-wrapper relative">
 
 
                 <!-- Content blocks -->
-                <div class="relative docs-content font-prose prose text-base w-full max-w-full px-4 md:px-8">
+                <div class="relative docs-content font-prose prose text-base w-full max-w-full ps-8 pe-2 md:pe-8">
                     {{ .Content | safeHTML }}
                 </div>
                 <div class="bg-neutral-200 border-neutral-300 flex justify-center items-center gap-3 py-4 px-4 flex-wrap w-full max-w-full">

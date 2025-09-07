@@ -1,7 +1,7 @@
 @layer base {
 
     .docs-content {
-        @apply text-neutral-900 leading-relaxed text-base py-8 rounded-lg shadow-md;
+        @apply text-neutral-900 leading-relaxed text-base rounded-lg shadow-md;
         font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
     }
 

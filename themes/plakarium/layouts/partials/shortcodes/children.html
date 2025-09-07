@@ -12,7 +12,7 @@
 
 {{- with $page -}}
 <div class="section-index">
-  <hr class="panel-line">
+  <hr class="panel-line my-6">
   {{- $pages := partial "_relearn/pages.gotmpl" (dict "page" . "by" $sortTerm) }}
   {{- range $pages }}
     {{- $hidden := and (or (.Params.hidden) (eq .Title "")) (not $showhidden) }}
