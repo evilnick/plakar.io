@@ -49,7 +49,7 @@
                                 <div>
                                     <div class="text-primary-500 font-space-text text-xs mb-1">{{ .name }}</div>
                                     {{ range sort .items "Weight" }}
-                                        <a href="{{ .URL | relLangURL }}" {{ with .Params.target }}target="{{ . }}"{{ end }} class="group flex gap-2 items-start p-2 rounded-lg hover:bg-violet-50">
+                                        <a href="{{ partial "menu-link.html" (dict "url" .URL "context" $ctx) | relLangURL }}" {{ with .Params.target }}target="{{ . }}"{{ end }} class="group flex gap-2 items-start p-2 rounded-lg hover:bg-violet-50">
                                             <div class="w-5 h-5 mt-1">
                                                 {{ with .Params.icon }}
                                                     {{ $icon := printf "img/ri/%s.svg" . }}

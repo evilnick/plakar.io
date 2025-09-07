@@ -1,53 +1,83 @@
-<details open id="TOCView" class="toc-right mt-0 rounded-lg  hidden xl:block">
+<details open id="TOCView" class="toc-right mt-0 rounded-lg hidden 2xl:block">
     <summary
-            class="block xl:hidden rounded-lg py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800  dark:bg-neutral-700 dark:text-neutral-100 ">
+            class="block 2xl:hidden rounded-lg py-1 text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800 dark:bg-neutral-700 dark:text-neutral-100">
         {{ i18n "article.table_of_contents" }}
     </summary>
-    <div class="text-base py-2 font-grotesk  ">
+    <div class="text-base py-2 font-grotesk">
         {{ with .TableOfContents }}
-            <style>
+            <style>s
+                /* Container styling */
+                .toc-right {
+                    width: 250px;
+                    max-width: 250px;
+                    overflow: hidden;
+                }
+
+                .toc-right #TableOfContents {
+                    width: 100%;
+                    max-width: 100%;
+                }
+
+                /* General list styling */
+                #TableOfContents ul {
+                    list-style-type: none;
+                    margin: 0;
+                    padding: 0;
+                    width: 100%;
+                }
+
                 #TableOfContents > ul {
                     display: flex;
                     flex-direction: column;
-                    padding: 0;
-                    margin: 0;
                 }
 
-                #TableOfContents > ul > li {
-                    margin: 0;
-                    padding: 0;
-                }
-
+                /* Level 1 links */
                 #TableOfContents > ul > li > a {
                     font-weight: 600;
                     display: block;
                     color: #111827;
                     margin-bottom: 0.2rem;
                     text-decoration: none;
+                    white-space: normal;
+                    overflow-wrap: break-word;
+                    word-wrap: break-word;
+                    word-break: break-word;
+                    hyphens: auto;
+                    max-width: 100%;
+                    padding-right: 0.5rem;
                 }
 
+                /* Nested lists */
                 #TableOfContents > ul > li > ul {
                     padding-left: 0.75rem;
                     margin-top: 0.2rem;
-                    list-style-type: none;
                     display: flex;
                     flex-direction: column;
                     gap: 0.2rem;
-                }
-
-                #TableOfContents ul li ul li {
-                    margin: 0;
-                }
-
-                #TableOfContents a {
-                    text-decoration: none;
-                    color: #111827;
+                    width: calc(100% - 0.75rem);
                 }
 
                 #TableOfContents > ul > li > ul > li > ul {
                     padding-left: 0.75rem;
-                    list-style-type: none;
+                    width: calc(100% - 0.75rem);
                 }
+
+                /* All links */
+                #TableOfContents a {
+                    text-decoration: none;
+                    color: #111827;
+                    display: block;
+                    white-space: normal;
+                    overflow-wrap: break-word;
+                    word-wrap: break-word;
+                    word-break: break-word;
+                    hyphens: auto;
+                    max-width: 100%;
+                    padding-right: 0.5rem;
+                    line-height: 1.3;
+                }
+
+                /* Active state */
                 #TableOfContents a.active {
                     color: #524CFF;
                     font-weight: 600;
@@ -58,10 +88,9 @@
             <p>{{ i18n "article.no_table_of_contents" }}</p>
         {{ end }}
     </div>
-
 </details>
-<details class="toc-inside mt-0 overflow-hidden xl:hidden">
-    <summary class="xl:hidden py-1  pl-4 rounded-lg text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800  dark:bg-primary-500 dark:text-neutral-100">
+<details class="toc-inside mt-0 overflow-hidden 2xl:hidden">
+    <summary class="2xl:hidden py-1  pl-4 rounded-lg text-lg font-semibold cursor-pointer bg-neutral-100 text-neutral-800  dark:bg-primary-500 dark:text-neutral-100">
         {{ i18n "article.table_of_contents" }}
     </summary>
     <div class="py-2 px-4  border-dotted border-neutral-300   dark:border-neutral-600">

@@ -108,7 +108,7 @@ parent = "solutions"
 [[main]]
 identifier = "engineering-learn-quickstart"
 name = "Quick start"
-url = "/docs/main/"
+url = "/docs/LATEST_VERSION_PLACEHOLDER/quickstart/"
 weight = 10
 parent = "engineering"
 [[main.params]]

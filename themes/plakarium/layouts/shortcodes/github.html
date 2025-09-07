@@ -1,6 +1,6 @@
 {{ $id := delimit (slice "github" (partial "functions/uid.html" .)) "-" }}
 {{- $githubURL := print "https://api.github.com/repos/" (.Get "repo") -}}
-{{- $githubData := resources.GetRemote $githubURL | transform.Unmarshal -}}
+{{- $githubData := dict "html_url" (print "https://github.com/" (.Get "repo")) -}}
 {{- $githubColors := .Site.Data.githubColors -}}
 {{- with $githubData -}}
 
