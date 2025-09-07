@@ -3,61 +3,35 @@
 {{- if eq (printf "%T" $showhidden) "string" }}
   {{- $showhidden = (eq $showhidden "true") }}
 {{- end }}
-{{- $style := .style | default "li" }}
 {{- $depth := .depth | default 1 }}
 {{- $withDescription := .description | default false }}
 {{- if eq (printf "%T" $withDescription) "string" }}
   {{- $withDescription = (eq $withDescription "true") }}
 {{- end }}
-{{- $sortTerm :=  .sort | lower }}
-{{- $containerstyle :=  .containerstyle | default "ul" }}
-{{- if( and (not (eq $style "li") ) (eq $containerstyle "ul" ) ) }}
-  {{- $containerstyle = "div" }}
-{{- end }}
+{{- $sortTerm := .sort | lower }}
 
 {{- with $page -}}
-{{ (printf "<%s class=\"children children-%s children-sort-%s\">" $containerstyle $style $sortTerm)|safeHTML }}
+<div class="section-index">
+  <hr class="panel-line">
   {{- $pages := partial "_relearn/pages.gotmpl" (dict "page" . "by" $sortTerm) }}
-  {{- partial "inline/childs" (dict "menu" $pages "containerstyle" $containerstyle "style" $style "showhidden" $showhidden "count" 1 "depth" $depth "pages" .Site.Pages "description" $withDescription "sortTerm" $sortTerm "page" .) }}
-{{ (printf "</%s>" $containerstyle)|safeHTML }}
-{{- end }}
-
-{{- define "partials/inline/childs" }}
-  {{- $page := .page }}
-  {{- range .menu }}
-    {{- $hidden := and (or (.Params.hidden) (eq .Title "")) (not $.showhidden) }}
+  {{- range $pages }}
+    {{- $hidden := and (or (.Params.hidden) (eq .Title "")) (not $showhidden) }}
     {{- if not $hidden }}
-      {{- if not .IsHome }}
-        {{- if hasPrefix $.style "h" }}
-          {{- $num := sub ( int (trim $.style "h") ) 1 }}
-          {{- $numn := add $num $.count }}
-{{ (printf `  <h%d class="children-title" id="%s">` $numn (.LinkTitle | plainify | anchorize))|safeHTML }}{{ if .RelPermalink }}<a href="{{ partial "permalink.gotmpl" (dict "to" .) }}">{{ .LinkTitle }}</a>{{ else }}<span>{{ .LinkTitle }}</span>{{ end }}{{ (printf "</h%d>" $numn)|safeHTML }}
-        {{- else if eq $.style "li" }}
-{{ (printf `  <%s class="children-title">` $.style)|safeHTML }}{{ if .RelPermalink }}<a href="{{ partial "permalink.gotmpl" (dict "to" .) }}">{{ .LinkTitle }}</a>{{ else }}<span>{{ .LinkTitle }}</span>{{ end }}
-        {{- else }}
-{{ (printf `  <%s class="children-title">` $.style)|safeHTML }}{{ if .RelPermalink }}<a href="{{ partial "permalink.gotmpl" (dict "to" .) }}">{{ .LinkTitle }}</a>{{ else }}<span>{{ .LinkTitle }}</span>{{ end }}{{ (printf "</%s>" $.style)|safeHTML }}
-        {{- end }}
-        {{- if $.description }}
-          {{- with or .Description .Summary -}}
-<p>{{ . }}</p>
+      <div class="entry pb-12">
+        <h2 class="!my-0 !py-0">
+          {{- if .RelPermalink }}
+            <a class="font-bold text-primary-500" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+          {{- else }}
+            <span>{{ .LinkTitle }}</span>
+          {{- end }}
+        </h2>
+        {{- if $withDescription }}
+          {{- with or .Description .Summary }}
+            <p class="!my-0 !py-0">{{ . }}</p>
           {{- end }}
         {{- end }}
-      {{- end }}
-      {{- if lt $.count $.depth }}
-        {{- if eq $.style "li" }}
-{{- (printf "<%s>" $.containerstyle)|safeHTML }}
-        {{- end }}
-        {{- $pages := partial "_relearn/pages.gotmpl" (dict "page" . "by" $.sortTerm) }}
-        {{- partial "inline/childs" (dict "menu" $pages "containerstyle" $.containerstyle "style" $.style "showhidden" $.showhidden "count" (add $.count 1) "depth" $.depth "pages" $.pages "description" $.description "sortTerm" $.sortTerm "page" $page) }}
-        {{- if eq $.style "li" }}
-{{- (printf "</%s>" $.containerstyle)|safeHTML }}
-        {{- end }}
-      {{- end }}
-      {{- if not .IsHome }}
-        {{- if eq $.style "li" }}
-{{- (printf "</%s>" $.style)|safeHTML -}}
-        {{- end }}
-      {{- end }}
+      </div>
     {{- end }}
   {{- end }}
+</div>
 {{- end }}

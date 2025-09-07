@@ -14,65 +14,7 @@
         @apply bg-neutral-600 px-2 py-1 rounded-sm;
     }
 
-    .docs-content blockquote,
-    .docs-content details,
-    .docs-content pre {
-        @apply mx-8;
 
-    }
-
-
-    .docs-content h1,
-    .docs-content h2,
-    .docs-content h3,
-    .docs-content h4,
-    .docs-content h5,
-    .docs-content h6,
-    .docs-content p,
-    .docs-content table,
-    .docs-content ul,
-    .docs-content ol,
-    .docs-content aside,
-    .docs-content .head,
-    .docs-content > a.content-tabs,
-    .docs-content dl {
-        padding: 12px 28px;
-    }
-
-    .
-
-    .docs-content h2 {
-        @apply bg-neutral-100 border-neutral-700 border-b border-t;
-        font-size: 25px;
-        padding-top: .5em;
-        padding-bottom: .5em;
-        margin-bottom: 21px;
-        margin-top: 2em;
-    }
-
-    /* Indent lists inside box content for better readability */
-    .docs-content  ul,
-    .docs-content ol {
-        padding-left: 4rem;
-        margin-top: 0.5rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .docs-content li + li {
-        margin-top: 0.25rem;
-    }
-
-    .docs-content img:hover {
-        cursor: zoom-in;
-    }
-
-    .docs-content table {
-        display: block;
-        width: auto;
-        max-width: 100%;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
 
 
 
