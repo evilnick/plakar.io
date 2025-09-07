@@ -18,8 +18,16 @@
 
 
 <section class="section-light-1 w-full">
-    <!-- Article content (right)  -->
-        <article class="max-w-full flex-1 flex flex-col gap-4 bg-neutral-50 overflow-hidden">
+    <div class="content flex flex-col xl:flex-row-reverse items-start">
+        <!-- Sidebar (right) -->
+        <aside class="xl:right-0 xl:sticky w-full h-full xl:w-[340px] max-w-full px-8 xl:px-0 xl:max-w-[calc((100%-680px-32px)/2)] pb-4 2xl:pe-4 lg:top-28 flex flex-col  mx-auto xl:mx-0">
+        <div class="~text-xs/lg font-prose flex flex-col gap-6 p-2 2xl:p-4 bg-neutral-50 xl:border-r border-dotted ">
+            {{ partial "toc-docs.html" . }}
+        </div>
+    </aside>
+
+        <!-- Article content (right)  -->
+        <article class="max-w-full flex-1 flex flex-col gap-4 bg-neutral-50 overflow-hidden pb-8">
             <div class="article-header ps-8 pe-2 md:pe-8 flex flex-col gap-4 pt-8">
                 <!-- Breadcrumbs -->
                 <div class="flex flex-wrap items-center gap-2 text-sm font-space-grotesk">
@@ -90,27 +98,23 @@
             </div>
 
             <div class="article-wrapper relative">
-
-
                 <!-- Content blocks -->
                 <div class="relative docs-content font-prose prose text-base w-full max-w-full ps-8 pe-2 md:pe-8">
                     {{ .Content | safeHTML }}
                 </div>
-                <div class="bg-neutral-200 border-neutral-300 flex justify-center items-center gap-3 py-4 px-4 flex-wrap w-full max-w-full">
-                    <div class="flex gap-4 items-center">
-                        {{ partial "social/bluesky-badge.html" . }}
-                        {{ partial "social/discord-badge.html" . }}
-                        {{ partial "social/linkedin-badge.html" . }}
-                        {{ partial "social/github-badge.html" (dict "format" "icon" "context" .) }}
-                    </div>
+            </div>
+
+            <div class="bg-neutral-200 border-neutral-300 flex justify-center items-center gap-3 py-4 px-4 flex-wrap w-full max-w-full">
+                <div class="flex gap-4 items-center">
+                    {{ partial "social/bluesky-badge.html" . }}
+                    {{ partial "social/discord-badge.html" . }}
+                    {{ partial "social/linkedin-badge.html" . }}
+                    {{ partial "social/github-badge.html" (dict "format" "icon" "context" .) }}
                 </div>
             </div>
         </article>
+    </div>
 
-        <!-- Sidebar (right)
-        {{ partial "toc-docs.html" . }}
-
-         -->
 </section>
 
 <script>

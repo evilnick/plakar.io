@@ -1,5 +1,5 @@
 +++
-title = "Tutorials"
+title = "Guides"
 date = "2025-08-12T06:20:40Z"
 weight = 3
 chapter = false
@@ -7,4 +7,4 @@ pre = "<b>3. </b>"
 sort = "title"
 +++
 
-{{%children description="false"%}}
+{{%children description="true"%}}
