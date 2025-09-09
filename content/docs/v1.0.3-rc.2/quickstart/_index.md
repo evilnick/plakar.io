@@ -1,106 +1,120 @@
 ---
 title: "Quickstart"
-date: "2025-03-03 17:00:00 +0100"
+date: "2025-09-02T12:00:00+01:00"
 weight: 1
 chapter: false
 pre: "<b>1. </b>"
 summary: "Get started with plakar: installation, creating your first backup, verifying, restoring, and using the UI. This guide helps you quickly set up plakar and perform essential backup operations."
 ---
 
-This article will guide you through the creation of your first backup with plakar.
+Welcome to **plakar** - easy, secure and efficient backups for people who value their time and data. The aim of this quick guide is to get you up and running with **plakar** and create your first backup within minutes. Let's get started!
 
-## Installing plakar
 
-> Install **plakar**:
+## What you will need
 
-```bash
-$ go install github.com/PlakarKorp/plakar@v1.0.3-rc.2
+ - an internet connection to download the plakar packages
+ - a Linux, MacOS, FreeBSD or OpenBSD machine to run the software
+ - admin access to install
+ - sufficient local storage to store your backups
+ - a web browser (for logging in and using the UI)
+
+## Get plakar
+
+All the release versions of plakar are available directly from github on the project's [release page](https://github.com/PlakarKorp/plakar/releases). 
+
+For each release, check under the 'assets' section for a list of prebuilt packages. They follow the naming convention:
+
+`plakar_<version>_<os>_<arch>.<format>`
+
+So, for example for a Mac running on modern Mac hardware you would fetch the file `plakar_1.0.3-rc.2_darwin_arm64.tar.gz`; for OpenSuse on Intel hardware, you would want `plakar_1.0.3_linux_amd64.rpm`.
+
+## Install plakar
+
+Once you have downloaded the appropriate package, installation depends on your local operating system.
+
+### Debian-based OS
+
+For a Debian-based OS (e.g. Ubuntu, Debian) it's easiest to download the '.deb' package from the releases page. 
+>You can install the package with the `dpkg` command:
+```
+$ sudo dpkg -i plakar_1.0.3_linux_amd64.deb
 ```
 
-> To verify the installation was successful, run:
-
-```bash
+>Verify the installation by running:
+```
 $ plakar version
-v1.0.3-rc.2
 ```
 
-{{% notice style="info" title="Requisites" expanded="true" %}}
+This should return the expected version number, for example 'v1.0.3'.
 
-At the time of this writing, we do not yet provide packages and **plakar** has to be compiled from source, which requires the Go toolchain to be installed on your system.
+### RPM-based OS
 
-To install the Go toolchain, please refer to the [official documentation](https://golang.org/doc/install) or run the following commands:
+For an OS which uses RPM-based packages, download the relevant '.rpm' file from the releases page.
 
-* **MacOS**: `brew install go`
-* **Debian/Ubuntu**: `sudo apt-get update && sudo apt-get install -y ca-certificates golang`
-* **OpenBSD**: `doas pkg_add go`
-
-At the time of writing this document, Plakar needs Golang 1.23.3 or higher.
-
-By default, *plakar* is installed in *~/go/bin*. Run `export PATH=$PATH:~/go/bin` to add it to your PATH.
-
-{{% /notice %}}
-
-
-## Running the local agent
-
-To work efficiently,
-**plakar** requires each user to run their local agent that will provide caching among other things.
-If the agent is not running,
-the **plakar** CLI will spawn it on first use.
-
-
-## Creating your first local repository
-
-The **plakar** software reads your data,
-splits it into smaller chunks that it deduplicates and stores in a **repository**,
-a fancy word to designate storage space dedicated to hold these chunks.
-
-A **repository** can be a directory on your local filesystem,
-a mountpoint to your NAS,
-a remote directory over SFTP,
-a bucket on an S3 object store,
-or any storage we provide (or you write) a connector for.
-
-> Our first repository will be a directory at `~/backups`:
-
-```bash
-$ plakar at ~/backups create
-repository passphrase: 
-repository passphrase (confirm):
+Then use the package manager to install the package. 
+> For example, on Fedora:
+```
+$ sudo dnf install plakar_1.0.3_linux_amd64.rpm
 ```
 
-{{% notice style="warning" title="Your passphrase is important" expanded="true"  %}}
+### MacOS
+
+The MacOS built packages use 'darwin' as the OS designation. Modern Mac processors are based
+on the arm64 architecture, so you will most likely want to fetch the 
+'plakar_1.0.3_linux_arm64.tar.gz' release file.
+The binary file can be extracted from the archive and run.
+MacOS has some built-in protection from malware. To enable the binary to be run, you will need
+to explicitly allow it from the `Privacy & Security` settings.
+
+![MacOS Privacy and Security settings](./images/macos.png)
+
+### FreeBSD
+
+The default package manager for FreeBSD uses simple tar files for packaging. Download the appropriate one based on the hardware architecture.
+
+> For FreeBSD, use the 'pkg' command with root privilege to install the downloaded package: 
+```
+# pkg add ./plakar_1.0.3_freebsd_amd64.tar.gz
+```
+ 
+## Create a Kloset
+
+Before we can backup any data, we need to define where the backup will go. In **plakar** terms, this storage location is called a 'Kloset'. You can find out more about the concept and rationale behind Kloset in [this post on our blog](https://www.plakar.io/posts/2025-04-29/kloset-the-immutable-data-store/).
+
+For our first backup, we will create a local Kloset on the filesystem of the host OS. In a real backup scenario you would want to create a backup on a different physical device, so substitute in a better location if you have one.
+
+> In the CLI enter the following command:
+```shell
+$ plakar at $HOME/backups create
+```
+
+**plakar** will then ask you to enter a passphrase, and repeat it to confirm.
+
+{{% notice style="warning" title="Your passphrase is important!" expanded="true"  %}}
 
 Be extra careful when choosing the passphrase:
-it is the secret protecting your data.
-People with both access to the repository and knowledge of the passphrase can read your backups.
+People with access to the repository and knowledge of the passphrase can read your backups.
+
+By default **plakar** will enforce rules on your choice of passphrase to make sure it is 
+complex enough to be secure. To add complexity, use a mixture of upper and lower case 
+characters and symbols.
 
 **DO NOT LOSE OR FORGET THE PASSPHRASE:**
-it is not stored anywhere and can't be recovered in case of loss.
-A lost passphrase means the data within the repository can no longer be recovered.
+it is not stored anywhere and **can not** be recovered in case of loss.
+A lost passphrase means the data within the repository can no longer be accessed 
+or recovered.
 {{% /notice %}}
 
+## Create your first backup
 
-
-> It is also possible to create unencrypted repositories,
-should your backups remain local,
-in which case the `-plaintext` option has to be passed at creation:
-
-```bash
-$ plakar at ~/backups create -plaintext
+Now we have created the Kloset where data will be stored we can use it to create our first backup. **plakar** uses the 'at' keyword to specify where a command is to take place. 
+> To create a simple example backup, try running:
 ```
-
-Note that once a repository is created,
-it is no longer possible to change its configuration,
-such changes require creating a new repository and performing a synchronization between old and new repository.
-
-
-## Creating your first local backup
-
-> Once the repository is created, we can do the first backup to it:
-
-```bash
-$ plakar at ~/backups backup /private/etc
+plakar at $HOME/backups backup /private/etc
+```
+**plakar** will process the files it finds at that location and pass them to the Kloset where they will be chunked and encrypted. 
+>The output will indicate the progress:
+```
 9abc3294: OK ✓ /private/etc/ftpusers
 9abc3294: OK ✓ /private/etc/asl/com.apple.iokit.power
 9abc3294: OK ✓ /private/etc/pam.d/screensaver_new_ctk
@@ -109,20 +123,34 @@ $ plakar at ~/backups backup /private/etc
 9abc3294: OK ✓ /private/etc
 9abc3294: OK ✓ /private
 9abc3294: OK ✓ /
-backup: created unsigned snapshot 9abc3294 of size 3.1 MiB in 72.55875ms
+backup: created unsigned snapshot 9abc3294 of size 3.1 MB in 72.55875ms
 ```
+>The output lists the short form of the snapshot's id number. This is used to identify a particular snapshot and is also how you identify the snapshot to use for various **plakar** commands.
 
-> You can verify that it is properly recorded:
+{{% notice style="info" title="Command help" expanded="true" %}}
+Learning new tools can be confusing. To make things easier, **plakar** includes built-in help for all commands. Just use `plakar help` and then the command you need help with for a full list of options and examples. For example, if you forget what the options are for restoring files from a snapshot: `plakar help restore`
+
+{{% /notice %}}
+
+> You can verify that the backup exists:
 
 ```bash
-$ plakar at ~/backups ls
-2025-02-19T21:38:16Z   9abc3294    3.1 MiB      0s   /private/etc
+$ plakar at $HOME/backups ls
 ```
 
-> Verify the integrity of its content:
+>...will return the known backups in that Kloset:
+```
+2025-09-02T15:38:16Z   9abc3294    3.1 MB      0s   /private/etc
+```
+
+The output lists the datestamp of the last backup, the short UUID, the size of files backed-up, the time it took to create the backup and the source path of the backup.
+
+> Verify the integrity of the contents:
 
 ```bash
-$ plakar at ~/backups check 9abc3294
+$ plakar at $HOME/backups check 9abc3294
+```
+```
 9abc3294: ✓ /private/etc/afpovertcp.cfg
 9abc3294: ✓ /private/etc/apache2/extra/httpd-autoindex.conf
 9abc3294: ✓ /private/etc/apache2/extra/httpd-dav.conf
@@ -137,7 +165,12 @@ check: verification of 9abc3294:/private/etc completed successfully
 > And restore it to a local directory:
 
 ```bash
-$ plakar at ~/backups restore -to /tmp/restore 9abc3294
+$ plakar at $HOME/backups restore -to /tmp/restore 9abc3294
+```
+
+In this case we are restoring to temporary storage as it is just a test. The output will list the restored files as it creates them:
+
+```
 9abc3294: OK ✓ /private/etc/afpovertcp.cfg
 9abc3294: OK ✓ /private/etc/apache2/extra/httpd-autoindex.conf
 9abc3294: OK ✓ /private/etc/apache2/extra/httpd-dav.conf
@@ -147,7 +180,17 @@ $ plakar at ~/backups restore -to /tmp/restore 9abc3294
 9abc3294: OK ✓ /private/etc/zshrc
 9abc3294: OK ✓ /private/etc/zshrc_Apple_Terminal
 restore: restoration of 9abc3294:/private/etc at /tmp/restore completed successfully
+```
+
+> To verify the files have been re-created, list the directory they were restored to:
+
+```
 $ ls -l /tmp/restore
+```
+
+This will list the restored file. Note that the properties of the restored files, such as the creation date, will be the same as the original files that were backed up:
+
+```
 total 1784
 -rw-r--r--@  1 gilles  wheel     515 Feb 19 22:47 afpovertcp.cfg
 drwxr-xr-x@  9 gilles  wheel     288 Feb 19 22:47 apache2
@@ -159,161 +202,54 @@ drwxr-xr-x@ 16 gilles  wheel     512 Feb 19 22:47 asl
 -rw-r--r--@  1 gilles  wheel    9335 Feb 19 22:47 zshrc_Apple_Terminal
 ```
 
-## Viewing the backup with the web interface
+## Login
+
+By default, **plakar** works without requiring you to create an account or log in. You can back up and restore your data with just a few commands, no external services involved.
+
+However, logging in unlocks optional features that improve usability and monitoring, and by adding the ability to easily install pre-built integrations. In plakar, an integration is a package which supports an additional protocol as a source, destination or storage method (or all three), such as ftp, Google Cloud Storage or an s3 bucket.
+
+Logging in is simple and needs only an email address or github account for authentication.
+
+> To log in using the CLI:
+```
+plakar login -email <youremailaddress@example.com>
+```
+
+Substitute in your own email address and follow the prompt. You can then check your email and follow the link sent from plakar.io. 
+>To check that you are now logged in you can run:
+
+```
+plakar login -status
+```
+
+## Access the UI
 
 > Plakar provides a web interface to view the backups and their content. To start the web interface, run:
 
 ```bash
-$ plakar at ~/backups ui
+$ plakar at $HOME/backups ui
 ```
 
-Your default browser will open a new tab. You can navigate through the snapshots, view the files, and restore them.
+Your default browser will open a new tab. You can navigate through the snapshots, search and view the files, and download them.
 
 ![Web UI, light mode](./images/ui-light.png)
 ![Web UI, dark mode](./images/ui-dark.png)
 
+## Congratulations!
 
-## Digression: one copy is not enough
+You have successfully:
+ 
+ - installed **plakar**
+ - created a backup
+ - verified it
+ - restored files
+ - used the graphical UI
 
-You've completed a backup, which is great. However, if you'll allow me, I'd like to digress for a moment:
+How long did it take? That's how easy **plakar** is for simple, secure backups.   
 
-{{% notice style="note" title="Everything fail" expanded="true"  %}}
+## Next steps
 
-Literature and empirical studies suggest that the annual probability of data loss at a single site—especially when considering factors like hardware failures, human error, and environmental risks—is typically in the low single-digit percentages. For example, a seminal study by Pinheiro, Weber, and Barroso (2007) titled ["Failure Trends in a Large Disk Drive Population"](https://static.googleusercontent.com/media/research.google.com/en//archive/disk_failures.pdf) found that hard drive failure rates generally fall in the range of 2% to 4% per year. In practice, when additional risks beyond basic hardware failure (such as accidental deletion or other operational issues) are factored in, many practitioners adopt a conservative estimate of around 5% per year for a single site.
+There is plenty more to discover about **plakar**. Here are our suggestions on what to try next:
 
-{{% /notice %}}
-
-A local backup, as we just did, is helpful in case of accidental removal of the original data...  but not so much if the storage is entirely lost.
-
-As explained in the page [One repository is not enough](/docs/probabilities/), the probability of losing data is as follows:
-
-* For a single set of data: 5% per year (1 in 20 chance)
-* For two copies at distinct sites: 0.00069% per year (1 in 145,000 chance)
-* For three copies at distinct sites: 0.0000001% per year (1 in a billion chance)
-
-To reduce the risk of data loss, it is highly recommended to create multiple copies of your backups across different locations.
-
-## Creating a second copy over SFTP
-
-We now have a local repository with a copy of our backups, but it is done on the same machine: **we're currently at 5% chances of losing data this year if the drive dies**.
-
-Plakar has been designed to make it easy to synchronize repositories across multiple locations. Let's create another repository on my remote NAS over SFTP and synchronize it with the local one: it should not take more than a couple of minutes.
-
-{{% notice title="What is SFTP?" style="grey" icon="circle-question" expanded="true"%}}
-SFTP is the Secure File Transfer Protocol that comes with OpenSSH.
-{{% /notice %}}
-
-
-> This can be done by creating a new repository there, with its own passphrase:
-
-```bash
-$ plakar at sftp://gilles@nas.plakar.io/home/gilles/backups create
-repository passphrase: 
-repository passphrase (confirm):
-```
-
-We could simply do a new backup to it, but this might produce different snapshots as data may have changed since the first backup.
-
-Instead, we can perform a repository synchronization.
-
-> A repository synchronization ensures that backups are transferred from a repository to another, using the recorded data,and performing necessary decryption and encryption to produce a similar copy:
-
-```bash
-$ plakar at ~/backups sync to sftp://gilles@nas.plakar.io/home/gilles/backups
-peer repository passphrase: 
-peer repository passphrase (confirm):
-sync: synchronized 1 snapshot
-info: sync: synchronization from /home/gilles/backups to sftp://gilles@nas.plakar.io/home/gilles/backups completed: 1 snapshots synchronized
-$ plakar at sftp://gilles@nas.plakar.io/home/gilles/backups ls
-2025-02-19T21:38:16Z   9abc3294    3.1 MB      0s   /private/etc
-```
-
-> We can verify integrity of the snapshot on the second repository:
-
-```bash
-$ plakar at sftp://gilles@nas.plakar.io/home/gilles/backups check 9abc3294
-9abc3294: ✓ /private/etc/afpovertcp.cfg
-9abc3294: ✓ /private/etc/apache2/extra/httpd-autoindex.conf
-9abc3294: ✓ /private/etc/apache2/extra/httpd-dav.conf
-[...]
-9abc3294: ✓ /private/etc/xtab
-9abc3294: ✓ /private/etc/zshrc
-9abc3294: ✓ /private/etc/zshrc_Apple_Terminal
-9abc3294: ✓ /private/etc
-check: verification of 9abc3294:/ completed successfully
-```
-
-**The probability of losing data this year has now fallen from 5% to 0.00069% (1 in 145,000)!**
-
-
-## Creating a third copy over S3
-
-> Let’s create yet another repository on a remote S3 bucket!
-
-```bash
-# for AWS, set s3://s3.<region>.amazonaws.com/<bucket>
-$ plakar store add s3 s3://minio.plakar.io:9001/mybackups   \
-    passphrase=****************                             \
-    access_key=gilles                                       \
-    secret_access_key=********
-```
-
-> Let's do another synchronization!
-
-```bash
-$ plakar at ~/backups sync to @s3
-sync: synchronization from /home/gilles/backups to s3://minio.plakar.io:9001/mybackups completed: 1 snapshots synchronized
-$ plakar at @s3 ls
-2025-02-19T21:38:16Z   9abc3294    3.1 MB      0s   /private/etc
-```
-
-
-> We can verify integrity of the snapshot on the third repository:
-
-```bash
-$ plakar at @s3 check 9abc3294
-9abc3294: ✓ /private/etc/afpovertcp.cfg
-9abc3294: ✓ /private/etc/apache2/extra/httpd-autoindex.conf
-9abc3294: ✓ /private/etc/apache2/extra/httpd-dav.conf
-[...]
-9abc3294: ✓ /private/etc/xtab
-9abc3294: ✓ /private/etc/zshrc
-9abc3294: ✓ /private/etc/zshrc_Apple_Terminal
-9abc3294: ✓ /private/etc
-check: verification of 9abc3294:/private/etc completed successfully
-```
-
-
-But what if both my drive died AND the data center hosting my NAS burst in flames?
-
-
-**The probability of losing data has now fallen from 0.00069% to 0.0000001% (1 in a billion)!**
-
-
-## A few additional words on synchronization
-
-> This first command locates snapshots that exist in my local repository but not in the remote one,
-then sends them over:
-
-```bash
-$ plakar at ~/backups sync to @s3
-```
-
-> This second command locates snapshots that exist in the remote repository but not in the local one to bring them over:
-
-```bash
-$ plakar at ~/backups sync from @s3
-```
-
-> And this last command does it both ways, pushing to the remote repositories snapshots that exist locally and are missing, but also fetching locally snapshots that only exist remotely:
-
-```bash
-$ plakar at ~/backups sync with @s3
-```
-
-
-Repository synchronization is slightly more advanced than what was shown,
-and you are encouraged to experiment with it to find the best workflow for your use-case.
-
-
-In addition, all these commands support passing snapshot identifiers and various options to perform partial synchronizations, only exchanging snapshots that match certain criteria. More information can be found in the [documentation]({{<find-doc-base>}}/commands/plakar-sync/).
+ - Enable integrations and backup more things to and from more places
+ - Reduce the risk of data loss by creating multiple copies of your backups across different locations.
