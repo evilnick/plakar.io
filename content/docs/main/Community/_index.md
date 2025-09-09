@@ -7,18 +7,29 @@ pre: "<b>4. </b>"
 summary: "Connect with the Plakar community, including developers, users, and contributors. Stay updated, share feedback, and join our Discord server for real-time discussions."
 ---
 
-## Join the Plakar community !
+# Engineered by dreamers, powered by community
 
-As Plakar evolves into both a Community Edition (free and open-source) and Enterprise Edition (with additional features and commercial support),
-we invite everyone to join our growing community.
+Our mission is to set a **new open-source standard for data protection**. Achieving it depends on the strength and engagement of our community. This page outlines our community guidelines and defines the boundaries of our open-source project.
 
-Connect with developers,
-users,
-and contributors in real time,
-share feedback,
-and stay updated on the latest features.
+[Join Plakar community on Discord](https://discord.gg/uuegtnF2Q5)
 
-Whether you're using the Community or Enterprise Edition,
-everyone is welcome!
+![Discord screenshot](/img/community/discord-screenshot.png)
 
-[Join our Discord server here!](https://discord.gg/uuegtnF2Q5)
+---
+
+Visit our community page for more information: [Community Page](/community/)
+
+---
+
+## All the ways to join the Community
+
+Connect with Plakar, follow our updates, and take part in discussions through our different community channels.
+
+- [Join us on Discord](https://discord.gg/uuegtnF2Q5)
+- [Join us on Reddit](https://www.reddit.com/r/plakar)
+- [Follow us on X](https://x.com/plakar_io)
+- [Follow us on Bluesky](https://bsky.app/profile/plakar.io)
+- [Follow us on LinkedIn](https://www.linkedin.com/company/plakar)
+- [Follow us on GitHub](https://github.com/PlakarKorp/plakar)
+
+![Nestor danse](/img/Nestor/danse.svg)
