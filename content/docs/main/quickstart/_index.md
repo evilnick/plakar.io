@@ -1,10 +1,11 @@
-+++
-title = "Quickstart"
-date = "2025-09-02 12:00:00 +0100"
-weight = 1
-chapter = false
-pre = "<b>1. </b>"
-+++
+---
+title: "Quickstart"
+date: "2025-09-02T12:00:00+01:00"
+weight: 1
+chapter: false
+pre: "<b>1. </b>"
+summary: "Get started with plakar: installation, creating your first backup, verifying, restoring, and using the UI. This guide helps you quickly set up plakar and perform essential backup operations."
+---
 
 Welcome to **plakar** - easy, secure and efficient backups for people who value their time and data. The aim of this quick guide is to get you up and running with **plakar** and create your first backup within minutes. Let's get started!
 
@@ -252,4 +253,3 @@ There is plenty more to discover about **plakar**. Here are our suggestions on w
 
  - Enable integrations and backup more things to and from more places
  - Reduce the risk of data loss by creating multiple copies of your backups across different locations.
- 

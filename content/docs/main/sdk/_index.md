@@ -1,14 +1,8 @@
 ---
-title: SDK
-description: Backup content from your Notion workspace directly into Plakar — fast, structured, and API-driven.
-technology_description: This integration uses the Notion API to retrieve structured JSON representations of your workspace and pages.
-categories: 
-- integrations
-tags:
-- notion
+title: "SDK"
 weight: 4
-stage: "beta"
-date: 2025-07-07
+date: "2025-07-07"
+summary: "Learn how to implement a Plakar Integration (Source, Destination, or Storage) in Go, and use the SDK to run it. This guide covers interfaces, implementation, packaging, and installation."
 ---
 
 This guide explains **how to implement a Plakar Integration** (Source, Destination, or Storage) in Go, and how to use the provided **SDK** to run it.

@@ -1,10 +1,11 @@
-+++
-title = "Quickstart"
-date = "2025-03-03 17:00:00 +0100"
-weight = 1
-chapter = false
-pre = "<b>1. </b>"
-+++
+---
+title: "Quickstart"
+date: "2025-03-03 17:00:00 +0100"
+weight: 1
+chapter: false
+pre: "<b>1. </b>"
+summary: "Get started with plakar: installation, creating your first backup, verifying, restoring, and using the UI. This guide helps you quickly set up plakar and perform essential backup operations."
+---
 
 This article will guide you through the creation of your first backup with plakar.
 

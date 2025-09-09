@@ -1,10 +1,11 @@
-+++
-title = "Concepts"
-date = "2025-03-18T10:07:31Z"
-weight = 2
-chapter = false
-pre = "<b>2. </b>"
-+++
+---
+title: "Concepts"
+date: "2025-03-18T10:07:31Z"
+weight: 2
+chapter: false
+pre: "<b>2. </b>"
+summary: "Understand the core concepts behind Plakar, including Kloset stores, chunking, deduplication, integrations, backup strategies, and the ptar file format. This section provides essential background for effective use of Plakar."
+---
 
 One of the core missions of Plakar is to be as simple as possible. We don't want you to spend hours reading documentation to understand how to back up your laptop or your personal server. Still, there are some concepts that are important to understand in order to use Plakar effectively, especially if you want to use it in a more advanced way.
 

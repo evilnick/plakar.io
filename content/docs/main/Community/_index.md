@@ -1,10 +1,11 @@
-+++
-title = "Community"
-date = 2022-03-13T23:27:47+01:00
-weight = 4
-chapter = false
-pre = "<b>4. </b>"
-+++
+---
+title: "Community"
+date: "2022-03-13T23:27:47+01:00"
+weight: 4
+chapter: false
+pre: "<b>4. </b>"
+summary: "Connect with the Plakar community, including developers, users, and contributors. Stay updated, share feedback, and join our Discord server for real-time discussions."
+---
 
 ## Join the Plakar community !
 
