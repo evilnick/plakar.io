@@ -23,7 +23,7 @@ tags:
 - portable format
 stage: stable
 date: 2025-07-30
-plakar_version: 1.0.2 or later
+plakar_version: 1.0.4 or later
 integration_version: 1.0.0
 resource_type: object-storage
 provides:
@@ -33,9 +33,7 @@ provides:
 - viewer
 ---
 
-This documentation assumes Plakar v1.0.2 is installed.
-
-If you are running a newer version, the commands differ slightly as some of the **configuration commands have changed in v1.0.3**. Check the Changelog of v1.0.3 to adapt the commands accordingly.
+This documentation assumes Plakar v1.0.4 is installed.
 
 ## Introduction
 
@@ -59,21 +57,16 @@ Plakar's built-in MinIO integration includes three connectors:
 
 To interact with MinIO, Plakar uses the S3-compatible API of MinIO which is supported natively.
 
-No additional packages or plugins are required.
+Starting from version 1.0.4, the S3 connector is no longer included by default and must be manually installed.
 
-> The `s3` connectors are built-in, and are always available in your Plakar installation
 ```bash
-$ plakar version
-plakar/v1.0.2
-
-importers: fs, ftp, s3, sftp # <-- `s3` is listed here
-exporters: fs, ftp, s3, sftp # <-- And here
-klosets: fs, http, https, ptar, s3, sftp, sqlite # <-- And here
+# First login on plakar to get access to the pre-compile package repository
+plakar login -email <Your Email Address>
+# Confirm the login by clicking the link sent to your email
+plakar pkg add s3
 ```
 
----
-
-### Configure IAM permissions in MinIO
+## Configure IAM permissions in MinIO
 
 MinIO supports fine-grained access control using IAM-style policies. You can assign permissions to users or service accounts using one of the following methods:
 
@@ -137,16 +130,13 @@ The storage connector allows you to host a Kloset store in a MinIO bucket. This 
 
 ### Configuration
 
-Use the commands `plakar store repository create <name>` and `plakar store repository set <name> <option> <value>` to configure a MinIO bucket as a Kloset store.
+Use the commands `plakar store add <name> <location> [option=value ...]` to configure a MinIO bucket as a Kloset store.
 
 > Configure Plakar to use MinIO to host a Kloset store
 ```bash
-$ plakar store repository create minio_store
-$ plakar store repository set minio_store location s3://localhost:9000/plakar-kloset
-$ plakar store repository set minio_store access_key minioadmin
-$ plakar store repository set minio_store secret_access_key minioadmin
+$ plakar store add minio_store s3://localhost:9000/plakar-kloset access_key=minioadmin secret_access_key=minioadmin
 # Only if your MinIO instance does not use TLS
-$ plakar store repository set minio_store use_tls false
+$ plakar store set minio_store use_tls=false
 ```
 
 **Configuration options**
@@ -196,16 +186,13 @@ The Kloset store can be hosted in any of the supported backends by Plakar (files
 
 ### Configuration
 
-Use the commands `plakar source remote create <name>` and `plakar source remote set <name> <option> <value>` to configure a MinIO bucket as a source for backups.
+Use the commands `plakar source add <name> <location> [option=value ...]` to configure a MinIO bucket as a source for backups.
 
 > Configure the source connector to back up a MinIO bucket
 ```bash
-$ plakar source remote create minio_src
-$ plakar source remote set minio_src location s3://localhost:9000/mybucket
-$ plakar source remote set minio_src access_key minioadmin
-$ plakar source remote set minio_src secret_access_key minioadmin
+$ plakar source add minio_src s3://localhost:9000/mybucket access_key=minioadmin secret_access_key=minioadmin
 # Only if your MinIO instance does not use TLS
-$ plakar source remote set minio_src use_tls false
+$ plakar source set minio_src use_tls=false
 ```
 
 **Configuration options**
@@ -241,16 +228,13 @@ The Kloset store location does not matter: it can be hosted on the local filesys
 
 ### Configuration
 
-Use the commands `plakar destination remote create <name>` and `plakar destination remote set <name> <option> <value>` to configure a MinIO bucket as a destination for restores.
+Use the commands `plakar destination add <name> <location> [option=value ...]` to configure a MinIO bucket as a destination for restores.
 
-> Configure the destination connector to back up a MinIO bucket
+> Configure the destination connector to restore to a MinIO bucket
 ```bash
-$ plakar destination remote create minio_src
-$ plakar destination remote set minio_src location s3://localhost:9000/mybucket
-$ plakar destination remote set minio_src access_key minioadmin
-$ plakar destination remote set minio_src secret_access_key minioadmin
+$ plakar destination add minio_dst s3://localhost:9000/mybucket access_key=minioadmin secret_access_key=minioadmin
 # Only if your MinIO instance does not use TLS
-$ plakar destination remote set minio_src use_tls false
+$ plakar destination set minio_dst use_tls=false
 ```
 
 **Configuration options**
@@ -353,10 +337,10 @@ Update the configuration option `use_tls` to `true` or `false` depending on whet
 > Enable or disable TLS for the MinIO integration
 ```bash
 # Disable TLS for the Kloset store
-$ plakar store repository set minio_store use_tls false
+$ plakar store set minio_store use_tls=false
 # Disable TLS for the Source or Destination connector
-$ plakar source remote set minio_src use_tls false
-$ plakar destination remote set minio_dst use_tls false
+$ plakar source set minio_src use_tls=false
+$ plakar destination set minio_dst use_tls=false
 ```
 
 ---
