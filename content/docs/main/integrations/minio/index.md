@@ -88,6 +88,8 @@ This is the most common and scriptable method. You can:
 - Define policies in JSON format
 - Attach policies to users with `mc admin policy attach`
 
+
+
 > Contents of policy.json — Remember to remove comments or the JSON will be invalid
 ```json
 {
@@ -100,7 +102,15 @@ This is the most common and scriptable method. You can:
       // "Action": ["s3:GetObject", "s3:ListBucket", "s3:PutObject"],
       // To allow using the bucket as a Kloset store, you also need to give permissions to create the bucket
       // "Action": ["s3:GetObject", "s3:ListBucket", "s3:PutObject", "s3:CreateBucket"],
+      // plakar-kloset is the name of the bucket you want to backup, restore to or host a Kloset store in
       "Resource": ["arn:aws:s3:::plakar-kloset", "arn:aws:s3:::plakar-kloset/*"]
+    },
+    // To allow deleting locks created by Plakar, you need to add the DeleteObject action on the locks prefix
+    // Those locks will be removed in future versions of Plakar
+    {
+      "Effect": "Allow",
+      "Action": ["s3:DeleteObject"],
+      "Resource": ["arn:aws:s3:::plakar-kloset/locks*"]
     }
   ]
 }
@@ -108,10 +118,10 @@ This is the most common and scriptable method. You can:
 
 > Create the user `plakar_user` with the password `mysecretpassword` and assign the policy `plakar-policy` to it
 ```bash
-$ mc alias set local http://localhost:9000 minioadmin minioadmin
-$ mc admin user add local plakar_user mysecretpassword
-$ mc admin policy create local plakar-policy policy.json
-$ mc admin policy attach local --user plakar_user plakar-policy
+$ mc alias set myminio http://localhost:9000 minioadmin minioadmin
+$ mc admin user add myminio plakar_user a-very-strong-secret
+$ mc admin policy create myminio plakar-policy /tmp/minio_policy # /tmp/plakar_policy contains the JSON of your policy
+$ mc admin policy attach myminio plakar-policy --user=plakar_user
 ```
 
 ---
