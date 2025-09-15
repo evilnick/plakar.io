@@ -122,7 +122,7 @@ parent = "engineering"
 [[main]]
 identifier = "engineering-learn-docs"
 name = "Documentation"
-url = "/docs/main/"
+url = "/docs/LATEST_VERSION_PLACEHOLDER/"
 weight = 20
 parent = "engineering"
 [[main.params]]

@@ -6,7 +6,7 @@ title = "Plakar - Effortless backup"
 ignoreFiles = ["content/templates/.*"]
 
 [Params]
-latest = 'v1.0.3-rc.2'
+latest = 'v1.0.4'
 
 
 [goldmark]
