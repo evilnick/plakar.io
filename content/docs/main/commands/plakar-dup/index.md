@@ -1,54 +1,51 @@
 ---
 date: "2025-09-15T14:20:51Z"
-title: mount
-summary: "Mount Plakar snapshots as read-only filesystem"
+title: dup
+summary: "Duplicates an existing snapshot with a different ID"
 ---
 <div class="head" role="doc-pageheader" aria-label="Manual header
-  line"><span class="head-ltitle">PLAKAR-MOUNT(1)</span>
+  line"><span class="head-ltitle">PLAKAR-DUP(1)</span>
   <span class="head-vol">General Commands Manual</span>
-  <span class="head-rtitle">PLAKAR-MOUNT(1)</span></div>
+  <span class="head-rtitle">PLAKAR-DUP(1)</span></div>
 <main class="manual-text">
 <section class="Sh">
 <h2 class="Sh" id="NAME"><a class="permalink" href="#NAME">NAME</a></h2>
-<p class="Pp"><code class="Nm">plakar-mount</code> &#x2014;
-    <span class="Nd" role="doc-subtitle">Mount Plakar snapshots as read-only
-    filesystem</span></p>
+<p class="Pp"><code class="Nm">plakar-dup</code> &#x2014;
+    <span class="Nd" role="doc-subtitle">Duplicates an existing snapshot with a
+    different ID</span></p>
 </section>
 <section class="Sh">
 <h2 class="Sh" id="SYNOPSIS"><a class="permalink" href="#SYNOPSIS">SYNOPSIS</a></h2>
 <table class="Nm">
   <tr>
-    <td><code class="Nm">plakar mount</code></td>
-    <td><var class="Ar">mountpoint</var></td>
+    <td><code class="Nm">plakar dup</code></td>
+    <td></td>
   </tr>
 </table>
 </section>
 <section class="Sh">
 <h2 class="Sh" id="DESCRIPTION"><a class="permalink" href="#DESCRIPTION">DESCRIPTION</a></h2>
-<p class="Pp">The <code class="Nm">plakar mount</code> command mounts a Plakar
-    repository snapshot as a read-only filesystem at the specified
-    <var class="Ar">mountpoint</var>. This allows users to access snapshot
-    contents as if they were part of the local file system, providing easy
-    browsing and retrieval of files without needing to explicitly restore them.
-    This command may not work on all Operating Systems.</p>
+<p class="Pp">The <code class="Nm">plakar dup</code> command creates a duplicate
+    of an existing snapshot with a new snapshot ID. The new snapshot is an exact
+    copy of the original, including all files and metadata.</p>
 </section>
 <section class="Sh">
 <h2 class="Sh" id="EXAMPLES"><a class="permalink" href="#EXAMPLES">EXAMPLES</a></h2>
-<p class="Pp">Mount a snapshot to the specified directory:</p>
+<p class="Pp">Create a duplicate of a snapshot with ID &quot;abc123&quot;:</p>
 <div class="Bd Pp Bd-indent Li">
-<pre>$ plakar mount ~/mnt</pre>
+<pre>$ plakar dup abc123</pre>
 </div>
 </section>
 <section class="Sh">
 <h2 class="Sh" id="DIAGNOSTICS"><a class="permalink" href="#DIAGNOSTICS">DIAGNOSTICS</a></h2>
-<p class="Pp">The <code class="Nm">plakar-mount</code> utility exits&#x00A0;0 on
+<p class="Pp">The <code class="Nm">plakar-dup</code> utility exits&#x00A0;0 on
     success, and&#x00A0;&gt;0 if an error occurs.</p>
 <dl class="Bl-tag">
   <dt>0</dt>
   <dd>Command completed successfully.</dd>
   <dt>&gt;0</dt>
-  <dd>An error occurred, such as an invalid mountpoint or failure during the
-      mounting process.</dd>
+  <dd>An error occurred, such as failure to retrieve existing snapshot or
+      invalid snapshot ID.</dd>
 </dl>
 </section>
 <section class="Sh">
@@ -60,4 +57,4 @@ summary: "Mount Plakar snapshots as read-only filesystem"
 </main>
 <div class="foot" role="doc-pagefooter" aria-label="Manual footer
   line"><span class="foot-left">Plakar</span> <span class="foot-date">July 3,
-  2025</span> <span class="foot-right">PLAKAR-MOUNT(1)</span></div>
+  2025</span> <span class="foot-right">PLAKAR-DUP(1)</span></div>

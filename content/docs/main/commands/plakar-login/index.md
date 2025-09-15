@@ -1,38 +1,38 @@
 ---
-date: "2025-07-31T20:19:30Z"
+date: "2025-09-15T14:20:51Z"
 title: login
 summary: "Authenticate to Plakar services"
 ---
-<table class="head">
-  <tr>
-    <td class="head-ltitle">PLAKAR-LOGIN(1)</td>
-    <td class="head-vol">General Commands Manual</td>
-    <td class="head-rtitle">PLAKAR-LOGIN(1)</td>
-  </tr>
-</table>
-<div class="manual-text">
+<div class="head" role="doc-pageheader" aria-label="Manual header
+  line"><span class="head-ltitle">PLAKAR-LOGIN(1)</span>
+  <span class="head-vol">General Commands Manual</span>
+  <span class="head-rtitle">PLAKAR-LOGIN(1)</span></div>
+<main class="manual-text">
 <section class="Sh">
-<h1 class="Sh" id="NAME"><a class="permalink" href="#NAME">NAME</a></h1>
+<h2 class="Sh" id="NAME"><a class="permalink" href="#NAME">NAME</a></h2>
 <p class="Pp"><code class="Nm">plakar-login</code> &#x2014;
-    <span class="Nd">Authenticate to Plakar services</span></p>
+    <span class="Nd" role="doc-subtitle">Authenticate to Plakar
+  services</span></p>
 </section>
 <section class="Sh">
-<h1 class="Sh" id="SYNOPSIS"><a class="permalink" href="#SYNOPSIS">SYNOPSIS</a></h1>
+<h2 class="Sh" id="SYNOPSIS"><a class="permalink" href="#SYNOPSIS">SYNOPSIS</a></h2>
 <table class="Nm">
   <tr>
     <td><code class="Nm">plakar login</code></td>
     <td>[<code class="Fl">-email</code> <var class="Ar">email</var>]
-      [<code class="Fl">-github</code>] [<code class="Fl">-no-spawn</code>]</td>
+      [<code class="Fl">-github</code>] [<code class="Fl">-no-spawn</code>]
+      [<code class="Fl">-status</code>]</td>
   </tr>
 </table>
 </section>
 <section class="Sh">
-<h1 class="Sh" id="DESCRIPTION"><a class="permalink" href="#DESCRIPTION">DESCRIPTION</a></h1>
+<h2 class="Sh" id="DESCRIPTION"><a class="permalink" href="#DESCRIPTION">DESCRIPTION</a></h2>
 <p class="Pp">The <code class="Nm">plakar login</code> command initiates an
     authentication flow with the Plakar platform. Login is optional for most
     <code class="Nm">plakar</code> commands but required to enable certain
     services, such as alerting. See also
-    <a class="Xr" href="../plakar-services/">plakar-services(1)</a>.</p>
+    <a class="Xr" href="../plakar-service/" aria-label="plakar-service, section
+    1">plakar-service(1)</a>.</p>
 <p class="Pp">Only one authentication method may be specified per invocation:
     the <code class="Fl">-email</code> and <code class="Fl">-github</code>
     options are mutually exclusive. If neither is provided,
@@ -48,10 +48,13 @@ summary: "Authenticate to Plakar services"
       the OAuth flow unless <code class="Fl">-no-spawn</code> is specified.</dd>
   <dt id="no-spawn"><a class="permalink" href="#no-spawn"><code class="Fl">-no-spawn</code></a></dt>
   <dd>Do not automatically open a browser window for authentication flows.</dd>
+  <dt id="status"><a class="permalink" href="#status"><code class="Fl">-status</code></a></dt>
+  <dd>Check wether the user is currently logged in. This option cannot be used
+      with any other options.</dd>
 </dl>
 </section>
 <section class="Sh">
-<h1 class="Sh" id="EXAMPLES"><a class="permalink" href="#EXAMPLES">EXAMPLES</a></h1>
+<h2 class="Sh" id="EXAMPLES"><a class="permalink" href="#EXAMPLES">EXAMPLES</a></h2>
 <p class="Pp">Start a login via email:</p>
 <div class="Bd Pp Bd-indent Li">
 <pre>$ plakar login -email user@example.com</pre>
@@ -62,15 +65,16 @@ summary: "Authenticate to Plakar services"
 </div>
 </section>
 <section class="Sh">
-<h1 class="Sh" id="SEE_ALSO"><a class="permalink" href="#SEE_ALSO">SEE
-  ALSO</a></h1>
-<p class="Pp"><a class="Xr" href="../plakar/">plakar(1)</a>,
-    <a class="Xr" href="../plakar-services/">plakar-services(1)</a></p>
+<h2 class="Sh" id="SEE_ALSO"><a class="permalink" href="#SEE_ALSO">SEE
+  ALSO</a></h2>
+<p class="Pp"><a class="Xr" href="../plakar/" aria-label="plakar, section
+    1">plakar(1)</a>,
+    <a class="Xr" href="../plakar-logout/" aria-label="plakar-logout, section
+    1">plakar-logout(1)</a>,
+    <a class="Xr" href="../plakar-service/" aria-label="plakar-service, section
+    1">plakar-service(1)</a></p>
 </section>
-</div>
-<table class="foot">
-  <tr>
-    <td class="foot-date">July 8, 2025</td>
-    <td class="foot-os">Plakar</td>
-  </tr>
-</table>
+</main>
+<div class="foot" role="doc-pagefooter" aria-label="Manual footer
+  line"><span class="foot-left">Plakar</span> <span class="foot-date">July 8,
+  2025</span> <span class="foot-right">PLAKAR-LOGIN(1)</span></div>
