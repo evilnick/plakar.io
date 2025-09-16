@@ -117,7 +117,7 @@ This might sound like a small change, but in practice it **completely removes fr
 
 ## Cache improvements: smarter, not noisier  
 
-Caching is at the heart of Plakar’s speed. But caching too aggressively could sometimes mean wasted resources or false positives in large datasets.  
+Caching is at the heart of Plakar’s speed. But caching too aggressively could sometimes mean wasted resources in large datasets.
 
 We’ve tuned and refined our strategy.  
 
