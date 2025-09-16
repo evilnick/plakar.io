@@ -1,5 +1,5 @@
 ---
-title: MinIO integration package
+title: MinIO integration
 description: Backup and restore your MinIO buckets with Plakar; secure, portable, and deduplicated.
 technology_description: This integration uses the S3-compatible API of MinIO to extract and restore bucket contents into a Kloset store.
 categories:
@@ -144,8 +144,29 @@ The policy you should attach to the user depends on your use-case:
 
 The storage connector allows you to host a Kloset store in a MinIO bucket. This is useful if you want to use MinIO as a durable, S3-compatible backend for storing Plakar snapshots.
 
-> Host a Kloset store in a MinIO bucket
-> ![Host a Kloset to a MinIO bucket](./architecture-store.svg)
+{{< mermaid >}}
+---
+title: Host a Kloset store in a MinIO bucket
+---
+flowchart LR
+    subgraph Sources[Source Connectors]
+        direction LR
+        DB1[(Databases)]
+        FILES@{ shape: docs, label: "Filesystem/NAS/SAN" }
+        SAAS[SAAS]
+        SFTP[/SFTP/]
+        RCLONE@{ shape: st-rect, label: "Rclone" }
+    end
+    Sources e1@--> Plakar[Plakar Agent]
+    subgraph Minio
+        direction TB
+        Kloset(((Kloset Store)))
+    end
+    Plakar e2@--> Minio
+    classDef animate stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 25s linear infinite;
+    class e1 animate
+    class e2 animate
+{{< /mermaid >}}
 
 ---
 
@@ -200,8 +221,29 @@ The source connector allows you to create a snapshot of a MinIO bucket and store
 
 The Kloset store can be hosted in any of the supported backends by Plakar (filesystem, SFTP, …), including MinIO itself.
 
-> Backup a MinIO bucket to a Kloset store
-> ![Backup a MinIO bucket](./architecture-backup.svg)
+{{< mermaid >}}
+---
+title: Backup a MinIO bucket to a Kloset store
+---
+flowchart LR
+    subgraph Minio
+        direction LR
+        DB1[(Bucket)]
+    end
+    Minio e1@--> Plakar[Plakar Agent]
+    Plakar e2@-->|SFTP| SFTP_Target(((Kloset Store)))
+    Plakar e3@-->|Rclone| Rclone_Target(((Kloset Store)))
+    Plakar e4@-->|S3-Compatible| S3_Target(((Kloset Store)))
+    Plakar e5@-->|Filesystem| FS_Target(((Kloset Store)))
+    Plakar e6@-->|...| All_Target(((Kloset Store)))
+    classDef animate stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 25s linear infinite;
+    class e1 animate
+    class e2 animate
+    class e3 animate
+    class e4 animate
+    class e5 animate
+    class e6 animate
+{{< /mermaid >}}
 
 ---
 
@@ -242,8 +284,22 @@ The destination connector allows you to restore a snapshot from a Kloset store i
 
 The Kloset store location does not matter: it can be hosted on the local filesystem, in a remote SFTP server, or even in another MinIO bucket.
 
-> Restore a snapshot to a MinIO bucket
-> ![Restore a backup to a MinIO bucket](./architecture-restore.svg)
+{{< mermaid >}}
+---
+title: Restore a snapshot to a MinIO bucket
+---
+flowchart LR
+Kloset(((Kloset Store)))
+Kloset e1@--> Plakar[Plakar Agent]
+subgraph Minio
+direction LR
+DB1[(Bucket)]
+end
+Plakar e2@--> Minio
+classDef animate stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 25s linear infinite;
+class e1 animate
+class e2 animate
+{{< /mermaid >}}
 
 ---
 

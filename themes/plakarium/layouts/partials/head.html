@@ -61,6 +61,8 @@ else
     [x-cloak] { display: none !important; }
 </style>
 
+{{ if .HasShortcode "mermaid" }}{{ partial "mermaid.html" . }}{{ end }}
+
 {{ if .Site.Params.github.enabled | default false }}
     {{ $githubOrganization := .Site.Params.github.organization | default "" }}
     {{ $githubRepository := .Site.Params.github.repository | default "" }}

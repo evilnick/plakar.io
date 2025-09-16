@@ -1,7 +1,7 @@
 ---
-title: "v1.0.4"
+title: "Plakar v1.0.4"
 date: "2025-03-18T10:07:31Z"
-weight: 3
+weight: 98
 chapter: false
 sort: "title"
 docsBase: "/docs/main"
