@@ -1,6 +1,6 @@
 ---
 title: "Release v1.0.4 — A new milestone for Plakar"
-date: 2025-09-11T10:00:00+0100
+date: 2025-09-16T10:00:00+0100
 authors:
 - "gilles"
 summary: "Plakar v1.0.4 introduces pre-packaged binaries, a new plugin system for integrations, smarter caching, policy-based lifecycle management, UI refinements, and major performance boosts — marking a milestone release for the platform."
