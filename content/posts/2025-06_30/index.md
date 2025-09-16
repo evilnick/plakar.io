@@ -6,7 +6,6 @@ authors:
 summary: ".tgz made sense in 1994, but today we need archiving that supports deduplication, encryption, S3, and zero trust. here’s why we built .ptar."
 categories:
  - technology
- - backup
 featured-scope:
  - hero-page
 tags:

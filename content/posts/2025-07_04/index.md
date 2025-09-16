@@ -6,7 +6,6 @@ authors:
 summary: "With our new Notion integration, plakar can now snapshot and restore workspaces directly — docs, databases, and more. No hacks. Just data."
 categories:
  - technology
- - backup
 featured-scope:
  - hero-page
 tags:

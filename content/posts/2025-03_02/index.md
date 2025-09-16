@@ -5,7 +5,6 @@ authors:
 - "gilles"
 summary: "New UI filters, timeline navigation, S3 and FTP support, checkpointing, and performance boosts in Plakar’s latest beta release..."
 categories:
- - technology
  - release-notes
 featured-scope:
   - hero-page

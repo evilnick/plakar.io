@@ -135,7 +135,7 @@ parent = "engineering"
 
 [[main]]
 identifier = "engineering-learn-blog"
-name = "Plakar stories"
+name = "Plakar blog"
 url = "/posts/"
 weight = 30
 parent = "engineering"

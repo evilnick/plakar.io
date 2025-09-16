@@ -5,8 +5,7 @@ authors:
 - "gilles"
 summary: "Plakar v1.0.2 adds an automatic security check for new critical releases. It also fixes relative-path resolution when using an agent, plus delivers dramatic S3 performance and memory improvements for faster, more reliable backups."
 categories:
- - technology
- - release notes
+ - release-notes
 featured-scope:
  - hero-page
 tags:

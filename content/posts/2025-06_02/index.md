@@ -5,8 +5,7 @@ authors:
 - "gilles"
 summary: ".ptar is our own archive format, a self-contained kloset, a container for your data. You end up with a standalone file that provides deduplication, compression, encryption, with all of the fancy features of a kloset store !"
 categories:
- - technology
- - release notes
+ - release-notes
 featured-scope:
  - hero-page
 tags:

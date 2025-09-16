@@ -5,8 +5,7 @@ authors:
 - "gilles"
 summary: "Immutable, queryable, encrypted snapshots with context and integrity — Kloset redefines how data is stored, verified, and reused..."
 categories:
- - technology
- - release notes
+ - release-notes
 featured-scope:
  - hero-page
 tags:

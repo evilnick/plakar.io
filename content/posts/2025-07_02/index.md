@@ -6,7 +6,6 @@ authors:
 summary: "want to craft a ptar archive but you don't need a full-fledged backup solution ? here comes kapsul, our ptar-specific tool, providing all you need from building to restoring and inspecting."
 categories:
  - technology
- - backup
 featured-scope:
  - hero-page
 tags:

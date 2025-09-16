@@ -5,8 +5,7 @@ authors:
 - "gilles"
 summary: "Plakar v1.0.4 introduces pre-packaged binaries, a new plugin system for integrations, smarter caching, policy-based lifecycle management, UI refinements, and major performance boosts — marking a milestone release for the platform."
 categories:
- - technology
- - backup
+ - release-notes
 featured-scope:
  - hero-page
 tags:

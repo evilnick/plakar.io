@@ -5,8 +5,7 @@ authors:
 - "julien"
 summary: "From magnetic tapes to immutable snapshots, how backups evolved into strategic, queryable, open tools ready for modern data challenges..."
 categories:
- - technology
- - release-notes
+ - insights
 featured-scope:
  - hero-page
 tags:

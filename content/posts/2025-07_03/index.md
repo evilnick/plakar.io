@@ -6,7 +6,6 @@ authors:
 summary: "We released go-cdc-chunkers, our open source library to provide Content-Defined Chunking. Here's why deduplication is important."
 categories:
  - technology
- - backup
 featured-scope:
  - hero-page
 tags:
