@@ -3,7 +3,7 @@ date: "2025-09-02T00:00:00Z"
 title: What is `plakar login`, and why should I use it?
 summary: "Learn about the benefits of logging in with `plakar login`, including installing pre-built packages and enabling alerting for better usability and monitoring."
 last_reviewed: "2025-09-02"
-last_reviewed_version: "v1.0.3"
+last_reviewed_version: "v1.0.4"
 ---
 
 *Last reviewed: {{<param "last_reviewed">}} / Plakar {{<param "last_reviewed_version">}}*
@@ -23,7 +23,7 @@ More features may require login in the future.
 
 ### 1. Install pre-built packages
 
-Starting with Plakar v1.0.3, you can extend Plakar with integrations, for example:
+Starting with Plakar v1.0.4, you can extend Plakar with integrations, for example:
 * S3
 * SFTP
 * rclone

@@ -3,7 +3,7 @@ date: "2025-09-02T00:00:00Z"
 title: What is `plakar server`, and why should I use it?
 summary: "Learn about the `plakar server` command, which creates an HTTP proxy on top of a Kloset store. This tutorial explains how it works, its use cases, and its limitations."
 last_reviewed: "2025-09-02"
-last_reviewed_version: "v1.0.3"
+last_reviewed_version: "v1.0.4"
 ---
 
 *Last reviewed: {{<param "last_reviewed">}} / Plakar {{<param "last_reviewed_version">}}*

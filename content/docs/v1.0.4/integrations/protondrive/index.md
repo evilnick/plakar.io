@@ -40,7 +40,7 @@ A Viewer is also provided to inspect, search, and restore snapshots without requ
 
 **Requirements:**
 
-* Plakar version: >=1.0.3
+* Plakar version: >=1.0.4
 * Integration version: 0.1.0
 * Proton Drive API credentials configured in Rclone
 

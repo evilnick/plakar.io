@@ -3,7 +3,7 @@ date: "2025-09-02T00:00:00Z"
 title: Setup the scheduler to run backups every day
 summary: "Learn how to configure and run the Plakar scheduler to automate daily backups. This tutorial covers configuration, task setup, and running the scheduler."
 last_reviewed: "2025-09-02"
-last_reviewed_version: "v1.0.3"
+last_reviewed_version: "v1.0.4"
 ---
 
 *Last reviewed: {{<param "last_reviewed">}} / Plakar {{<param "last_reviewed_version">}}*

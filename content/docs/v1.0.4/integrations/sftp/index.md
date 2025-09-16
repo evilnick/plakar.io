@@ -22,7 +22,7 @@ tags:
   - portable format
 stage: beta
 date: 2025-07-30
-plakar_version: {1.0.2 or >=1.0.3}
+plakar_version: {1.0.2 or >=1.0.4}
 integration_version: "0.1.0"
 resource_type: filesystem
 provides:
@@ -34,7 +34,7 @@ provides:
 ## Introduction
 
 > **Requirements**
-> - Plakar version: "1.0.2 or >=1.0.3"
+> - Plakar version: "1.0.2 or >=1.0.4"
 >  - Integration version: "0.1.0"
 >  - SFTP/SSH server accessible with read/write permissions
 

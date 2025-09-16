@@ -63,7 +63,7 @@ Check if the S3 package is installed:
 
 ```bash
 $ plakar pkg list
-s3@v1.0.3
+s3@v1.0.4
 ```
 
 If it does not appear in the list, install it as follows:

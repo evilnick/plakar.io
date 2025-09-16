@@ -18,7 +18,7 @@ tags:
   - portable format
 stage: test
 date: 2025-07-26
-plakar_version: ">=1.0.3"
+plakar_version: ">=1.0.4"
 integration_version: 0.1.0
 resource_type: object-storage
 provides:
@@ -50,7 +50,7 @@ A Viewer is also provided to inspect, search, and restore snapshots without requ
 
 **Requirements:**
 
-* Plakar version: >=1.0.3
+* Plakar version: >=1.0.4
 * Integration version: 0.1.0
 * Google Drive API credentials configured in Rclone
 

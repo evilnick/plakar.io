@@ -3,7 +3,7 @@ date: "2025-08-21T00:00:00Z"
 title: How to call a command to retrieve the passphrase of a Kloset store
 summary: "Learn how to configure and use a command to retrieve the passphrase for accessing an encrypted Kloset store in Plakar."
 last_reviewed: "2025-08-21"
-last_reviewed_version: "v1.0.3"
+last_reviewed_version: "v1.0.4"
 ---
 
 *Last reviewed: {{<param "last_reviewed">}} / Plakar {{<param "last_reviewed_version">}}*
